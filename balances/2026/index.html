@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Balances Angris · 2026</title>
+<style>
+/* Portada e índices del sitio. Va embebido, como el estilo del reporte del día. */
+:root {
+  --tinta: #16150F;
+  --texto: #43413A;
+  --tenue: #6E6B60;
+  --fondo: #FAF9F6;
+  --papel: #FFFFFF;
+  --borde: #E3E0D6;
+  --sube: #14705A;
+  --baja: #B3261E;
+  /* Anchos fijos de las dos columnas de la derecha: así todas las barras arrancan y terminan en
+     la misma vertical, sin importar el largo del resumen. No cambiar a auto. */
+  --col-barra: 260px;
+  --col-cifras: 190px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--fondo); color: var(--tinta); font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.wrap { max-width: 1060px; margin: 0 auto; padding: 24px 32px 64px; }
+.top { padding-bottom: 18px; border-bottom: 2px solid var(--tinta); }
+.brand { font-size: 19px; font-weight: 600; margin: 0; }
+.brand span { display: block; font-size: 13px; font-weight: 400; color: var(--tenue); }
+.migas { font-size: 13px; color: var(--tenue); margin-top: 14px; }
+.migas a { color: var(--tenue); }
+.mes { font-size: 15px; font-weight: 600; margin: 32px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--borde); }
+.semana { margin-bottom: 10px; }
+.semana summary { cursor: pointer; font-size: 13.5px; font-weight: 600; color: var(--texto); padding: 8px 0; }
+.semana .cuenta { font-weight: 400; color: var(--tenue); margin-left: 6px; }
+.day-card { display: grid; grid-template-columns: minmax(0, 1fr) var(--col-barra) var(--col-cifras); gap: 18px; align-items: center; background: var(--papel); border: 1px solid var(--borde); border-radius: 12px; padding: 14px 16px; margin-bottom: 8px; color: inherit; text-decoration: none; }
+.day-card:hover { border-color: var(--tinta); }
+.day-info { display: grid; gap: 2px; }
+.day-info span { font-size: 13px; color: var(--tenue); }
+.day-bar { display: flex; height: 10px; border-radius: 4px; overflow: hidden; background: var(--fondo); }
+.day-right { display: grid; justify-items: end; gap: 2px; }
+.delta { font-size: 12.5px; font-weight: 600; color: var(--tenue); }
+.delta.sube { color: var(--sube); }
+.delta.baja { color: var(--baja); }
+.nota { font-size: 13.5px; color: var(--tenue); }
+@media (max-width: 760px) {
+  .wrap { padding: 20px 16px 48px; }
+  .day-card { grid-template-columns: 1fr; gap: 8px; }
+  .day-right { justify-items: start; }
+}
+@media print {
+  .semana::details-content { content-visibility: visible; }
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1 class="brand">Comercializadora Angris S.A.S.<span>Balances diarios · compraventa de oro</span></h1>
+  </header>
+  <nav class="migas"><a href="../../index.html">Portada</a> › <span>2026</span></nav>
+
+  <h2 class="mes">2026</h2>
+
+  
+
+  
+  <a class="day-card" href="10/index.html">
+    <span class="day-info"><b>Octubre</b><span>21 balances · último corte 21/10</span></span>
+    <span class="day-bar" aria-hidden="true"><span style="flex:18.62; background:#14705A;"></span><span style="flex:50.23; background:#A4521F;"></span><span style="flex:11.69; background:#8A6512;"></span><span style="flex:1.3; background:#1F6F7A;"></span><span style="flex:7.58; background:#6B3FA0;"></span><span style="flex:10.58; background:#5A5E6B;"></span></span>
+    <span class="day-right"><b>$163.031.000</b></span>
+  </a>
+  
+  <a class="day-card" href="09/index.html">
+    <span class="day-info"><b>Septiembre</b><span>28 balances · último corte 30/09</span></span>
+    <span class="day-bar" aria-hidden="true"><span style="flex:10.21; background:#14705A;"></span><span style="flex:55.95; background:#A4521F;"></span><span style="flex:12.4; background:#1F6F7A;"></span><span style="flex:10.09; background:#6B3FA0;"></span><span style="flex:11.35; background:#5A5E6B;"></span></span>
+    <span class="day-right"><b>$35.326.000</b></span>
+  </a>
+  
+  <a class="day-card" href="08/index.html">
+    <span class="day-info"><b>Agosto</b><span>30 balances · último corte 31/08</span></span>
+    <span class="day-bar" aria-hidden="true"><span style="flex:7.01; background:#14705A;"></span><span style="flex:55.9; background:#A4521F;"></span><span style="flex:9.2; background:#8A6512;"></span><span style="flex:21.91; background:#1F6F7A;"></span><span style="flex:5.98; background:#5A5E6B;"></span></span>
+    <span class="day-right"><b>$173.439.124</b></span>
+  </a>
+  
+
+  
+  <h2 class="mes">Meses anteriores</h2>
+  
+  <p class="nota">Julio de 2026 está en el <a href="https://nilsonpm.github.io/reportes-angris/">sitio anterior</a>.</p>
+  
+</div>
+</body>
+</html>

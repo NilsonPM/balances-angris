@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Balances Angris · Octubre de 2026</title>
+<style>
+/* Portada e índices del sitio. Va embebido, como el estilo del reporte del día. */
+:root {
+  --tinta: #16150F;
+  --texto: #43413A;
+  --tenue: #6E6B60;
+  --fondo: #FAF9F6;
+  --papel: #FFFFFF;
+  --borde: #E3E0D6;
+  --sube: #14705A;
+  --baja: #B3261E;
+  /* Anchos fijos de las dos columnas de la derecha: así todas las barras arrancan y terminan en
+     la misma vertical, sin importar el largo del resumen. No cambiar a auto. */
+  --col-barra: 260px;
+  --col-cifras: 190px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--fondo); color: var(--tinta); font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.wrap { max-width: 1060px; margin: 0 auto; padding: 24px 32px 64px; }
+.top { padding-bottom: 18px; border-bottom: 2px solid var(--tinta); }
+.brand { font-size: 19px; font-weight: 600; margin: 0; }
+.brand span { display: block; font-size: 13px; font-weight: 400; color: var(--tenue); }
+.migas { font-size: 13px; color: var(--tenue); margin-top: 14px; }
+.migas a { color: var(--tenue); }
+.mes { font-size: 15px; font-weight: 600; margin: 32px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--borde); }
+.semana { margin-bottom: 10px; }
+.semana summary { cursor: pointer; font-size: 13.5px; font-weight: 600; color: var(--texto); padding: 8px 0; }
+.semana .cuenta { font-weight: 400; color: var(--tenue); margin-left: 6px; }
+.day-card { display: grid; grid-template-columns: minmax(0, 1fr) var(--col-barra) var(--col-cifras); gap: 18px; align-items: center; background: var(--papel); border: 1px solid var(--borde); border-radius: 12px; padding: 14px 16px; margin-bottom: 8px; color: inherit; text-decoration: none; }
+.day-card:hover { border-color: var(--tinta); }
+.day-info { display: grid; gap: 2px; }
+.day-info span { font-size: 13px; color: var(--tenue); }
+.day-bar { display: flex; height: 10px; border-radius: 4px; overflow: hidden; background: var(--fondo); }
+.day-right { display: grid; justify-items: end; gap: 2px; }
+.delta { font-size: 12.5px; font-weight: 600; color: var(--tenue); }
+.delta.sube { color: var(--sube); }
+.delta.baja { color: var(--baja); }
+.nota { font-size: 13.5px; color: var(--tenue); }
+@media (max-width: 760px) {
+  .wrap { padding: 20px 16px 48px; }
+  .day-card { grid-template-columns: 1fr; gap: 8px; }
+  .day-right { justify-items: start; }
+}
+@media print {
+  .semana::details-content { content-visibility: visible; }
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1 class="brand">Comercializadora Angris S.A.S.<span>Balances diarios · compraventa de oro</span></h1>
+  </header>
+  <nav class="migas"><a href="../../../index.html">Portada</a> › <a href="../index.html">2026</a> › <span>Octubre de 2026</span></nav>
+
+  <h2 class="mes">Octubre de 2026</h2>
+
+  
+  <details class="semana" open>
+    <summary>Semana del 19 al 25 de octubre <span class="cuenta">3 días</span></summary>
+    
+    <a class="day-card" href="balance-2026-10-21.html">
+      <span class="day-info"><b>mié 21 de octubre</b><span>Sube $34.778.560 frente al día anterior; 2 lotes en bodega por $47.697.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:18.62; background:#14705A;"></span><span style="flex:50.23; background:#A4521F;"></span><span style="flex:11.69; background:#8A6512;"></span><span style="flex:1.3; background:#1F6F7A;"></span><span style="flex:7.58; background:#6B3FA0;"></span><span style="flex:10.58; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$163.031.000</b><span class="delta sube">▲ +27,1%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-10-20.html">
+      <span class="day-info"><b>mar 20 de octubre</b><span>Sube $86.517.440 frente al día anterior; 1 lote en bodega por $27.068.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:7.17; background:#14705A;"></span><span style="flex:63.97; background:#A4521F;"></span><span style="flex:7.36; background:#8A6512;"></span><span style="flex:1.44; background:#1F6F7A;"></span><span style="flex:8.41; background:#6B3FA0;"></span><span style="flex:11.65; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$128.252.440</b><span class="delta sube">▲ +207,3%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-10-19.html">
+      <span class="day-info"><b>lun 19 de octubre</b><span>Baja $88.607.400 frente al día anterior; todo el oro salió a vender y está pendiente de pago</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:14.27; background:#14705A;"></span><span style="flex:58.82; background:#A4521F;"></span><span style="flex:1.98; background:#1F6F7A;"></span><span style="flex:9.95; background:#6B3FA0;"></span><span style="flex:14.98; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$41.735.000</b><span class="delta baja">▼ −68,0%</span></span>
+    </a>
+    
+  </details>
+  
+  <details class="semana">
+    <summary>Semana del 12 al 18 de octubre <span class="cuenta">7 días</span></summary>
+    
+    <a class="day-card" href="balance-2026-10-18.html">
+      <span class="day-info"><b>dom 18 de octubre</b><span>Baja $80.263.000 frente al día anterior; 5 lotes en bodega por $99.718.400</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:7.55; background:#14705A;"></span><span style="flex:44.31; background:#A4521F;"></span><span style="flex:27.6; background:#8A6512;"></span><span style="flex:1.52; background:#1F6F7A;"></span><span style="flex:7.61; background:#6B3FA0;"></span><span style="flex:11.41; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$130.342.400</b><span class="delta baja">▼ −38,1%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-10-17.html">
+      <span class="day-info"><b>sáb 17 de octubre</b><span>Sube $92.053.700 frente al día anterior; 4 lotes en bodega por $80.672.400</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:14.83; background:#14705A;"></span><span style="flex:49.68; background:#A4521F;"></span><span style="flex:18.51; background:#8A6512;"></span><span style="flex:1.26; background:#1F6F7A;"></span><span style="flex:6.31; background:#6B3FA0;"></span><span style="flex:9.41; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$210.605.400</b><span class="delta sube">▲ +77,6%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-10-16.html">
+      <span class="day-info"><b>vie 16 de octubre</b><span>Sube $51.679.100 frente al día anterior; 3 lotes en bodega por $49.250.400</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:0.79; background:#14705A;"></span><span style="flex:63.75; background:#A4521F;"></span><span style="flex:14.22; background:#8A6512;"></span><span style="flex:1.58; background:#1F6F7A;"></span><span style="flex:7.94; background:#6B3FA0;"></span><span style="flex:11.72; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$118.551.700</b><span class="delta sube">▲ +77,3%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-10-15.html">
+      <span class="day-info"><b>jue 15 de octubre</b><span>Baja $107.943.600 frente al día anterior; 2 lotes en bodega por $25.785.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:13.71; background:#14705A;"></span><span style="flex:54.63; background:#A4521F;"></span><span style="flex:9.46; background:#8A6512;"></span><span style="flex:2.01; background:#1F6F7A;"></span><span style="flex:8.68; background:#6B3FA0;"></span><span style="flex:11.51; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$66.872.600</b><span class="delta baja">▼ −61,7%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-10-14.html">
+      <span class="day-info"><b>mié 14 de octubre</b><span>Sube $48.736.800 frente al día anterior; 4 lotes en bodega por $86.975.200</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:18.99; background:#14705A;"></span><span style="flex:40.17; background:#A4521F;"></span><span style="flex:24.32; background:#8A6512;"></span><span style="flex:1.97; background:#1F6F7A;"></span><span style="flex:6.61; background:#6B3FA0;"></span><span style="flex:7.94; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$174.816.200</b><span class="delta sube">▲ +38,7%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-10-13.html">
+      <span class="day-info"><b>mar 13 de octubre</b><span>Sube $33.250.400 frente al día anterior; 2 lotes en bodega por $31.444.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:11.72; background:#14705A;"></span><span style="flex:58.09; background:#A4521F;"></span><span style="flex:10.54; background:#8A6512;"></span><span style="flex:2.36; background:#1F6F7A;"></span><span style="flex:7.93; background:#6B3FA0;"></span><span style="flex:9.36; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$126.079.400</b><span class="delta sube">▲ +35,8%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-10-12.html">
+      <span class="day-info"><b>lun 12 de octubre</b><span>Sube $80.717.000 frente al día anterior; 1 lote en bodega por $22.400.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:70.17; background:#A4521F;"></span><span style="flex:8.68; background:#8A6512;"></span><span style="flex:2.73; background:#1F6F7A;"></span><span style="flex:7.71; background:#6B3FA0;"></span><span style="flex:10.71; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$92.829.000</b><span class="delta sube">▲ +666,4%</span></span>
+    </a>
+    
+  </details>
+  
+  <details class="semana">
+    <summary>Semana del 5 al 11 de octubre <span class="cuenta">7 días</span></summary>
+    
+    <a class="day-card" href="balance-2026-10-11.html">
+      <span class="day-info"><b>dom 11 de octubre</b><span>Baja $124.694.000 frente al día anterior; la bodega quedó vacía: todo el oro salió a vender</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:6.67; background:#14705A;"></span><span style="flex:62.52; background:#A4521F;"></span><span style="flex:3.99; background:#1F6F7A;"></span><span style="flex:11.25; background:#6B3FA0;"></span><span style="flex:15.57; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$12.112.000</b><span class="delta baja">▼ −91,1%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-10-10.html">
+      <span class="day-info"><b>sáb 10 de octubre</b><span>Sube $49.100.260 frente al día anterior; 3 lotes en bodega por $61.925.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:23.14; background:#14705A;"></span><span style="flex:37.38; background:#A4521F;"></span><span style="flex:21.03; background:#8A6512;"></span><span style="flex:2.39; background:#1F6F7A;"></span><span style="flex:6.75; background:#6B3FA0;"></span><span style="flex:9.31; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$136.806.000</b><span class="delta sube">▲ +56,0%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-10-09.html">
+      <span class="day-info"><b>vie 9 de octubre</b><span>Sube $66.638.740 frente al día anterior; 1 lote en bodega por $12.555.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:0.39; background:#14705A;"></span><span style="flex:71.82; background:#A4521F;"></span><span style="flex:5.22; background:#8A6512;"></span><span style="flex:2.93; background:#1F6F7A;"></span><span style="flex:8.28; background:#6B3FA0;"></span><span style="flex:11.36; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$87.705.740</b><span class="delta sube">▲ +316,3%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-10-08.html">
+      <span class="day-info"><b>jue 8 de octubre</b><span>Baja $83.890.900 frente al día anterior; 1 lote en bodega por $2.365.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:8.76; background:#14705A;"></span><span style="flex:60.29; background:#A4521F;"></span><span style="flex:1.4; background:#8A6512;"></span><span style="flex:4.18; background:#1F6F7A;"></span><span style="flex:9.5; background:#6B3FA0;"></span><span style="flex:15.87; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$21.067.000</b><span class="delta baja">▼ −79,9%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-10-07.html">
+      <span class="day-info"><b>mié 7 de octubre</b><span>Sube $20.754.900 frente al día anterior; 4 lotes en bodega por $64.013.900</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:8.01; background:#14705A;"></span><span style="flex:46.78; background:#A4521F;"></span><span style="flex:25.43; background:#8A6512;"></span><span style="flex:2.8; background:#1F6F7A;"></span><span style="flex:6.37; background:#6B3FA0;"></span><span style="flex:10.61; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$104.957.900</b><span class="delta sube">▲ +24,6%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-10-06.html">
+      <span class="day-info"><b>mar 6 de octubre</b><span>Sube $17.397.660 frente al día anterior; 2 lotes en bodega por $34.131.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:23.17; background:#14705A;"></span><span style="flex:41.2; background:#A4521F;"></span><span style="flex:14.56; background:#8A6512;"></span><span style="flex:3.01; background:#1F6F7A;"></span><span style="flex:6.84; background:#6B3FA0;"></span><span style="flex:11.22; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$84.203.000</b><span class="delta sube">▲ +26,0%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-10-05.html">
+      <span class="day-info"><b>lun 5 de octubre</b><span>Sube $20.662.340 frente al día anterior; 1 lote en bodega por $9.699.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:1.4; background:#14705A;"></span><span style="flex:70.97; background:#A4521F;"></span><span style="flex:4.58; background:#8A6512;"></span><span style="flex:3.33; background:#1F6F7A;"></span><span style="flex:7.57; background:#6B3FA0;"></span><span style="flex:12.15; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$66.805.340</b><span class="delta sube">▲ +44,8%</span></span>
+    </a>
+    
+  </details>
+  
+  <details class="semana">
+    <summary>Semana del 28 de septiembre al 4 de octubre <span class="cuenta">4 días</span></summary>
+    
+    <a class="day-card" href="balance-2026-10-04.html">
+      <span class="day-info"><b>dom 4 de octubre</b><span>Baja $94.333.000 frente al día anterior; todo el oro salió a vender y está pendiente de pago</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:21.55; background:#14705A;"></span><span style="flex:53.98; background:#A4521F;"></span><span style="flex:3.84; background:#1F6F7A;"></span><span style="flex:6.87; background:#6B3FA0;"></span><span style="flex:13.76; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$46.143.000</b><span class="delta baja">▼ −67,2%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-10-03.html">
+      <span class="day-info"><b>sáb 3 de octubre</b><span>Sube $67.668.000 frente al día anterior; 3 lotes en bodega por $58.908.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:7.98; background:#14705A;"></span><span style="flex:53.23; background:#A4521F;"></span><span style="flex:22.05; background:#8A6512;"></span><span style="flex:2.64; background:#1F6F7A;"></span><span style="flex:4.72; background:#6B3FA0;"></span><span style="flex:9.38; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$140.476.000</b><span class="delta sube">▲ +92,9%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-10-02.html">
+      <span class="day-info"><b>vie 2 de octubre</b><span>Baja $4.847.650 frente al día anterior; 2 lotes en bodega por $28.818.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:22.51; background:#14705A;"></span><span style="flex:40.86; background:#A4521F;"></span><span style="flex:14.41; background:#8A6512;"></span><span style="flex:3.52; background:#1F6F7A;"></span><span style="flex:6.3; background:#6B3FA0;"></span><span style="flex:12.4; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$72.808.000</b><span class="delta baja">▼ −6,2%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-10-01.html">
+      <span class="day-info"><b>jue 1 de octubre</b><span>Sube $42.329.650 frente al día anterior; 1 lote en bodega por $9.364.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:29.6; background:#14705A;"></span><span style="flex:42.96; background:#A4521F;"></span><span style="flex:5.02; background:#8A6512;"></span><span style="flex:3.78; background:#1F6F7A;"></span><span style="flex:6.76; background:#6B3FA0;"></span><span style="flex:11.88; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$77.655.650</b><span class="delta sube">▲ +119,8%</span></span>
+    </a>
+    
+  </details>
+  
+
+  
+
+  
+  <h2 class="mes">Meses anteriores</h2>
+  
+  <p class="nota">Julio de 2026 está en el <a href="https://nilsonpm.github.io/reportes-angris/">sitio anterior</a>.</p>
+  
+</div>
+</body>
+</html>

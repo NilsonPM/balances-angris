@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="balance:fecha" content="2026-08-01">
+<meta name="balance:total" content="237857765">
+<meta name="balance:cuadre" content="237857765">
+<meta name="balance:resumen" content="8 lotes en bodega por $112.746.000">
+<title>Balance Angris · 1 de agosto de 2026</title>
+<style>
+/* El reporte del día. Va embebido en la página para que se pueda abrir suelta, enviar o
+   imprimir y se vea igual (docs/publicacion.md). Sigue el diseño del sitio publicado. */
+:root {
+  --tinta: #16150F;
+  --texto: #43413A;
+  --tenue: #6E6B60;
+  --fondo: #FAF9F6;
+  --papel: #FFFFFF;
+  --borde: #E3E0D6;
+  --linea: #EDEBE3;
+  --nota: #F2F0E9;
+  --sube: #14705A;
+  --baja: #B3261E;
+  --oro: #8A6512;
+  --aviso: #FBF3E4;
+  --aviso-borde: #A4521F;
+  --radio: 12px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1060px; margin: 0 auto; padding: 24px 32px 64px; }
+p { margin: 0; }
+
+/* Vista privada: estado del día y acciones. No va en el HTML publicado. */
+.privado { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; padding: 12px 14px; margin-bottom: 16px; border: 1px dashed var(--borde); border-radius: var(--radio); font-size: 14px; color: var(--texto); }
+.privado form { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; }
+.privado label { display: grid; gap: 2px; font-size: 12.5px; color: var(--tenue); }
+.privado input { font: inherit; padding: 8px 10px; min-height: 44px; border: 1px solid var(--borde); border-radius: 8px; }
+.privado button { font: inherit; font-weight: 600; min-height: 44px; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--tinta); background: var(--tinta); color: #fff; cursor: pointer; }
+.privado button[disabled] { opacity: .45; cursor: not-allowed; }
+.privado .tenue { font-size: 12.5px; color: var(--tenue); }
+.privado-detalle { display: block; margin: 32px 0 0; }
+.privado-detalle h2 { font-size: 15px; margin: 16px 0 6px; }
+.privado-detalle ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+.mensaje { width: 100%; font-weight: 600; color: var(--sube); }
+.mensaje.error { color: var(--baja); }
+
+/* Navegación */
+.topnav { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding-bottom: 16px; }
+.navhome { font-size: 13px; color: var(--tenue); text-decoration: none; }
+.navhome:hover { color: var(--tinta); }
+.navdays { display: flex; gap: 8px; }
+.navpill { font-size: 13px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--borde); color: var(--texto); text-decoration: none; }
+.navpill:hover { border-color: var(--tinta); }
+
+/* Encabezado */
+.top { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap; padding-bottom: 20px; border-bottom: 2px solid var(--tinta); }
+.brand { font-size: 19px; font-weight: 600; letter-spacing: -0.01em; margin: 0; }
+.brand span { display: block; font-size: 13px; font-weight: 400; color: var(--tenue); letter-spacing: 0.02em; margin-top: 2px; }
+.stamp { text-align: right; }
+.stamp .date { font-size: 13px; color: var(--tenue); margin-bottom: 6px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; background: #E6F1EA; color: var(--sube); font-size: 12.5px; font-weight: 600; padding: 5px 11px; border-radius: 999px; }
+
+/* Cifras de cierre: el tamaño marca la jerarquía, día, mes, histórico */
+.hero { padding: 34px 0 26px; }
+.eyebrow, .hero .cifra span { font-size: 12.5px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--tenue); }
+.hero .eyebrow { margin-bottom: 8px; }
+.hero .total { font-size: 60px; font-weight: 600; letter-spacing: -0.035em; line-height: 1; }
+.hero .cifra { font-weight: 600; color: var(--texto); }
+.hero .cifra span { display: block; margin-bottom: 2px; }
+.hero .segunda { font-size: 21px; margin-top: 16px; letter-spacing: -0.02em; }
+.hero .tercera { font-size: 17px; margin-top: 13px; letter-spacing: -0.015em; }
+.hero .sub { font-size: 14.5px; color: var(--tenue); margin-top: 12px; max-width: 640px; }
+.hero .delta { font-size: 14px; margin-top: 10px; }
+
+/* Variaciones: el color marca la dirección, no si la noticia es buena */
+.delta { color: var(--tenue); font-weight: 600; }
+.delta.sube { color: var(--sube); }
+.delta.baja { color: var(--baja); }
+
+/* Barra de composición */
+.barwrap { margin: 6px 0 14px; }
+.bar { display: flex; height: 46px; border-radius: 8px; overflow: hidden; }
+.seg { display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: 600; min-width: 0; }
+.seg.thin { font-size: 0; }
+.keys { display: flex; flex-wrap: wrap; gap: 8px 26px; margin-top: 14px; }
+.key { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--texto); }
+.dot { width: 11px; height: 11px; border-radius: 3px; flex: none; }
+.resta { color: var(--tenue); font-size: 12.5px; }
+
+.h2 { font-size: 15px; font-weight: 600; letter-spacing: -0.005em; margin: 44px 0 14px; padding-bottom: 10px; border-bottom: 1px solid var(--borde); }
+.h3 { font-size: 13.5px; font-weight: 600; color: var(--texto); margin: 22px 0 10px; }
+
+/* Tarjetas */
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+.card { background: var(--papel); border: 1px solid var(--borde); border-top: 3px solid; border-radius: var(--radio); padding: 18px 18px 16px; }
+.card .ico { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+.card .ttl { font-size: 14.5px; font-weight: 600; margin-bottom: 3px; letter-spacing: -0.005em; }
+.card .hint { font-size: 12.5px; color: var(--tenue); margin-bottom: 14px; line-height: 1.45; min-height: 36px; }
+.card .amt { font-size: 25px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.1; }
+.card .hoy, .card .pct { font-size: 12.5px; color: var(--tenue); margin-top: 4px; }
+.card .delta { font-size: 12px; margin-top: 7px; line-height: 1.35; }
+
+/* Tablas: se desplazan dentro de su caja, la página nunca */
+.tracewrap { overflow-x: auto; }
+.trace { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 640px; }
+.trace th { text-align: right; font-weight: 600; color: var(--tenue); font-size: 12px; padding: 8px 10px; border-bottom: 1px solid var(--borde); white-space: nowrap; }
+.trace td { text-align: right; padding: 9px 10px; border-bottom: 1px solid var(--linea); white-space: nowrap; }
+.trace th:first-child, .trace td:first-child { text-align: left; }
+.trace tfoot td { font-weight: 600; border-top: 1px solid var(--tinta); border-bottom: none; }
+.trace .lotes { font-weight: 400; color: var(--tenue); }
+.trace .sub { display: block; font-weight: 400; color: var(--tenue); font-size: 11.5px; margin-top: 1px; }
+.trace .merma { color: var(--baja); }
+.trace .paso { color: var(--oro); font-weight: 600; }
+.trace.trace-2col { min-width: 0; }
+.trace.trace-2col td:first-child, .trace.trace-2col th:first-child { white-space: normal; }
+.tracenote { font-size: 12.5px; color: var(--tenue); margin-top: 10px; }
+
+/* Lo que no está en ninguna cifra de cierre se avisa aparte */
+.aviso { margin-top: 14px; background: var(--aviso); border-left: 3px solid var(--aviso-borde); border-radius: 0 8px 8px 0; padding: 12px 16px; font-size: 13.5px; color: var(--texto); }
+.aviso b, .note b { font-weight: 600; color: var(--tinta); }
+
+/* Quién responde */
+.who { background: var(--papel); border: 1px solid var(--borde); border-radius: var(--radio); padding: 16px 18px; display: flex; align-items: center; gap: 14px; }
+.av { width: 42px; height: 42px; border-radius: 50%; flex: none; display: flex; align-items: center; justify-content: center; font-size: 15.5px; font-weight: 600; }
+.who .nm { font-size: 15px; font-weight: 600; letter-spacing: -0.005em; }
+.who .rl { font-size: 12.5px; color: var(--tenue); margin: 1px 0 5px; }
+.who .vl { font-size: 19px; font-weight: 600; letter-spacing: -0.02em; }
+
+.note { margin-top: 34px; background: var(--nota); border-radius: var(--radio); padding: 18px 20px; font-size: 13.5px; color: var(--texto); line-height: 1.6; }
+.note p { margin-bottom: 8px; }
+.note p:last-child { margin-bottom: 0; }
+
+@media (max-width: 900px) {
+  .hero .total { font-size: 44px; }
+  .card .hint { min-height: 0; }
+}
+@media (max-width: 560px) {
+  .wrap { padding: 28px 16px 48px; }
+  .grid { grid-template-columns: 1fr; }
+  .hero .total { font-size: 36px; }
+  .stamp { text-align: left; }
+}
+@media print {
+  body { background: #fff; }
+  .wrap { max-width: none; padding: 0; }
+  .topnav, .privado { display: none; }
+  .card, .who, .note, .aviso { break-inside: avoid; }
+  .tracewrap { overflow-x: visible; }
+  .trace { min-width: 0; font-size: 11px; }
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+
+  <nav class="topnav">
+    <a class="navhome" href="../../../index.html">‹ Portada</a>
+    <div class="navdays">
+      
+      <a class="navpill" rel="next" href="balance-2026-08-02.html">2 ago ›</a>
+    </div>
+  </nav>
+
+  <header class="top">
+    <h1 class="brand">Comercializadora Angris S.A.S.<span>Panel financiero · compraventa de oro</span></h1>
+    <div class="stamp">
+      <p class="date">Corte: 1 de agosto de 2026</p>
+      <span class="chip">✓ Balance cuadrado</span>
+    </div>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">Gran total del día</p>
+    <p class="total">$237.857.765</p>
+    
+    <p class="cifra segunda"><span>Patrimonio acumulado</span>$237.857.765</p>
+    
+    
+    
+    <p class="sub">El gran total es la cifra de cierre del libro: balance del día, $237.842.765, más los movimientos del mes sumados en valor absoluto. El patrimonio acumulado cuenta cada cuenta una sola vez, con su saldo, y es lo que suman las tarjetas de abajo.</p>
+  </section>
+
+  <div class="barwrap">
+    <div class="bar">
+      <div class="seg" style="width:21.85%; background:#14705A;">22%</div><div class="seg" style="width:30.3%; background:#A4521F;">30%</div><div class="seg" style="width:47.4%; background:#8A6512;">47%</div><div class="seg thin" style="width:0.45%; background:#5A5E6B;">0,45%</div>
+    </div>
+    <div class="keys">
+      <span class="key"><span class="dot" style="background:#14705A;"></span>Plata disponible</span><span class="key"><span class="dot" style="background:#A4521F;"></span>Plata que nos deben</span><span class="key"><span class="dot" style="background:#8A6512;"></span>Oro en inventario</span><span class="key"><span class="dot" style="background:#5A5E6B;"></span>Gastos y ajustes</span>
+    </div>
+  </div>
+
+  
+  <h2 class="h2">Inventario de oro y su estado</h2>
+  <div class="tracewrap">
+  <table class="trace">
+    <thead>
+      <tr><th scope="col">Estado</th><th scope="col">P.F.</th><th scope="col">Ley media</th><th scope="col">P.P.E.</th><th scope="col">Precio de compra</th></tr>
+    </thead>
+    
+    
+    <tfoot>
+      
+      <tr><td>Total · en bodega</td><td>436,29 gr</td><td>0,740</td><td class="paso">322,88 gr</td><td>$112.746.000</td></tr>
+      
+    </tfoot>
+    
+  </table>
+</div>
+
+  <p class="tracenote">Cada lote llega fundido (P.F.) y su ley indica qué proporción es oro puro: el peso purificado estimado (P.P.E.) es el producto de los dos. La <b>ley media</b> es la del conjunto, el P.P.E. dividido entre el P.F. <b>El precio de compra se calcula sobre el P.P.E.</b></p>
+  
+
+  
+
+  <h2 class="h2">En qué está representado ese valor</h2>
+  <div class="grid">
+    
+    <div class="card" style="border-top-color:#14705A;">
+      <div class="ico" style="background:#E6F1EA; color:#14705A;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>
+</div>
+      <p class="ttl">Plata disponible</p>
+      <p class="hint">Cajas y efectivo. Se puede usar hoy mismo, sin esperar a nadie.</p>
+      <p class="amt">$51.977.000</p>
+      
+      <p class="pct">22% del acumulado</p>
+      
+    </div>
+    
+    <div class="card" style="border-top-color:#A4521F;">
+      <div class="ico" style="background:#F6EAE2; color:#A4521F;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h12"/><path d="M12 8l4 4-4 4"/><path d="M20 5v14"/></svg>
+</div>
+      <p class="ttl">Plata que nos deben</p>
+      <p class="hint">Saldo que la mina, el motor y los anticipos tienen pendiente de regresar.</p>
+      <p class="amt">$72.059.765</p>
+      
+      <p class="pct">30% del acumulado</p>
+      
+    </div>
+    
+    <div class="card" style="border-top-color:#8A6512;">
+      <div class="ico" style="background:#F4EDDC; color:#8A6512;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18l3-8h10l3 8z"/><path d="M8 10l2-4h4l2 4"/></svg>
+</div>
+      <p class="ttl">Oro en inventario</p>
+      <p class="hint">8 lotes en bodega, valorados a su precio de compra.</p>
+      <p class="amt">$112.746.000</p>
+      
+      <p class="pct">47% del acumulado</p>
+      
+    </div>
+    
+    <div class="card" style="border-top-color:#5A5E6B;">
+      <div class="ico" style="background:#EDEEF1; color:#5A5E6B;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>
+</div>
+      <p class="ttl">Gastos y ajustes</p>
+      <p class="hint">Acumulado de gastos, sobrantes y faltantes de caja. El libro los suma al valor del día.</p>
+      <p class="amt">$1.075.000</p>
+      <p class="hoy">de la columna del día: $1.060.000</p>
+      <p class="pct">0,45% del acumulado</p>
+      
+    </div>
+    
+  </div>
+
+  
+  <h2 class="h2">Quién responde por cada monto</h2>
+  <div class="grid">
+    
+    <div class="who">
+      <div class="av" style="background:#E6F1EA; color:#14705A;">C</div>
+      <div>
+        <p class="nm">Carlos</p>
+        <p class="rl">Caja principal</p>
+        <p class="vl">$21.700.000</p>
+      </div>
+    </div>
+    
+    <div class="who">
+      <div class="av" style="background:#E6F1EA; color:#14705A;">F</div>
+      <div>
+        <p class="nm">Fabián</p>
+        <p class="rl">Caja auxiliar</p>
+        <p class="vl">$20.277.000</p>
+      </div>
+    </div>
+    
+    <div class="who">
+      <div class="av" style="background:#EEEDE8; color:#6E6B60;">S</div>
+      <div>
+        <p class="nm">Sin responsable</p>
+        <p class="rl">El libro no lo registra</p>
+        <p class="vl">$10.000.000</p>
+      </div>
+    </div>
+    
+    <div class="who">
+      <div class="av" style="background:#F6EAE2; color:#A4521F;">G</div>
+      <div>
+        <p class="nm">Grismaldo</p>
+        <p class="rl">Cuenta por cobrar</p>
+        <p class="vl">$70.809.765</p>
+      </div>
+    </div>
+    
+    <div class="who">
+      <div class="av" style="background:#F6EAE2; color:#A4521F;">M</div>
+      <div>
+        <p class="nm">Motor</p>
+        <p class="rl">Cuenta por cobrar</p>
+        <p class="vl">$1.250.000</p>
+      </div>
+    </div>
+    
+    <div class="who">
+      <div class="av" style="background:#EDEEF1; color:#5A5E6B;">L</div>
+      <div>
+        <p class="nm">La compraventa</p>
+        <p class="rl">Gastos del negocio</p>
+        <p class="vl">$1.060.000</p>
+      </div>
+    </div>
+    
+    <div class="who">
+      <div class="av" style="background:#EDEEF1; color:#5A5E6B;">F</div>
+      <div>
+        <p class="nm">Fabián</p>
+        <p class="rl">Sobrantes y faltantes de caja</p>
+        <p class="vl">$15.000</p>
+      </div>
+    </div>
+    
+  </div>
+  <p class="tracenote">Esta sección no suma el balance del día: el oro no tiene responsable.</p>
+  
+
+  <h2 class="h2">Detalle de las cuentas: el día y el mes</h2>
+  <div class="tracewrap">
+  <table class="trace">
+    <thead>
+      <tr><th scope="col">Cuenta</th><th scope="col">En el día</th><th scope="col">En el mes</th></tr>
+    </thead>
+    
+    <tbody>
+      
+      <tr><td>Caja Principal</td><td>$21.700.000</td><td>—</td></tr>
+      
+      <tr><td>Caja Auxiliar</td><td>$20.277.000</td><td>—</td></tr>
+      
+      <tr><td>Recepción de Efectivo</td><td>$10.000.000</td><td>—</td></tr>
+      
+      <tr><td>Cuenta x Cobrar Mina (Grismaldo)</td><td>$70.809.765</td><td>—</td></tr>
+      
+      <tr><td>Cuenta x Cobrar Motor a Crédito</td><td>$1.250.000</td><td>—</td></tr>
+      
+      <tr><td>Caja Auxiliar — Dinero Sobrante</td><td>—</td><td>$15.000</td></tr>
+      
+    </tbody>
+    
+    <tbody>
+      
+      <tr><td>Gastos Diario CompraVenta</td><td class="merma">−$1.060.000</td><td>—</td></tr>
+      
+    </tbody>
+    
+    
+    <tfoot>
+      
+      <tr><td>Suman</td><td>$124.036.765</td><td>$15.000</td></tr>
+      
+      <tr><td>Restan</td><td class="merma">−$1.060.000</td><td>—</td></tr>
+      
+      <tr><td>Total que registra el libro</td><td>$125.096.765</td><td>$15.000</td></tr>
+      
+    </tfoot>
+    
+  </table>
+</div>
+
+  <p class="tracenote">Cada cifra es lo que la cuenta aporta al cierre, con su signo. El guion significa que ese día no se registró nada, no que valga cero. Las cifras en rojo restan.</p>
+
+  
+  <h2 class="h2">De dónde sale cada cifra de cierre</h2>
+  
+  <div class="tracewrap">
+    <table class="trace trace-2col">
+      <thead><tr><th scope="col">Lo que suman las tarjetas</th><th scope="col">Importe</th></tr></thead>
+      <tbody><tr><td>Balance del día</td><td>$237.842.765</td></tr><tr><td>Efecto neto del mes</td><td>$15.000</td></tr></tbody>
+      <tfoot><tr><td>Patrimonio acumulado</td><td>$237.857.765</td></tr></tfoot>
+    </table>
+  </div>
+  
+  <div class="tracewrap">
+    <table class="trace trace-2col">
+      <thead><tr><th scope="col">Cómo lo cierra el libro</th><th scope="col">Importe</th></tr></thead>
+      <tbody><tr><td>Balance del día</td><td>$237.842.765</td></tr><tr><td>Movimientos del mes, como los suma el libro</td><td>$15.000</td></tr></tbody>
+      <tfoot><tr><td>Gran total</td><td>$237.857.765</td></tr></tfoot>
+    </table>
+  </div>
+  
+  <p class="tracenote">Las dos parten del balance del día y llegan a cifras distintas porque el libro suma los movimientos del mes en valor absoluto, contando por separado lo que entra y lo que sale aunque se compensen: aportan $15.000 cuando su efecto neto es $15.000. Las tarjetas cuentan cada cuenta una sola vez, con su saldo.</p>
+  
+
+  <div class="note">
+    <p><b>Las tarjetas muestran saldos acumulados.</b> Cada una lleva la suma de sus cuentas en todas sus columnas. Cuando parte del saldo no viene de la columna del día, la tarjeta lo aclara en pequeño debajo del importe. El detalle por columna está en la tabla de cuentas.</p><p>Elaborado a partir del balance diario del 1 de agosto de 2026.</p>
+  </div>
+
+
+</div>
+</body>
+</html>

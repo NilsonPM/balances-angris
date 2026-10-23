@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Balances Angris · Septiembre de 2026</title>
+<style>
+/* Portada e índices del sitio. Va embebido, como el estilo del reporte del día. */
+:root {
+  --tinta: #16150F;
+  --texto: #43413A;
+  --tenue: #6E6B60;
+  --fondo: #FAF9F6;
+  --papel: #FFFFFF;
+  --borde: #E3E0D6;
+  --sube: #14705A;
+  --baja: #B3261E;
+  /* Anchos fijos de las dos columnas de la derecha: así todas las barras arrancan y terminan en
+     la misma vertical, sin importar el largo del resumen. No cambiar a auto. */
+  --col-barra: 260px;
+  --col-cifras: 190px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--fondo); color: var(--tinta); font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.wrap { max-width: 1060px; margin: 0 auto; padding: 24px 32px 64px; }
+.top { padding-bottom: 18px; border-bottom: 2px solid var(--tinta); }
+.brand { font-size: 19px; font-weight: 600; margin: 0; }
+.brand span { display: block; font-size: 13px; font-weight: 400; color: var(--tenue); }
+.migas { font-size: 13px; color: var(--tenue); margin-top: 14px; }
+.migas a { color: var(--tenue); }
+.mes { font-size: 15px; font-weight: 600; margin: 32px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--borde); }
+.semana { margin-bottom: 10px; }
+.semana summary { cursor: pointer; font-size: 13.5px; font-weight: 600; color: var(--texto); padding: 8px 0; }
+.semana .cuenta { font-weight: 400; color: var(--tenue); margin-left: 6px; }
+.day-card { display: grid; grid-template-columns: minmax(0, 1fr) var(--col-barra) var(--col-cifras); gap: 18px; align-items: center; background: var(--papel); border: 1px solid var(--borde); border-radius: 12px; padding: 14px 16px; margin-bottom: 8px; color: inherit; text-decoration: none; }
+.day-card:hover { border-color: var(--tinta); }
+.day-info { display: grid; gap: 2px; }
+.day-info span { font-size: 13px; color: var(--tenue); }
+.day-bar { display: flex; height: 10px; border-radius: 4px; overflow: hidden; background: var(--fondo); }
+.day-right { display: grid; justify-items: end; gap: 2px; }
+.delta { font-size: 12.5px; font-weight: 600; color: var(--tenue); }
+.delta.sube { color: var(--sube); }
+.delta.baja { color: var(--baja); }
+.nota { font-size: 13.5px; color: var(--tenue); }
+@media (max-width: 760px) {
+  .wrap { padding: 20px 16px 48px; }
+  .day-card { grid-template-columns: 1fr; gap: 8px; }
+  .day-right { justify-items: start; }
+}
+@media print {
+  .semana::details-content { content-visibility: visible; }
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1 class="brand">Comercializadora Angris S.A.S.<span>Balances diarios · compraventa de oro</span></h1>
+  </header>
+  <nav class="migas"><a href="../../../index.html">Portada</a> › <a href="../index.html">2026</a> › <span>Septiembre de 2026</span></nav>
+
+  <h2 class="mes">Septiembre de 2026</h2>
+
+  
+  <details class="semana" open>
+    <summary>Semana del 28 de septiembre al 4 de octubre <span class="cuenta">3 días</span></summary>
+    
+    <a class="day-card" href="balance-2026-09-30.html">
+      <span class="day-info"><b>mié 30 de septiembre</b><span>Baja $93.010.010 frente al día anterior; todo el oro salió a vender y está pendiente de pago</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:10.21; background:#14705A;"></span><span style="flex:55.95; background:#A4521F;"></span><span style="flex:12.4; background:#1F6F7A;"></span><span style="flex:10.09; background:#6B3FA0;"></span><span style="flex:11.35; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$35.326.000</b><span class="delta baja">▼ −72,5%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-29.html">
+      <span class="day-info"><b>mar 29 de septiembre</b><span>Sube $64.310.010 frente al día anterior; 2 lotes en bodega por $33.583.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:9.31; background:#14705A;"></span><span style="flex:55.59; background:#A4521F;"></span><span style="flex:8.6; background:#8A6512;"></span><span style="flex:9.71; background:#1F6F7A;"></span><span style="flex:7.91; background:#6B3FA0;"></span><span style="flex:8.88; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$128.336.010</b><span class="delta sube">▲ +100,4%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-28.html">
+      <span class="day-info"><b>lun 28 de septiembre</b><span>Baja $54.373.000 frente al día anterior; 1 lote en bodega por $18.461.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:3.25; background:#14705A;"></span><span style="flex:60.41; background:#A4521F;"></span><span style="flex:5.76; background:#8A6512;"></span><span style="flex:11.83; background:#1F6F7A;"></span><span style="flex:7.99; background:#6B3FA0;"></span><span style="flex:10.76; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$64.026.000</b><span class="delta baja">▼ −45,9%</span></span>
+    </a>
+    
+  </details>
+  
+  <details class="semana">
+    <summary>Semana del 21 al 27 de septiembre <span class="cuenta">6 días</span></summary>
+    
+    <a class="day-card" href="balance-2026-09-26.html">
+      <span class="day-info"><b>sáb 26 de septiembre</b><span>Baja $2.028.000 frente al día anterior; 3 lotes en bodega por $44.626.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:18.19; background:#14705A;"></span><span style="flex:43.07; background:#A4521F;"></span><span style="flex:12.14; background:#8A6512;"></span><span style="flex:10.32; background:#1F6F7A;"></span><span style="flex:6.97; background:#6B3FA0;"></span><span style="flex:9.31; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$118.399.000</b><span class="delta baja">▼ −1,7%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-25.html">
+      <span class="day-info"><b>vie 25 de septiembre</b><span>Sube $6.851.760 frente al día anterior; 2 lotes en bodega por $24.172.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:24.41; background:#14705A;"></span><span style="flex:41.87; background:#A4521F;"></span><span style="flex:6.68; background:#8A6512;"></span><span style="flex:10.49; background:#1F6F7A;"></span><span style="flex:7.09; background:#6B3FA0;"></span><span style="flex:9.46; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$120.427.000</b><span class="delta sube">▲ +6,0%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-24.html">
+      <span class="day-info"><b>jue 24 de septiembre</b><span>Sube $36.321.240 frente al día anterior; 1 lote en bodega por $13.911.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:15.69; background:#14705A;"></span><span style="flex:52.42; background:#A4521F;"></span><span style="flex:3.98; background:#8A6512;"></span><span style="flex:10.85; background:#1F6F7A;"></span><span style="flex:7.33; background:#6B3FA0;"></span><span style="flex:9.73; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$113.575.240</b><span class="delta sube">▲ +47,0%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-23.html">
+      <span class="day-info"><b>mié 23 de septiembre</b><span>Baja $29.344.000 frente al día anterior; todo el oro salió a vender y está pendiente de pago</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:20.71; background:#14705A;"></span><span style="flex:49.28; background:#A4521F;"></span><span style="flex:12.16; background:#1F6F7A;"></span><span style="flex:7.05; background:#6B3FA0;"></span><span style="flex:10.8; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$77.254.000</b><span class="delta baja">▼ −27,5%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-22.html">
+      <span class="day-info"><b>mar 22 de septiembre</b><span>Baja $35.830.000 frente al día anterior; 2 lotes en bodega por $35.509.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:20.41; background:#14705A;"></span><span style="flex:41.57; background:#A4521F;"></span><span style="flex:10.47; background:#8A6512;"></span><span style="flex:11.19; background:#1F6F7A;"></span><span style="flex:6.49; background:#6B3FA0;"></span><span style="flex:9.87; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$106.598.000</b><span class="delta baja">▼ −25,2%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-21.html">
+      <span class="day-info"><b>lun 21 de septiembre</b><span>Sube $25.878.000 frente al día anterior; 1 lote en bodega por $21.161.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:30.78; background:#14705A;"></span><span style="flex:37.95; background:#A4521F;"></span><span style="flex:5.78; background:#8A6512;"></span><span style="flex:10.37; background:#1F6F7A;"></span><span style="flex:6.02; background:#6B3FA0;"></span><span style="flex:9.1; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$142.428.000</b><span class="delta sube">▲ +22,2%</span></span>
+    </a>
+    
+  </details>
+  
+  <details class="semana">
+    <summary>Semana del 14 al 20 de septiembre <span class="cuenta">6 días</span></summary>
+    
+    <a class="day-card" href="balance-2026-09-20.html">
+      <span class="day-info"><b>dom 20 de septiembre</b><span>Baja $104.063.000 frente al día anterior; todo el oro salió a vender y está pendiente de pago</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:34.46; background:#14705A;"></span><span style="flex:39.02; background:#A4521F;"></span><span style="flex:11.16; background:#1F6F7A;"></span><span style="flex:5.67; background:#6B3FA0;"></span><span style="flex:9.69; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$116.550.000</b><span class="delta baja">▼ −47,2%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-19.html">
+      <span class="day-info"><b>sáb 19 de septiembre</b><span>Sube $119.492.700 frente al día anterior; 2 lotes en bodega por $32.597.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:16.76; background:#14705A;"></span><span style="flex:54.55; background:#A4521F;"></span><span style="flex:7.63; background:#8A6512;"></span><span style="flex:8.88; background:#1F6F7A;"></span><span style="flex:4.51; background:#6B3FA0;"></span><span style="flex:7.67; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$220.613.000</b><span class="delta sube">▲ +118,2%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-18.html">
+      <span class="day-info"><b>vie 18 de septiembre</b><span>Sube $41.268.000 frente al día anterior; 2 lotes en bodega por $16.752.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:12.34; background:#14705A;"></span><span style="flex:53.86; background:#A4521F;"></span><span style="flex:5.35; background:#8A6512;"></span><span style="flex:12.11; background:#1F6F7A;"></span><span style="flex:6.15; background:#6B3FA0;"></span><span style="flex:10.19; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$101.120.300</b><span class="delta sube">▲ +68,9%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-17.html">
+      <span class="day-info"><b>jue 17 de septiembre</b><span>Baja $26.490.700 frente al día anterior; 1 lote en bodega por $9.170.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:1.37; background:#14705A;"></span><span style="flex:62.5; background:#A4521F;"></span><span style="flex:3.74; background:#8A6512;"></span><span style="flex:15.46; background:#1F6F7A;"></span><span style="flex:7.85; background:#6B3FA0;"></span><span style="flex:9.08; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$59.852.300</b><span class="delta baja">▼ −30,7%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-15.html">
+      <span class="day-info"><b>mar 15 de septiembre</b><span>Baja $24.813.900 frente al día anterior; 4 lotes en bodega por $63.165.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:10.98; background:#14705A;"></span><span style="flex:40.11; background:#A4521F;"></span><span style="flex:22.8; background:#8A6512;"></span><span style="flex:13.69; background:#1F6F7A;"></span><span style="flex:4.75; background:#6B3FA0;"></span><span style="flex:7.67; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$86.343.000</b><span class="delta baja">▼ −22,3%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-14.html">
+      <span class="day-info"><b>lun 14 de septiembre</b><span>Sube $21.009.900 frente al día anterior; 2 lotes en bodega por $38.819.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:18.6; background:#14705A;"></span><span style="flex:42.0; background:#A4521F;"></span><span style="flex:14.01; background:#8A6512;"></span><span style="flex:13.69; background:#1F6F7A;"></span><span style="flex:4.75; background:#6B3FA0;"></span><span style="flex:6.95; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$111.156.900</b><span class="delta sube">▲ +23,3%</span></span>
+    </a>
+    
+  </details>
+  
+  <details class="semana">
+    <summary>Semana del 7 al 13 de septiembre <span class="cuenta">7 días</span></summary>
+    
+    <a class="day-card" href="balance-2026-09-13.html">
+      <span class="day-info"><b>dom 13 de septiembre</b><span>Sube $46.845.000 frente al día anterior; 1 lote en bodega por $22.769.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:0.76; background:#14705A;"></span><span style="flex:64.08; background:#A4521F;"></span><span style="flex:9.1; background:#8A6512;"></span><span style="flex:15.17; background:#1F6F7A;"></span><span style="flex:3.28; background:#6B3FA0;"></span><span style="flex:7.61; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$90.147.000</b><span class="delta sube">▲ +108,2%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-12.html">
+      <span class="day-info"><b>sáb 12 de septiembre</b><span>Baja $73.542.140 frente al día anterior; la bodega quedó vacía: todo el oro salió a vender</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:16.4; background:#14705A;"></span><span style="flex:49.57; background:#A4521F;"></span><span style="flex:19.86; background:#1F6F7A;"></span><span style="flex:4.3; background:#6B3FA0;"></span><span style="flex:9.87; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$43.302.000</b><span class="delta baja">▼ −62,9%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-11.html">
+      <span class="day-info"><b>vie 11 de septiembre</b><span>Baja $3.404.860 frente al día anterior; 3 lotes en bodega por $39.157.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:27.6; background:#14705A;"></span><span style="flex:32.01; background:#A4521F;"></span><span style="flex:15.25; background:#8A6512;"></span><span style="flex:14.78; background:#1F6F7A;"></span><span style="flex:3.2; background:#6B3FA0;"></span><span style="flex:7.16; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$116.844.140</b><span class="delta baja">▼ −2,8%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-10.html">
+      <span class="day-info"><b>jue 10 de septiembre</b><span>Sube $98.844.000 frente al día anterior; 3 lotes en bodega por $22.502.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:4.1; background:#14705A;"></span><span style="flex:62.25; background:#A4521F;"></span><span style="flex:8.93; background:#8A6512;"></span><span style="flex:15.06; background:#1F6F7A;"></span><span style="flex:2.53; background:#6B3FA0;"></span><span style="flex:7.13; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$120.249.000</b><span class="delta sube">▲ +461,8%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-09.html">
+      <span class="day-info"><b>mié 9 de septiembre</b><span>Baja $42.788.500 frente al día anterior; 2 lotes en bodega por $8.904.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:6.41; background:#14705A;"></span><span style="flex:46.2; background:#A4521F;"></span><span style="flex:5.93; background:#8A6512;"></span><span style="flex:25.28; background:#1F6F7A;"></span><span style="flex:4.25; background:#6B3FA0;"></span><span style="flex:11.93; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$21.405.000</b><span class="delta baja">▼ −66,7%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-08.html">
+      <span class="day-info"><b>mar 8 de septiembre</b><span>Baja $11.790.500 frente al día anterior; 2 lotes en bodega por $39.497.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:11.81; background:#14705A;"></span><span style="flex:34.79; background:#A4521F;"></span><span style="flex:20.85; background:#8A6512;"></span><span style="flex:20.03; background:#1F6F7A;"></span><span style="flex:3.36; background:#6B3FA0;"></span><span style="flex:9.16; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$64.193.500</b><span class="delta baja">▼ −15,5%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-07.html">
+      <span class="day-info"><b>lun 7 de septiembre</b><span>Baja $116.349.900 frente al día anterior; 1 lote en bodega por $12.487.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:31.01; background:#14705A;"></span><span style="flex:32.11; background:#A4521F;"></span><span style="flex:6.29; background:#8A6512;"></span><span style="flex:19.11; background:#1F6F7A;"></span><span style="flex:2.94; background:#6B3FA0;"></span><span style="flex:8.54; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$75.984.000</b><span class="delta baja">▼ −60,5%</span></span>
+    </a>
+    
+  </details>
+  
+  <details class="semana">
+    <summary>Semana del 31 de agosto al 6 de septiembre <span class="cuenta">6 días</span></summary>
+    
+    <a class="day-card" href="balance-2026-09-06.html">
+      <span class="day-info"><b>dom 6 de septiembre</b><span>Baja $39.829.100 frente al día anterior; 6 lotes en bodega por $86.793.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:26.86; background:#14705A;"></span><span style="flex:21.51; background:#A4521F;"></span><span style="flex:30.49; background:#8A6512;"></span><span style="flex:13.33; background:#1F6F7A;"></span><span style="flex:2.05; background:#6B3FA0;"></span><span style="flex:5.76; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$192.333.900</b><span class="delta baja">▼ −17,2%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-05.html">
+      <span class="day-info"><b>sáb 5 de septiembre</b><span>Sube $160.255.000 frente al día anterior; 4 lotes en bodega por $46.723.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:16.56; background:#14705A;"></span><span style="flex:50.68; background:#A4521F;"></span><span style="flex:14.93; background:#8A6512;"></span><span style="flex:12.12; background:#1F6F7A;"></span><span style="flex:0.93; background:#6B3FA0;"></span><span style="flex:4.78; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$232.163.000</b><span class="delta sube">▲ +222,9%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-04.html">
+      <span class="day-info"><b>vie 4 de septiembre</b><span>Baja $47.212.000 frente al día anterior; 1 lote en bodega por $3.031.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:45.04; background:#14705A;"></span><span style="flex:16.36; background:#A4521F;"></span><span style="flex:1.99; background:#8A6512;"></span><span style="flex:24.93; background:#1F6F7A;"></span><span style="flex:1.91; background:#6B3FA0;"></span><span style="flex:9.77; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$71.908.000</b><span class="delta baja">▼ −39,6%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-03.html">
+      <span class="day-info"><b>jue 3 de septiembre</b><span>Baja $132.834.000 frente al día anterior; 5 lotes en bodega por $65.637.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:26.54; background:#14705A;"></span><span style="flex:12.29; background:#A4521F;"></span><span style="flex:33.15; background:#8A6512;"></span><span style="flex:19.16; background:#1F6F7A;"></span><span style="flex:1.47; background:#6B3FA0;"></span><span style="flex:7.39; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$119.120.000</b><span class="delta baja">▼ −52,7%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-02.html">
+      <span class="day-info"><b>mié 2 de septiembre</b><span>Sube $91.211.000 frente al día anterior; 4 lotes en bodega por $58.763.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:28.15; background:#14705A;"></span><span style="flex:37.6; background:#A4521F;"></span><span style="flex:17.7; background:#8A6512;"></span><span style="flex:11.43; background:#1F6F7A;"></span><span style="flex:0.88; background:#6B3FA0;"></span><span style="flex:4.24; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$251.954.000</b><span class="delta sube">▲ +56,7%</span></span>
+    </a>
+    
+    <a class="day-card" href="balance-2026-09-01.html">
+      <span class="day-info"><b>mar 1 de septiembre</b><span>primer balance con el cierre nuevo del libro; 3 lotes en bodega por $41.244.000</span></span>
+      <span class="day-bar" aria-hidden="true"><span style="flex:5.88; background:#14705A;"></span><span style="flex:53.8; background:#A4521F;"></span><span style="flex:17.96; background:#8A6512;"></span><span style="flex:16.52; background:#1F6F7A;"></span><span style="flex:1.27; background:#6B3FA0;"></span><span style="flex:4.57; background:#5A5E6B;"></span></span>
+      <span class="day-right"><b>$160.743.000</b><span class="delta baja">▼ −7,3%</span></span>
+    </a>
+    
+  </details>
+  
+
+  
+
+  
+  <h2 class="mes">Meses anteriores</h2>
+  
+  <p class="nota">Julio de 2026 está en el <a href="https://nilsonpm.github.io/reportes-angris/">sitio anterior</a>.</p>
+  
+</div>
+</body>
+</html>
