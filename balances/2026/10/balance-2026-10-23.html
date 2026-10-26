@@ -192,8 +192,59 @@ p { margin: 0; }
 .ventana-cabeza h3 { font-size: 15px; margin: 0; }
 .ventana .trace td:nth-child(-n+4), .ventana .trace th:nth-child(-n+4) { text-align: left; }
 
+/* El reporte del mes (mes.html) */
+.mes-hero { padding: 28px 0 22px; }
+.mes-titulo { font-size: 40px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; margin: 0; }
+.chip.parcial { background: var(--aviso); color: var(--aviso-borde); }
+.ajustado { font-size: 12px; color: var(--aviso-borde); margin-top: 6px; line-height: 1.4; }
+.evolucion { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 22px; align-items: center; }
+.grafica { width: 100%; height: auto; background: var(--papel); border: 1px solid var(--borde); border-radius: var(--radio); }
+.extremos { display: grid; grid-template-columns: 1fr auto; gap: 6px 14px; margin: 0; font-size: 13.5px; }
+.extremos dt { color: var(--tenue); }
+.extremos dd { margin: 0; text-align: right; font-weight: 600; }
+.resultado-mes { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 14px; margin-top: 14px; padding: 12px 16px; background: var(--papel); border: 1px solid var(--borde); border-left: 3px solid #6B3FA0; border-radius: 8px; font-size: 14px; }
+.resultado-mes b { font-size: 18px; }
+.resultado-mes .ajustado { flex-basis: 100%; margin: 0; }
+.ajustes-mes { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; font-size: 13.5px; }
+.ajustes-mes li { padding: 8px 12px; background: var(--aviso); border-left: 3px solid var(--aviso-borde); border-radius: 0 8px 8px 0; }
+.marca-ajuste { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--aviso-borde); margin-right: 6px; }
+.tenue { color: var(--tenue); }
+.nota-mes { margin-top: 12px; padding: 10px 14px; background: var(--nota); border-radius: 8px; font-size: 13.5px; color: var(--texto); }
+.mes-manual details { margin: 10px 0; }
+.mes-manual summary { cursor: pointer; font-weight: 600; font-size: 14px; }
+.formulario-mes { display: grid; gap: 10px; max-width: 520px; margin-top: 10px; }
+.formulario-mes textarea, .formulario-mes select { font: inherit; padding: 8px 10px; border: 1px solid var(--borde); border-radius: 8px; min-height: 44px; }
+.formulario-mes button { justify-self: start; }
+.en-linea { display: inline; }
+.privado .quitar-mes { min-height: 0; padding: 2px 8px; font-size: 12.5px; background: none; color: var(--baja); border-color: var(--borde); }
+@media (max-width: 760px) {
+  .evolucion { grid-template-columns: 1fr; }
+  .mes-titulo { font-size: 32px; }
+}
+
 @media print {
   .ventana { display: none; }
+  .mes-hero { padding: 12px 0; }
+  .grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .card { padding: 10px; }
+  .card .amt { font-size: 18px; }
+  .evolucion, .resultado-mes, .ajustes-mes, .tracewrap { break-inside: avoid; }
+  .h2 { margin: 14px 0 6px; padding-bottom: 4px; break-after: avoid; }
+  .h3 { margin: 8px 0 4px; }
+  body { font-size: 12px; }
+  .top { padding-bottom: 8px; }
+  .mes-titulo { font-size: 26px; }
+  .mes-hero .eyebrow { display: none; }
+  .mes-hero .sub { font-size: 11px; margin-top: 4px; }
+  .card .ttl { font-size: 11px; }
+  .card .delta, .card .ajustado { font-size: 9.5px; margin-top: 3px; }
+  .evolucion { grid-template-columns: minmax(0, 1fr) 200px; gap: 12px; }
+  .grafica { max-height: 110px; }
+  .extremos { font-size: 11px; gap: 2px 10px; }
+  .tracenote { font-size: 9.5px; margin-top: 4px; }
+  .trace td, .trace th { padding: 4px 6px; }
+  .resultado-mes { margin-top: 8px; padding: 6px 10px; font-size: 12px; }
+  .resultado-mes b { font-size: 14px; }
   body { background: #fff; }
   .wrap { max-width: none; padding: 0; }
   .topnav, .privado { display: none; }
@@ -211,6 +262,7 @@ p { margin: 0; }
   <nav class="topnav">
     <a class="navhome" href="../../../index.html">‹ Portada</a>
     <div class="navdays">
+      <a class="navpill" href="resumen.html">Ver el mes</a>
       <a class="navpill" rel="prev" href="balance-2026-10-22.html">‹ 22 oct</a>
       
     </div>
@@ -247,7 +299,7 @@ p { margin: 0; }
 <span class="tip-lista"><span>Cuenta x Cobrar MINA GRIS</span><span>$92.284.912</span><span>Cuenta x Cobrar Grismaldo</span><span>$60.983.000</span><span>Anticipo por Venta de Oro II</span><span>$60.000.000</span><span>Cuenta x Cobrar MINA ELVIS</span><span>$24.039.300</span><span>Anticipo a Trabajadores — Minas</span><span>$10.630.000</span><span>Cuenta x Cobrar Motores</span><span>$4.588.700</span></span>
 </span></div><div class="seg" style="width:10.63%; background:#8A6512;" tabindex="0" aria-describedby="rubro-oro">11%<span class="tip" id="rubro-oro" role="tooltip" style="right:19.66%;"><span class="tip-ttl"><span class="dot" style="background:#8A6512;"></span>Oro en inventario</span>
 <span class="tip-cifra">$44.186.000 · 14% del acumulado</span>
-<span class="tip-txt">Solo el oro que sigue siendo nuestro. Abajo está el inventario completo, con los lotes ya entregados al comprador, que no cuentan aquí.</span>
+<span class="tip-txt">Solo el oro que sigue siendo nuestro. Abajo está el inventario completo, con los lotes ya pagados, que no cuentan aquí.</span>
 <span class="tip-lista"><span>En Bodega · 2 lotes</span><span>$44.186.000</span></span>
 </span></div><div class="seg thin" style="width:1.28%; background:#1F6F7A;" tabindex="0" aria-describedby="rubro-debemos">1%<span class="tip" id="rubro-debemos" role="tooltip" style="right:18.38%;"><span class="tip-ttl"><span class="dot" style="background:#1F6F7A;"></span>Plata que debemos</span>
 <span class="tip-cifra">−$5.303.422 · resta el 2% del acumulado</span>
@@ -274,7 +326,7 @@ p { margin: 0; }
 <span class="tip-lista"><span>Cuenta x Cobrar MINA GRIS</span><span>$92.284.912</span><span>Cuenta x Cobrar Grismaldo</span><span>$60.983.000</span><span>Anticipo por Venta de Oro II</span><span>$60.000.000</span><span>Cuenta x Cobrar MINA ELVIS</span><span>$24.039.300</span><span>Anticipo a Trabajadores — Minas</span><span>$10.630.000</span><span>Cuenta x Cobrar Motores</span><span>$4.588.700</span></span>
 </span></span><span class="key" tabindex="0" aria-describedby="leyenda-oro"><span class="dot" style="background:#8A6512;"></span>Oro en inventario<span class="tip" id="leyenda-oro" role="tooltip"><span class="tip-ttl"><span class="dot" style="background:#8A6512;"></span>Oro en inventario</span>
 <span class="tip-cifra">$44.186.000 · 14% del acumulado</span>
-<span class="tip-txt">Solo el oro que sigue siendo nuestro. Abajo está el inventario completo, con los lotes ya entregados al comprador, que no cuentan aquí.</span>
+<span class="tip-txt">Solo el oro que sigue siendo nuestro. Abajo está el inventario completo, con los lotes ya pagados, que no cuentan aquí.</span>
 <span class="tip-lista"><span>En Bodega · 2 lotes</span><span>$44.186.000</span></span>
 </span></span><span class="key" tabindex="0" aria-describedby="leyenda-debemos"><span class="dot" style="background:#1F6F7A;"></span>Plata que debemos <span class="resta">(resta)</span><span class="tip" id="leyenda-debemos" role="tooltip"><span class="tip-ttl"><span class="dot" style="background:#1F6F7A;"></span>Plata que debemos</span>
 <span class="tip-cifra">−$5.303.422 · resta el 2% del acumulado</span>
@@ -305,7 +357,7 @@ p { margin: 0; }
       <tr><td>En bodega <span class="lotes">· 2 lotes</span></td><td>166,09 gr</td><td>0,733</td><td class="paso">121,76 gr</td><td>$44.186.000</td></tr>
 
       
-      <tr><td>Enviado <span class="lotes">· 4 lotes</span></td><td>239,38 gr</td><td>0,728</td><td class="paso">174,27 gr</td><td>$64.732.000</td></tr>
+      <tr><td>Pagado <span class="lotes">· 4 lotes</span></td><td>239,38 gr</td><td>0,728</td><td class="paso">174,27 gr</td><td>$64.732.000</td></tr>
 
       
     </tbody>
@@ -380,7 +432,7 @@ p { margin: 0; }
       <div class="ico" style="background:#F4EDDC; color:#8A6512;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18l3-8h10l3 8z"/><path d="M8 10l2-4h4l2 4"/></svg>
 </div>
       <p class="ttl">Oro en inventario</p>
-      <p class="hint">Solo el oro que sigue siendo nuestro. Abajo está el inventario completo, con los lotes ya entregados al comprador, que no cuentan aquí.</p>
+      <p class="hint">Solo el oro que sigue siendo nuestro. Abajo está el inventario completo, con los lotes ya pagados, que no cuentan aquí.</p>
       <p class="amt">$44.186.000</p>
       
       <p class="pct">14% del acumulado</p>
@@ -638,7 +690,7 @@ p { margin: 0; }
   
 
   <div class="note">
-    <p><b>Las tarjetas muestran saldos acumulados.</b> Cada una lleva la suma de sus cuentas en todas sus columnas. Cuando parte del saldo no viene de la columna del día, la tarjeta lo aclara en pequeño debajo del importe. El detalle por columna está en la tabla de cuentas.</p><p><b>Frente al 22 de octubre.</b> El balance del día sube $51.458.200. El oro que sigue siendo nuestro pasa de $18.840.000 a $44.186.000.</p><p><b>El resultado de la venta de oro.</b> No es un saldo aparte: ese dinero ya está contado en las cajas y en las cuentas por cobrar. Se publica porque el cierre del día lo incluye.</p><p><b>Oro fuera del balance.</b> El libro registra $64.732.000 ya entregados al comprador. Deja de contar como inventario: su valor vuelve al balance como dinero cuando el comprador lo liquide y lo pague.</p><p>Elaborado con lo registrado en la app el 23 de octubre de 2026.</p>
+    <p><b>Las tarjetas muestran saldos acumulados.</b> Cada una lleva la suma de sus cuentas en todas sus columnas. Cuando parte del saldo no viene de la columna del día, la tarjeta lo aclara en pequeño debajo del importe. El detalle por columna está en la tabla de cuentas.</p><p><b>Frente al 22 de octubre.</b> El balance del día sube $51.458.200. El oro que sigue siendo nuestro pasa de $18.840.000 a $44.186.000.</p><p><b>El resultado de la venta de oro.</b> No es un saldo aparte: ese dinero ya está contado en las cajas y en las cuentas por cobrar. Se publica porque el cierre del día lo incluye.</p><p><b>Oro ya vendido.</b> El libro registra $64.732.000 ya pagados. Ya se vendió y se cobró: no cuenta como inventario porque su valor ya entró como dinero, y lo que se ganó o se perdió está en el resultado por venta de oro.</p><p>Elaborado con lo registrado en la app el 23 de octubre de 2026.</p>
   </div>
 
 

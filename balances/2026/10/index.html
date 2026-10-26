@@ -39,6 +39,8 @@ body { margin: 0; background: var(--fondo); color: var(--tinta); font-family: "S
 .semana .cuenta { font-weight: 400; color: var(--tenue); margin-left: 6px; }
 .day-card { display: grid; grid-template-columns: minmax(0, 1fr) var(--col-barra) var(--col-cifras); gap: 18px; align-items: center; background: var(--papel); border: 1px solid var(--borde); border-radius: 12px; padding: 14px 16px; margin-bottom: 8px; color: inherit; text-decoration: none; }
 .day-card:hover { border-color: var(--tinta); }
+/* El resumen del mes, primero y con el dorado de la marca. */
+.resumen-mes { border-left: 4px solid var(--oro-logo); margin-bottom: 16px; }
 .day-info { display: grid; gap: 2px; }
 .day-info span { font-size: 13px; color: var(--tenue); }
 .day-bar { display: flex; height: 10px; border-radius: 4px; overflow: hidden; background: var(--fondo); }
@@ -66,6 +68,7 @@ body { margin: 0; background: var(--fondo); color: var(--tinta); font-family: "S
   <nav class="migas"><a href="../../../index.html">Portada</a> › <a href="../index.html">2026</a> › <span>Octubre de 2026</span></nav>
 
   <h2 class="mes">Octubre de 2026</h2>
+  <a class="day-card resumen-mes" href="resumen.html"><span class="day-info"><b>Resumen de octubre</b><span>El mes en una página: balance, compras, ventas y gastos · parcial</span></span><span class="day-bar"></span><span class="day-right">›</span></a>
 
   
   <details class="semana" open>
