@@ -58,6 +58,7 @@ p { margin: 0; }
 .privado-detalle ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
 .privado .sesion { width: 100%; margin: 0; font-weight: 600; color: var(--tinta); }
 .privado .sesion small { font-weight: 400; color: var(--tenue); }
+.privado .sesion .version { float: right; font-size: 12px; }
 .mensaje { width: 100%; font-weight: 600; color: var(--sube); }
 .mensaje.error { color: var(--baja); }
 
@@ -217,6 +218,15 @@ p { margin: 0; }
 .formulario-mes button { justify-self: start; }
 .en-linea { display: inline; }
 .privado .quitar-mes { min-height: 0; padding: 2px 8px; font-size: 12.5px; background: none; color: var(--baja); border-color: var(--borde); }
+.privado .quitar-mes.armado { background: #FBEAE9; border-color: var(--baja); }
+/* Un botón que ya envió no acepta otro clic (static/comun/botones.js): de entrada solo se sombrea.
+   Si tarda más de un segundo, dice lo que está haciendo, en gris claro con texto oscuro. */
+.privado button { transition: opacity .2s; }
+.privado button.bloqueado { opacity: .6; cursor: default; }
+.privado button.enviando { opacity: 1; background: var(--nota); color: var(--tinta); border-color: var(--borde); cursor: progress; }
+.privado button.enviando::before { content: ''; display: inline-block; width: .85em; height: .85em; margin-right: .45em; vertical-align: -.1em; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: girar .8s linear infinite; }
+@keyframes girar { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .privado button.enviando::before { animation: none; border-right-color: currentColor; opacity: .5; } }
 @media (max-width: 760px) {
   .evolucion { grid-template-columns: 1fr; }
   .mes-titulo { font-size: 32px; }
@@ -264,7 +274,7 @@ p { margin: 0; }
     <div class="navdays">
       <a class="navpill" href="resumen.html">Ver el mes</a>
       <a class="navpill" rel="prev" href="balance-2026-10-22.html">‹ 22 oct</a>
-      
+      <a class="navpill" rel="next" href="balance-2026-10-24.html">24 oct ›</a>
     </div>
   </nav>
 
@@ -296,7 +306,7 @@ p { margin: 0; }
 </span></div><div class="seg" style="width:60.75%; background:#A4521F;" tabindex="0" aria-describedby="rubro-nos_deben">61%<span class="tip" id="rubro-nos_deben" role="tooltip" style="left:8.96%;"><span class="tip-ttl"><span class="dot" style="background:#A4521F;"></span>Plata que nos deben</span>
 <span class="tip-cifra">$252.525.912 · 79% del acumulado</span>
 <span class="tip-txt">Saldo que la mina, el motor y los anticipos tienen pendiente de regresar.</span>
-<span class="tip-lista"><span>Cuenta x Cobrar MINA GRIS</span><span>$92.284.912</span><span>Cuenta x Cobrar Grismaldo</span><span>$60.983.000</span><span>Anticipo por Venta de Oro II</span><span>$60.000.000</span><span>Cuenta x Cobrar MINA ELVIS</span><span>$24.039.300</span><span>Anticipo a Trabajadores — Minas</span><span>$10.630.000</span><span>Cuenta x Cobrar Motores</span><span>$4.588.700</span></span>
+<span class="tip-lista"><span>Cuenta x Cobrar MINA GRIS</span><span>$92.284.912</span><span>Cuenta x Cobrar Grismaldo</span><span>$60.983.000</span><span>Anticipo por Venta de Oro - Blas</span><span>$60.000.000</span><span>Cuenta x Cobrar MINA ELVIS</span><span>$24.039.300</span><span>Anticipo a Trabajadores - Minas</span><span>$10.630.000</span><span>Cuenta x Cobrar Motores</span><span>$4.588.700</span></span>
 </span></div><div class="seg" style="width:10.63%; background:#8A6512;" tabindex="0" aria-describedby="rubro-oro">11%<span class="tip" id="rubro-oro" role="tooltip" style="right:19.66%;"><span class="tip-ttl"><span class="dot" style="background:#8A6512;"></span>Oro en inventario</span>
 <span class="tip-cifra">$44.186.000 · 14% del acumulado</span>
 <span class="tip-txt">Solo el oro que sigue siendo nuestro. Abajo está el inventario completo, con los lotes ya pagados, que no cuentan aquí.</span>
@@ -312,7 +322,7 @@ p { margin: 0; }
 </span></div><div class="seg" style="width:10.48%; background:#5A5E6B;" tabindex="0" aria-describedby="rubro-gastos">10%<span class="tip" id="rubro-gastos" role="tooltip" style="right:0%;"><span class="tip-ttl"><span class="dot" style="background:#5A5E6B;"></span>Gastos y ajustes</span>
 <span class="tip-cifra">−$43.582.000 · resta el 14% del acumulado</span>
 <span class="tip-txt">Acumulado de gastos, nómina, sobrantes y faltantes de caja. El libro los resta del valor del día.</span>
-<span class="tip-lista"><span>Gastos CompraVenta</span><span>−$38.762.000</span><span>Nómina</span><span>−$5.000.000</span><span>Caja Auxiliar — Dinero Sobrante</span><span>$430.000</span><span>Caja Auxiliar — Dinero Faltante</span><span>−$250.000</span></span>
+<span class="tip-lista"><span>Gastos CompraVenta</span><span>−$38.762.000</span><span>Nómina</span><span>−$5.000.000</span><span>Caja Auxiliar — $ Sobrante</span><span>$430.000</span><span>Caja Auxiliar — $ Faltante</span><span>−$250.000</span></span>
 </span></div>
     </div>
     <div class="keys">
@@ -323,7 +333,7 @@ p { margin: 0; }
 </span></span><span class="key" tabindex="0" aria-describedby="leyenda-nos_deben"><span class="dot" style="background:#A4521F;"></span>Plata que nos deben<span class="tip" id="leyenda-nos_deben" role="tooltip"><span class="tip-ttl"><span class="dot" style="background:#A4521F;"></span>Plata que nos deben</span>
 <span class="tip-cifra">$252.525.912 · 79% del acumulado</span>
 <span class="tip-txt">Saldo que la mina, el motor y los anticipos tienen pendiente de regresar.</span>
-<span class="tip-lista"><span>Cuenta x Cobrar MINA GRIS</span><span>$92.284.912</span><span>Cuenta x Cobrar Grismaldo</span><span>$60.983.000</span><span>Anticipo por Venta de Oro II</span><span>$60.000.000</span><span>Cuenta x Cobrar MINA ELVIS</span><span>$24.039.300</span><span>Anticipo a Trabajadores — Minas</span><span>$10.630.000</span><span>Cuenta x Cobrar Motores</span><span>$4.588.700</span></span>
+<span class="tip-lista"><span>Cuenta x Cobrar MINA GRIS</span><span>$92.284.912</span><span>Cuenta x Cobrar Grismaldo</span><span>$60.983.000</span><span>Anticipo por Venta de Oro - Blas</span><span>$60.000.000</span><span>Cuenta x Cobrar MINA ELVIS</span><span>$24.039.300</span><span>Anticipo a Trabajadores - Minas</span><span>$10.630.000</span><span>Cuenta x Cobrar Motores</span><span>$4.588.700</span></span>
 </span></span><span class="key" tabindex="0" aria-describedby="leyenda-oro"><span class="dot" style="background:#8A6512;"></span>Oro en inventario<span class="tip" id="leyenda-oro" role="tooltip"><span class="tip-ttl"><span class="dot" style="background:#8A6512;"></span>Oro en inventario</span>
 <span class="tip-cifra">$44.186.000 · 14% del acumulado</span>
 <span class="tip-txt">Solo el oro que sigue siendo nuestro. Abajo está el inventario completo, con los lotes ya pagados, que no cuentan aquí.</span>
@@ -339,7 +349,7 @@ p { margin: 0; }
 </span></span><span class="key" tabindex="0" aria-describedby="leyenda-gastos"><span class="dot" style="background:#5A5E6B;"></span>Gastos y ajustes <span class="resta">(resta)</span><span class="tip" id="leyenda-gastos" role="tooltip"><span class="tip-ttl"><span class="dot" style="background:#5A5E6B;"></span>Gastos y ajustes</span>
 <span class="tip-cifra">−$43.582.000 · resta el 14% del acumulado</span>
 <span class="tip-txt">Acumulado de gastos, nómina, sobrantes y faltantes de caja. El libro los resta del valor del día.</span>
-<span class="tip-lista"><span>Gastos CompraVenta</span><span>−$38.762.000</span><span>Nómina</span><span>−$5.000.000</span><span>Caja Auxiliar — Dinero Sobrante</span><span>$430.000</span><span>Caja Auxiliar — Dinero Faltante</span><span>−$250.000</span></span>
+<span class="tip-lista"><span>Gastos CompraVenta</span><span>−$38.762.000</span><span>Nómina</span><span>−$5.000.000</span><span>Caja Auxiliar — $ Sobrante</span><span>$430.000</span><span>Caja Auxiliar — $ Faltante</span><span>−$250.000</span></span>
 </span></span>
     </div>
   </div>
@@ -623,19 +633,19 @@ p { margin: 0; }
       <tr><td>Cuenta x Cobrar Grismaldo</td><td>$7.885.000</td><td>$22.809.000</td><td>$30.289.000</td></tr>
 
       
-      <tr><td>Caja Auxiliar — Dinero Sobrante</td><td>$1.000</td><td>$253.000</td><td>$176.000</td></tr>
+      <tr><td>Caja Auxiliar — $ Sobrante</td><td>$1.000</td><td>$253.000</td><td>$176.000</td></tr>
 
       
       <tr><td>Ganancia x Venta Oro</td><td>$1.935.200</td><td>$30.910.470</td><td>—</td></tr>
 
       
-      <tr><td>Anticipo a Trabajadores — Minas</td><td>—</td><td>—</td><td>$10.630.000</td></tr>
+      <tr><td>Anticipo a Trabajadores - Minas</td><td>—</td><td>—</td><td>$10.630.000</td></tr>
 
       
       <tr><td>Cuenta x Cobrar Motores</td><td>—</td><td class="merma">−$7.639.000</td><td>$12.227.700</td></tr>
 
       
-      <tr><td>Anticipo por Venta de Oro II</td><td>$60.000.000</td><td>—</td><td>—</td></tr>
+      <tr><td>Anticipo por Venta de Oro - Blas</td><td>$60.000.000</td><td>—</td><td>—</td></tr>
 
       
     </tbody>
@@ -651,7 +661,7 @@ p { margin: 0; }
       <tr><td>Gastos CompraVenta</td><td class="merma">−$302.000</td><td class="merma">−$16.543.000</td><td class="merma">−$21.917.000</td></tr>
 
       
-      <tr><td>Caja Auxiliar — Dinero Faltante</td><td>—</td><td class="merma">−$9.000</td><td class="merma">−$241.000</td></tr>
+      <tr><td>Caja Auxiliar — $ Faltante</td><td>—</td><td class="merma">−$9.000</td><td class="merma">−$241.000</td></tr>
 
       
     </tbody>

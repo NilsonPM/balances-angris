@@ -54,6 +54,7 @@ p { margin: 0; }
 .privado-detalle ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
 .privado .sesion { width: 100%; margin: 0; font-weight: 600; color: var(--tinta); }
 .privado .sesion small { font-weight: 400; color: var(--tenue); }
+.privado .sesion .version { float: right; font-size: 12px; }
 .mensaje { width: 100%; font-weight: 600; color: var(--sube); }
 .mensaje.error { color: var(--baja); }
 
@@ -213,6 +214,15 @@ p { margin: 0; }
 .formulario-mes button { justify-self: start; }
 .en-linea { display: inline; }
 .privado .quitar-mes { min-height: 0; padding: 2px 8px; font-size: 12.5px; background: none; color: var(--baja); border-color: var(--borde); }
+.privado .quitar-mes.armado { background: #FBEAE9; border-color: var(--baja); }
+/* Un botón que ya envió no acepta otro clic (static/comun/botones.js): de entrada solo se sombrea.
+   Si tarda más de un segundo, dice lo que está haciendo, en gris claro con texto oscuro. */
+.privado button { transition: opacity .2s; }
+.privado button.bloqueado { opacity: .6; cursor: default; }
+.privado button.enviando { opacity: 1; background: var(--nota); color: var(--tinta); border-color: var(--borde); cursor: progress; }
+.privado button.enviando::before { content: ''; display: inline-block; width: .85em; height: .85em; margin-right: .45em; vertical-align: -.1em; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: girar .8s linear infinite; }
+@keyframes girar { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .privado button.enviando::before { animation: none; border-right-color: currentColor; opacity: .5; } }
 @media (max-width: 760px) {
   .evolucion { grid-template-columns: 1fr; }
   .mes-titulo { font-size: 32px; }
@@ -413,13 +423,13 @@ p { margin: 0; }
     
     <tbody>
       
-      <tr><td>Caja Auxiliar — Dinero Sobrante</td><td>$151.500</td></tr>
+      <tr><td>Caja Auxiliar — $ Sobrante</td><td>$151.500</td></tr>
 
       
       <tr><td>Gastos CompraVenta</td><td>−$10.157.800</td></tr>
 
       
-      <tr><td>Caja Auxiliar — Dinero Faltante</td><td>−$343.000</td></tr>
+      <tr><td>Caja Auxiliar — $ Faltante</td><td>−$343.000</td></tr>
 
       
     </tbody>
@@ -477,7 +487,7 @@ p { margin: 0; }
     
     <tbody>
       
-      <tr><td>Cuenta x Cobrar Mina</td><td>—</td><td>$86.094.312</td><td>$86.094.312</td></tr>
+      <tr><td>Cuenta x Cobrar MINA GRIS</td><td>—</td><td>$86.094.312</td><td>$86.094.312</td></tr>
 
       
       <tr><td>Cuenta x Cobrar Grismaldo</td><td>—</td><td>$10.696.200</td><td>$10.696.200</td></tr>

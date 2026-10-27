@@ -54,6 +54,7 @@ p { margin: 0; }
 .privado-detalle ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
 .privado .sesion { width: 100%; margin: 0; font-weight: 600; color: var(--tinta); }
 .privado .sesion small { font-weight: 400; color: var(--tenue); }
+.privado .sesion .version { float: right; font-size: 12px; }
 .mensaje { width: 100%; font-weight: 600; color: var(--sube); }
 .mensaje.error { color: var(--baja); }
 
@@ -213,6 +214,15 @@ p { margin: 0; }
 .formulario-mes button { justify-self: start; }
 .en-linea { display: inline; }
 .privado .quitar-mes { min-height: 0; padding: 2px 8px; font-size: 12.5px; background: none; color: var(--baja); border-color: var(--borde); }
+.privado .quitar-mes.armado { background: #FBEAE9; border-color: var(--baja); }
+/* Un botón que ya envió no acepta otro clic (static/comun/botones.js): de entrada solo se sombrea.
+   Si tarda más de un segundo, dice lo que está haciendo, en gris claro con texto oscuro. */
+.privado button { transition: opacity .2s; }
+.privado button.bloqueado { opacity: .6; cursor: default; }
+.privado button.enviando { opacity: 1; background: var(--nota); color: var(--tinta); border-color: var(--borde); cursor: progress; }
+.privado button.enviando::before { content: ''; display: inline-block; width: .85em; height: .85em; margin-right: .45em; vertical-align: -.1em; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: girar .8s linear infinite; }
+@keyframes girar { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .privado button.enviando::before { animation: none; border-right-color: currentColor; opacity: .5; } }
 @media (max-width: 760px) {
   .evolucion { grid-template-columns: 1fr; }
   .mes-titulo { font-size: 32px; }
@@ -340,10 +350,7 @@ p { margin: 0; }
       <tr><td>Compraventa</td><td>45</td><td>2.009,26 g</td><td class="paso">1.459,09 g</td><td>$599.789.000</td><td>$382.945/gr</td></tr>
 
       
-      <tr><td>Mina</td><td>3</td><td>262,05 g</td><td class="paso">206,07 g</td><td>$79.331.350</td><td>$384.978/gr</td></tr>
-
-      
-      <tr><td>Mina Gris</td><td>1</td><td>31,22 g</td><td class="paso">24,20 g</td><td>$9.801.000</td><td>$405.075/gr</td></tr>
+      <tr><td>Mina Gris</td><td>4</td><td>293,27 g</td><td class="paso">230,26 g</td><td>$89.132.350</td><td>$387.090/gr</td></tr>
 
       
     </tbody>
@@ -434,7 +441,7 @@ p { margin: 0; }
     
     <tbody>
       
-      <tr><td>Caja Auxiliar — Dinero Sobrante</td><td>$176.000</td></tr>
+      <tr><td>Caja Auxiliar — $ Sobrante</td><td>$176.000</td></tr>
 
       
       <tr><td>Nómina</td><td>−$2.400.000</td></tr>
@@ -443,7 +450,7 @@ p { margin: 0; }
       <tr><td>Gastos CompraVenta</td><td>−$21.917.000</td></tr>
 
       
-      <tr><td>Caja Auxiliar — Dinero Faltante</td><td>−$241.000</td></tr>
+      <tr><td>Caja Auxiliar — $ Faltante</td><td>−$241.000</td></tr>
 
       
     </tbody>
@@ -501,16 +508,13 @@ p { margin: 0; }
     
     <tbody>
       
-      <tr><td>Cuenta x Cobrar Mina</td><td>$86.094.312</td><td>$0</td><td>−$86.094.312</td></tr>
+      <tr><td>Cuenta x Cobrar MINA GRIS</td><td>$86.094.312</td><td>$97.447.312</td><td>$11.353.000</td></tr>
 
       
       <tr><td>Cuenta x Cobrar Grismaldo</td><td>$10.696.200</td><td>$40.289.000</td><td>$29.592.800</td></tr>
 
       
-      <tr><td>Anticipo a Trabajadores</td><td>—</td><td>$900.000</td><td>$900.000</td></tr>
-
-      
-      <tr><td>Cuenta x Cobrar MINA GRIS</td><td>—</td><td>$97.447.312</td><td>$97.447.312</td></tr>
+      <tr><td>Anticipo a Trabajadores - CompraVenta</td><td>—</td><td>$900.000</td><td>$900.000</td></tr>
 
       
       <tr><td>Cuenta x Cobrar MINA ELVIS</td><td>—</td><td>$18.036.300</td><td>$18.036.300</td></tr>
