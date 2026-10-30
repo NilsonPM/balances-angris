@@ -26,6 +26,36 @@
   --aviso-borde: #A4521F;
   --radio: 12px;
 }
+/* El movimiento de la app: corto y funcional, para que nada aparezca ni cambie de golpe. Va en la
+   hoja de la app y en la de los reportes (también en lo publicado: es solo CSS). Quien pide
+   «reducir movimiento» en su equipo no ve ninguna animación. */
+:root { --rapido: 150ms; --medio: 220ms; --curva: cubic-bezier(.2, .7, .3, 1); }
+@supports (interpolate-size: allow-keywords) { :root { interpolate-size: allow-keywords; } }
+
+a, button, summary, input, select, .boton, .modulo, .rubro, .periodo, .tarea, .navpill {
+  transition: color var(--rapido) ease, background-color var(--rapido) ease,
+    border-color var(--rapido) ease, box-shadow var(--rapido) ease, opacity var(--rapido) ease;
+}
+
+/* Los desplegables abren y cierran deslizando, donde el navegador lo permite; donde no, se abren
+   como antes. «Corregir este día» no entra aquí: su panel flota y se anima aparte. */
+.agregar::details-content, .como::details-content, .anteriores::details-content,
+.mes-dias::details-content, .eliminar::details-content {
+  height: 0; opacity: 0; overflow: clip;
+  transition: height var(--medio) var(--curva), opacity var(--medio) ease,
+    content-visibility var(--medio) allow-discrete;
+}
+.agregar[open]::details-content, .como[open]::details-content, .anteriores[open]::details-content,
+.mes-dias[open]::details-content, .eliminar[open]::details-content { height: auto; opacity: 1; }
+
+@keyframes aparecer { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  .agregar::details-content, .como::details-content, .anteriores::details-content,
+  .mes-dias::details-content, .eliminar::details-content { transition: none !important; }
+}
+
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 body {
@@ -52,9 +82,37 @@ p { margin: 0; }
 .privado-detalle { display: block; margin: 32px 0 0; }
 .privado-detalle h2 { font-size: 15px; margin: 16px 0 6px; }
 .privado-detalle ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
-.privado .sesion { width: 100%; margin: 0; font-weight: 600; color: var(--tinta); }
-.privado .sesion small { font-weight: 400; color: var(--tenue); }
-.privado .sesion .version { float: right; font-size: 12px; }
+/* El estado en una línea; reabrir va plegado en «Corregir este día» para no ir antes del balance. */
+.franja-estado { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.pildora { display: inline-block; font-size: 12.5px; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--nota); color: var(--texto); }
+.pildora.borrador { background: #FBF3E4; color: #A4521F; }
+.pildora.publicado { background: #E6F1EA; color: var(--sube); }
+.privado .accion { font-weight: 600; }
+/* El estado a la izquierda y las acciones a la derecha, siempre en el mismo lugar. */
+.cabeza-dia { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+.cabeza-dia > .mensaje, .cabeza-dia > .destino { grid-column: 1 / -1; }
+.cabeza-dia > .destino { margin-top: -4px; text-align: right; }
+.acciones-dia { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; }
+.acciones { position: relative; }
+.acciones > summary { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 6px 14px; border: 1px solid var(--tinta); border-radius: 8px; background: var(--nota); font-weight: 600; cursor: pointer; list-style: none; }
+.acciones > summary:hover { background: var(--borde); }
+.acciones > summary::-webkit-details-marker { display: none; }
+.acciones > summary::after { content: '▾'; color: var(--tenue); transition: transform var(--medio) var(--curva); }
+.acciones[open] > summary::after { transform: rotate(180deg); }
+/* Reabrir se abre como un panel flotante bajo su botón: no empuja ni mueve nada. */
+.acciones .panel { position: absolute; z-index: 10; top: calc(100% + 8px); right: 0; width: min(360px, calc(100vw - 32px)); display: grid; gap: 10px; padding: 14px; background: var(--papel); border: 1px solid var(--borde); border-radius: var(--radio); box-shadow: 0 12px 32px rgba(22, 21, 15, 0.14); }
+.acciones .panel form { display: grid; gap: 10px; }
+.acciones .panel input { width: 100%; }
+.acciones[open] .panel { animation: aparecer var(--medio) var(--curva); }
+@media (max-width: 560px) {
+  .cabeza-dia { grid-template-columns: 1fr; }
+  .acciones-dia { justify-content: flex-start; }
+  .cabeza-dia > .destino { text-align: left; }
+  /* En el celular el panel toma el ancho de la franja, anclado a ella y no al botón. */
+  .cabeza-dia { position: relative; }
+  .acciones { position: static; }
+  .acciones .panel { left: 0; right: 0; width: auto; }
+}
 .mensaje { width: 100%; font-weight: 600; color: var(--sube); }
 .mensaje.error { color: var(--baja); }
 
@@ -147,6 +205,15 @@ p { margin: 0; }
 .trace.trace-2col { min-width: 0; }
 .trace.trace-2col td:first-child, .trace.trace-2col th:first-child { white-space: normal; }
 .tracenote { font-size: 12.5px; color: var(--tenue); margin-top: 10px; }
+/* Las explicaciones de cómo se calcula cada cosa van plegadas: quien lee el reporte a diario no
+   las necesita; quien las busca, las abre. Sin JavaScript: sirve igual en lo publicado. */
+.como { margin-top: 10px; }
+.como > summary { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; font-size: 13px; font-weight: 600; color: var(--tenue); cursor: pointer; list-style: none; }
+.como > summary::-webkit-details-marker { display: none; }
+.como > summary::before { content: '›'; display: inline-block; transition: transform .15s; }
+.como[open] > summary::before { transform: rotate(90deg); }
+.como > summary:hover { color: var(--tinta); }
+.como > .tracenote, .como > .sub { margin-top: 4px; }
 
 /* Lo que no está en ninguna cifra de cierre se avisa aparte */
 .aviso { margin-top: 14px; background: var(--aviso); border-left: 3px solid var(--aviso-borde); border-radius: 0 8px 8px 0; padding: 12px 16px; font-size: 13.5px; color: var(--texto); }
@@ -196,6 +263,12 @@ p { margin: 0; }
 .ajustado { font-size: 12px; color: var(--aviso-borde); margin-top: 6px; line-height: 1.4; }
 .evolucion { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 22px; align-items: center; }
 .grafica { width: 100%; height: auto; background: var(--papel); border: 1px solid var(--borde); border-radius: var(--radio); }
+.grafica .guia { stroke: var(--linea); stroke-width: 1; stroke-dasharray: 3 4; }
+.grafica .base { stroke: var(--borde); stroke-width: 1; }
+.grafica .eje { font-size: 11px; fill: var(--tenue); font-variant-numeric: tabular-nums; }
+.grafica .ultimo { font-size: 12px; font-weight: 700; fill: var(--tinta); }
+/* En el celular el dibujo se encoge a la mitad: los rótulos se agrandan para seguir legibles. */
+@media (max-width: 560px) { .grafica .eje { font-size: 15px; } .grafica .ultimo { font-size: 17px; } }
 .extremos { display: grid; grid-template-columns: 1fr auto; gap: 6px 14px; margin: 0; font-size: 13.5px; }
 .extremos dt { color: var(--tenue); }
 .extremos dd { margin: 0; text-align: right; font-weight: 600; }
@@ -253,15 +326,20 @@ p { margin: 0; }
   .resultado-mes b { font-size: 14px; }
   body { background: #fff; }
   .wrap { max-width: none; padding: 0; }
-  .topnav, .privado { display: none; }
+  .topnav, .privado, .barra { display: none; }
+  /* Al imprimir, las explicaciones van abiertas y sin el «¿Cómo se calcula?». */
+  .como > summary { display: none; }
+  .como::details-content { content-visibility: visible; display: block; height: auto; opacity: 1; }
   .card, .who, .note, .aviso { break-inside: avoid; }
   .tracewrap { overflow-x: visible; }
   .trace { min-width: 0; font-size: 11px; }
 }
 
+
 </style>
 </head>
 <body>
+
 <div class="wrap">
 
 
@@ -321,19 +399,23 @@ p { margin: 0; }
 
   <h2 class="h2">Cómo se movió el balance</h2>
   <div class="evolucion">
-    <svg class="grafica" viewBox="0 0 640 150" role="img" aria-label="Gran total de cada día del mes">
-      <polyline points="14.0,77.1 35.1,81.1 56.2,79.7 77.3,136.0 98.4,89.2 119.5,57.5 140.6,57.4 161.7,57.4 182.8,57.4 203.9,57.4 225.0,56.3 246.1,14.0 267.2,84.7 288.3,115.3 309.4,120.1 330.6,122.8 351.7,129.6 372.8,98.6 393.9,94.9 415.0,108.3 436.1,90.6 457.2,62.4 478.3,89.3 499.4,102.0 520.5,84.2 541.6,88.1 562.7,96.4 583.8,35.4 604.9,67.8 626.0,103.2" fill="none" stroke="#14705A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-      <circle cx="14.0" cy="77.1" r="3.5" fill="#14705A"><title>1 ago: $237.857.765</title></circle><circle cx="35.1" cy="81.1" r="3.5" fill="#14705A"><title>2 ago: $227.858.765</title></circle><circle cx="56.2" cy="79.7" r="3.5" fill="#14705A"><title>3 ago: $231.359.565</title></circle><circle cx="77.3" cy="136.0" r="3.5" fill="#14705A"><title>4 ago: $92.857.045</title></circle><circle cx="98.4" cy="89.2" r="3.5" fill="#14705A"><title>5 ago: $208.032.045</title></circle><circle cx="119.5" cy="57.5" r="3.5" fill="#14705A"><title>6 ago: $286.041.125</title></circle><circle cx="140.6" cy="57.4" r="3.5" fill="#14705A"><title>7 ago: $286.159.124</title></circle><circle cx="161.7" cy="57.4" r="3.5" fill="#14705A"><title>8 ago: $286.177.124</title></circle><circle cx="182.8" cy="57.4" r="3.5" fill="#14705A"><title>9 ago: $286.186.124</title></circle><circle cx="203.9" cy="57.4" r="3.5" fill="#14705A"><title>10 ago: $286.286.124</title></circle><circle cx="225.0" cy="56.3" r="3.5" fill="#14705A"><title>11 ago: $289.021.124</title></circle><circle cx="246.1" cy="14.0" r="3.5" fill="#14705A"><title>12 ago: $393.026.124</title></circle><circle cx="267.2" cy="84.7" r="3.5" fill="#14705A"><title>13 ago: $219.011.124</title></circle><circle cx="288.3" cy="115.3" r="3.5" fill="#14705A"><title>14 ago: $143.837.124</title></circle><circle cx="309.4" cy="120.1" r="3.5" fill="#14705A"><title>15 ago: $131.874.124</title></circle><circle cx="330.6" cy="122.8" r="3.5" fill="#14705A"><title>16 ago: $125.281.124</title></circle><circle cx="351.7" cy="129.6" r="3.5" fill="#14705A"><title>17 ago: $108.644.661</title></circle><circle cx="372.8" cy="98.6" r="3.5" fill="#14705A"><title>18 ago: $184.785.124</title></circle><circle cx="393.9" cy="94.9" r="3.5" fill="#14705A"><title>19 ago: $193.979.124</title></circle><circle cx="415.0" cy="108.3" r="3.5" fill="#14705A"><title>20 ago: $161.085.624</title></circle><circle cx="436.1" cy="90.6" r="3.5" fill="#14705A"><title>21 ago: $204.478.624</title></circle><circle cx="457.2" cy="62.4" r="3.5" fill="#14705A"><title>22 ago: $273.940.124</title></circle><circle cx="478.3" cy="89.3" r="3.5" fill="#14705A"><title>24 ago: $207.851.124</title></circle><circle cx="499.4" cy="102.0" r="3.5" fill="#14705A"><title>25 ago: $176.596.124</title></circle><circle cx="520.5" cy="84.2" r="3.5" fill="#14705A"><title>26 ago: $220.195.124</title></circle><circle cx="541.6" cy="88.1" r="3.5" fill="#14705A"><title>27 ago: $210.748.124</title></circle><circle cx="562.7" cy="96.4" r="3.5" fill="#14705A"><title>28 ago: $190.394.124</title></circle><circle cx="583.8" cy="35.4" r="3.5" fill="#14705A"><title>29 ago: $340.451.124</title></circle><circle cx="604.9" cy="67.8" r="3.5" fill="#14705A"><title>30 ago: $260.609.124</title></circle><circle cx="626.0" cy="103.2" r="3.5" fill="#14705A"><title>31 ago: $173.439.124</title></circle>
+    <svg class="grafica" viewBox="0 0 640 180" role="img" aria-label="Gran total de cada día del mes">
+      <line class="guia" x1="124" x2="624" y1="30.0" y2="30.0"/><text class="eje" x="116" y="30.0" text-anchor="end" dominant-baseline="middle">$393.026.124</text><line class="guia" x1="124" x2="624" y1="90.0" y2="90.0"/><text class="eje" x="116" y="90.0" text-anchor="end" dominant-baseline="middle">$242.941.584</text><line class="guia" x1="124" x2="624" y1="150.0" y2="150.0"/><text class="eje" x="116" y="150.0" text-anchor="end" dominant-baseline="middle">$92.857.045</text>
+      <line class="base" x1="124" x2="624" y1="150.0" y2="150.0"/>
+      <text class="eje" x="124.0" y="174" text-anchor="start">1 ago</text><text class="eje" x="365.4" y="174" text-anchor="middle">15 ago</text><text class="eje" x="624.0" y="174" text-anchor="end">31 ago</text>
+      <polyline points="124.0,92.0 141.2,96.0 158.5,94.6 175.7,150.0 193.0,104.0 210.2,72.8 227.4,72.7 244.7,72.7 261.9,72.7 279.2,72.7 296.4,71.6 313.7,30.0 330.9,99.6 348.1,129.6 365.4,134.4 382.6,137.0 399.9,143.7 417.1,113.2 434.3,109.6 451.6,122.7 468.8,105.4 486.1,77.6 503.3,104.0 520.6,116.5 537.8,99.1 555.0,102.9 572.3,111.0 589.5,51.0 606.8,82.9 624.0,117.8" fill="none" stroke="#14705A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="124.0" cy="92.0" r="3.5" fill="#14705A"><title>1 ago: $237.857.765</title></circle><circle cx="141.2" cy="96.0" r="3.5" fill="#14705A"><title>2 ago: $227.858.765</title></circle><circle cx="158.5" cy="94.6" r="3.5" fill="#14705A"><title>3 ago: $231.359.565</title></circle><circle cx="175.7" cy="150.0" r="3.5" fill="#14705A"><title>4 ago: $92.857.045</title></circle><circle cx="193.0" cy="104.0" r="3.5" fill="#14705A"><title>5 ago: $208.032.045</title></circle><circle cx="210.2" cy="72.8" r="3.5" fill="#14705A"><title>6 ago: $286.041.125</title></circle><circle cx="227.4" cy="72.7" r="3.5" fill="#14705A"><title>7 ago: $286.159.124</title></circle><circle cx="244.7" cy="72.7" r="3.5" fill="#14705A"><title>8 ago: $286.177.124</title></circle><circle cx="261.9" cy="72.7" r="3.5" fill="#14705A"><title>9 ago: $286.186.124</title></circle><circle cx="279.2" cy="72.7" r="3.5" fill="#14705A"><title>10 ago: $286.286.124</title></circle><circle cx="296.4" cy="71.6" r="3.5" fill="#14705A"><title>11 ago: $289.021.124</title></circle><circle cx="313.7" cy="30.0" r="3.5" fill="#14705A"><title>12 ago: $393.026.124</title></circle><circle cx="330.9" cy="99.6" r="3.5" fill="#14705A"><title>13 ago: $219.011.124</title></circle><circle cx="348.1" cy="129.6" r="3.5" fill="#14705A"><title>14 ago: $143.837.124</title></circle><circle cx="365.4" cy="134.4" r="3.5" fill="#14705A"><title>15 ago: $131.874.124</title></circle><circle cx="382.6" cy="137.0" r="3.5" fill="#14705A"><title>16 ago: $125.281.124</title></circle><circle cx="399.9" cy="143.7" r="3.5" fill="#14705A"><title>17 ago: $108.644.661</title></circle><circle cx="417.1" cy="113.2" r="3.5" fill="#14705A"><title>18 ago: $184.785.124</title></circle><circle cx="434.3" cy="109.6" r="3.5" fill="#14705A"><title>19 ago: $193.979.124</title></circle><circle cx="451.6" cy="122.7" r="3.5" fill="#14705A"><title>20 ago: $161.085.624</title></circle><circle cx="468.8" cy="105.4" r="3.5" fill="#14705A"><title>21 ago: $204.478.624</title></circle><circle cx="486.1" cy="77.6" r="3.5" fill="#14705A"><title>22 ago: $273.940.124</title></circle><circle cx="503.3" cy="104.0" r="3.5" fill="#14705A"><title>24 ago: $207.851.124</title></circle><circle cx="520.6" cy="116.5" r="3.5" fill="#14705A"><title>25 ago: $176.596.124</title></circle><circle cx="537.8" cy="99.1" r="3.5" fill="#14705A"><title>26 ago: $220.195.124</title></circle><circle cx="555.0" cy="102.9" r="3.5" fill="#14705A"><title>27 ago: $210.748.124</title></circle><circle cx="572.3" cy="111.0" r="3.5" fill="#14705A"><title>28 ago: $190.394.124</title></circle><circle cx="589.5" cy="51.0" r="3.5" fill="#14705A"><title>29 ago: $340.451.124</title></circle><circle cx="606.8" cy="82.9" r="3.5" fill="#14705A"><title>30 ago: $260.609.124</title></circle><circle cx="624.0" cy="117.8" r="4.5" fill="#14705A"><title>31 ago: $173.439.124</title></circle>
+      <text class="ultimo" x="624.0" y="107.8" text-anchor="end">$173.439.124</text>
     </svg>
     <dl class="extremos">
       
       <dt>Al terminar · 31 ago</dt><dd>$173.439.124</dd>
-      <dt>El más alto</dt><dd>$393.026.124</dd>
-      <dt>El más bajo</dt><dd>$92.857.045</dd>
+      <dt>El más alto · 12 ago</dt><dd>$393.026.124</dd>
+      <dt>El más bajo · 4 ago</dt><dd>$92.857.045</dd>
       <dt>Balance histórico al terminar</dt><dd>$76.564.900</dd>
     </dl>
   </div>
-  <p class="tracenote">La línea es el gran total de cada día registrado; cada punto muestra su cifra al pasar el mouse.</p>
+  <details class="como"><summary>¿Cómo se lee la gráfica?</summary><p class="tracenote">La línea es el gran total de cada día registrado; a la izquierda, el más alto, el del medio y el más bajo del mes.</p></details>
   
 
 
@@ -367,7 +449,7 @@ p { margin: 0; }
 </div>
 
   
-  <p class="tracenote">Los lotes recibidos en el mes, con los pesos del último día en que aparecen. El precio por gramo se lee contra el P.P.E., solo de los lotes que ya lo tienen.</p>
+  <details class="como"><summary>¿Cómo se calcula?</summary><p class="tracenote">Los lotes recibidos en el mes, con los pesos del último día en que aparecen. El precio por gramo se lee contra el P.P.E., solo de los lotes que ya lo tienen.</p></details>
   
 
 
@@ -410,7 +492,7 @@ p { margin: 0; }
 </div>
 
   <p class="resultado-mes"><span>Resultado por venta de oro del mes</span> <b>$0</b></p>
-  <p class="tracenote">El resultado es el de las cuentas de ganancia y pérdida por venta de oro del mes, la cifra del libro; los márgenes de cada venta son su detalle.</p>
+  <details class="como"><summary>¿Cómo se calcula?</summary><p class="tracenote">El resultado es el de las cuentas de ganancia y pérdida por venta de oro del mes, la cifra del libro; los márgenes de cada venta son su detalle.</p></details>
   
 
 
@@ -534,7 +616,7 @@ p { margin: 0; }
 </div>
 
   
-  <p class="tracenote">Cada saldo es lo que la cuenta aporta al cierre, con su signo: al empezar es el del último día del mes anterior; al terminar, el del último día del mes.</p>
+  <details class="como"><summary>¿Cómo se lee esta tabla?</summary><p class="tracenote">Cada saldo es lo que la cuenta aporta al cierre, con su signo: al empezar es el del último día del mes anterior; al terminar, el del último día del mes.</p></details>
 
 
 </div>
