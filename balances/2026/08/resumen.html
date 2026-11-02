@@ -9,6 +9,7 @@
 <style>
 /* El reporte del día. Va embebido en la página para que se pueda abrir suelta, enviar o
    imprimir y se vea igual (docs/publicacion.md). Sigue el diseño del sitio publicado. */
+/* Los colores y medidas de la app y de los reportes: una sola lista (docs/publicacion.md). */
 :root {
   --tinta: #16150F;
   --texto: #43413A;
@@ -16,16 +17,23 @@
   --fondo: #FAF9F6;
   --papel: #FFFFFF;
   --borde: #E3E0D6;
-  --oro-logo: #B69659;  /* El dorado del logo: solo adornos, no texto */
   --linea: #EDEBE3;
   --nota: #F2F0E9;
-  --sube: #14705A;
-  --baja: #B3261E;
+  --verde: #14705A;
+  --rojo: #B3261E;
+  /* En los reportes el color marca la dirección del cambio, no si la noticia es buena. */
+  --sube: var(--verde);
+  --baja: var(--rojo);
   --oro: #8A6512;
+  /* El dorado del logo: solo para adornos (bordes, líneas). Sobre blanco no llega al contraste
+     de un texto. */
+  --oro-logo: #B69659;
   --aviso: #FBF3E4;
   --aviso-borde: #A4521F;
   --radio: 12px;
+  --toque: 44px;
 }
+
 /* El movimiento de la app: corto y funcional, para que nada aparezca ni cambie de golpe. Va en la
    hoja de la app y en la de los reportes (también en lo publicado: es solo CSS). Quien pide
    «reducir movimiento» en su equipo no ve ninguna animación. */
@@ -199,6 +207,7 @@ p { margin: 0; }
 .trace th:first-child, .trace td:first-child { text-align: left; }
 .trace tfoot td { font-weight: 600; border-top: 1px solid var(--tinta); border-bottom: none; }
 .trace .lotes { font-weight: 400; color: var(--tenue); }
+.trace td.venta .lotes { display: block; font-size: 11.5px; margin-top: 1px; }
 .trace .sub { display: block; font-weight: 400; color: var(--tenue); font-size: 11.5px; margin-top: 1px; }
 .trace .merma { color: var(--baja); }
 .trace .paso { color: var(--oro); font-weight: 600; }
@@ -254,7 +263,7 @@ p { margin: 0; }
 .ventana::backdrop { background: rgba(22, 21, 15, 0.35); }
 .ventana-cabeza { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; }
 .ventana-cabeza h3 { font-size: 15px; margin: 0; }
-.ventana .trace td:nth-child(-n+4), .ventana .trace th:nth-child(-n+4) { text-align: left; }
+.ventana .trace tbody td:nth-child(-n+4), .ventana .trace thead th:nth-child(-n+4) { text-align: left; }
 
 /* El reporte del mes (mes.html) */
 .mes-hero { padding: 28px 0 22px; }
@@ -262,6 +271,7 @@ p { margin: 0; }
 .chip.parcial { background: var(--aviso); color: var(--aviso-borde); }
 .ajustado { font-size: 12px; color: var(--aviso-borde); margin-top: 6px; line-height: 1.4; }
 .evolucion { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 22px; align-items: center; }
+/* La línea del balance del mes: en el reporte y en el inicio. */
 .grafica { width: 100%; height: auto; background: var(--papel); border: 1px solid var(--borde); border-radius: var(--radio); }
 .grafica .guia { stroke: var(--linea); stroke-width: 1; stroke-dasharray: 3 4; }
 .grafica .base { stroke: var(--borde); stroke-width: 1; }
@@ -269,6 +279,7 @@ p { margin: 0; }
 .grafica .ultimo { font-size: 12px; font-weight: 700; fill: var(--tinta); }
 /* En el celular el dibujo se encoge a la mitad: los rótulos se agrandan para seguir legibles. */
 @media (max-width: 560px) { .grafica .eje { font-size: 15px; } .grafica .ultimo { font-size: 17px; } }
+
 .extremos { display: grid; grid-template-columns: 1fr auto; gap: 6px 14px; margin: 0; font-size: 13.5px; }
 .extremos dt { color: var(--tenue); }
 .extremos dd { margin: 0; text-align: right; font-weight: 600; }
@@ -282,6 +293,7 @@ p { margin: 0; }
 .nota-mes { margin-top: 12px; padding: 10px 14px; background: var(--nota); border-radius: 8px; font-size: 13.5px; color: var(--texto); }
 .mes-manual details { margin: 10px 0; }
 .mes-manual summary { cursor: pointer; font-weight: 600; font-size: 14px; }
+.mes-manual .enlace-apertura { display: inline-block; margin: 2px 0; color: var(--tinta); font-weight: 600; font-size: 14px; }
 .formulario-mes { display: grid; gap: 10px; max-width: 520px; margin-top: 10px; }
 .formulario-mes textarea, .formulario-mes select { font: inherit; padding: 8px 10px; border: 1px solid var(--borde); border-radius: 8px; min-height: 44px; }
 .formulario-mes button { justify-self: start; }
@@ -343,6 +355,7 @@ p { margin: 0; }
 <div class="wrap">
 
 
+  
   <nav class="topnav">
     <a class="navhome" href="index.html">‹ Agosto de 2026</a>
     <div class="navdays">
@@ -407,6 +420,7 @@ p { margin: 0; }
       <circle cx="124.0" cy="92.0" r="3.5" fill="#14705A"><title>1 ago: $237.857.765</title></circle><circle cx="141.2" cy="96.0" r="3.5" fill="#14705A"><title>2 ago: $227.858.765</title></circle><circle cx="158.5" cy="94.6" r="3.5" fill="#14705A"><title>3 ago: $231.359.565</title></circle><circle cx="175.7" cy="150.0" r="3.5" fill="#14705A"><title>4 ago: $92.857.045</title></circle><circle cx="193.0" cy="104.0" r="3.5" fill="#14705A"><title>5 ago: $208.032.045</title></circle><circle cx="210.2" cy="72.8" r="3.5" fill="#14705A"><title>6 ago: $286.041.125</title></circle><circle cx="227.4" cy="72.7" r="3.5" fill="#14705A"><title>7 ago: $286.159.124</title></circle><circle cx="244.7" cy="72.7" r="3.5" fill="#14705A"><title>8 ago: $286.177.124</title></circle><circle cx="261.9" cy="72.7" r="3.5" fill="#14705A"><title>9 ago: $286.186.124</title></circle><circle cx="279.2" cy="72.7" r="3.5" fill="#14705A"><title>10 ago: $286.286.124</title></circle><circle cx="296.4" cy="71.6" r="3.5" fill="#14705A"><title>11 ago: $289.021.124</title></circle><circle cx="313.7" cy="30.0" r="3.5" fill="#14705A"><title>12 ago: $393.026.124</title></circle><circle cx="330.9" cy="99.6" r="3.5" fill="#14705A"><title>13 ago: $219.011.124</title></circle><circle cx="348.1" cy="129.6" r="3.5" fill="#14705A"><title>14 ago: $143.837.124</title></circle><circle cx="365.4" cy="134.4" r="3.5" fill="#14705A"><title>15 ago: $131.874.124</title></circle><circle cx="382.6" cy="137.0" r="3.5" fill="#14705A"><title>16 ago: $125.281.124</title></circle><circle cx="399.9" cy="143.7" r="3.5" fill="#14705A"><title>17 ago: $108.644.661</title></circle><circle cx="417.1" cy="113.2" r="3.5" fill="#14705A"><title>18 ago: $184.785.124</title></circle><circle cx="434.3" cy="109.6" r="3.5" fill="#14705A"><title>19 ago: $193.979.124</title></circle><circle cx="451.6" cy="122.7" r="3.5" fill="#14705A"><title>20 ago: $161.085.624</title></circle><circle cx="468.8" cy="105.4" r="3.5" fill="#14705A"><title>21 ago: $204.478.624</title></circle><circle cx="486.1" cy="77.6" r="3.5" fill="#14705A"><title>22 ago: $273.940.124</title></circle><circle cx="503.3" cy="104.0" r="3.5" fill="#14705A"><title>24 ago: $207.851.124</title></circle><circle cx="520.6" cy="116.5" r="3.5" fill="#14705A"><title>25 ago: $176.596.124</title></circle><circle cx="537.8" cy="99.1" r="3.5" fill="#14705A"><title>26 ago: $220.195.124</title></circle><circle cx="555.0" cy="102.9" r="3.5" fill="#14705A"><title>27 ago: $210.748.124</title></circle><circle cx="572.3" cy="111.0" r="3.5" fill="#14705A"><title>28 ago: $190.394.124</title></circle><circle cx="589.5" cy="51.0" r="3.5" fill="#14705A"><title>29 ago: $340.451.124</title></circle><circle cx="606.8" cy="82.9" r="3.5" fill="#14705A"><title>30 ago: $260.609.124</title></circle><circle cx="624.0" cy="117.8" r="4.5" fill="#14705A"><title>31 ago: $173.439.124</title></circle>
       <text class="ultimo" x="624.0" y="107.8" text-anchor="end">$173.439.124</text>
     </svg>
+
     <dl class="extremos">
       
       <dt>Al terminar · 31 ago</dt><dd>$173.439.124</dd>
@@ -620,5 +634,6 @@ p { margin: 0; }
 
 
 </div>
+
 </body>
 </html>

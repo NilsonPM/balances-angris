@@ -9,6 +9,7 @@
 <style>
 /* El reporte del día. Va embebido en la página para que se pueda abrir suelta, enviar o
    imprimir y se vea igual (docs/publicacion.md). Sigue el diseño del sitio publicado. */
+/* Los colores y medidas de la app y de los reportes: una sola lista (docs/publicacion.md). */
 :root {
   --tinta: #16150F;
   --texto: #43413A;
@@ -16,16 +17,23 @@
   --fondo: #FAF9F6;
   --papel: #FFFFFF;
   --borde: #E3E0D6;
-  --oro-logo: #B69659;  /* El dorado del logo: solo adornos, no texto */
   --linea: #EDEBE3;
   --nota: #F2F0E9;
-  --sube: #14705A;
-  --baja: #B3261E;
+  --verde: #14705A;
+  --rojo: #B3261E;
+  /* En los reportes el color marca la dirección del cambio, no si la noticia es buena. */
+  --sube: var(--verde);
+  --baja: var(--rojo);
   --oro: #8A6512;
+  /* El dorado del logo: solo para adornos (bordes, líneas). Sobre blanco no llega al contraste
+     de un texto. */
+  --oro-logo: #B69659;
   --aviso: #FBF3E4;
   --aviso-borde: #A4521F;
   --radio: 12px;
+  --toque: 44px;
 }
+
 /* El movimiento de la app: corto y funcional, para que nada aparezca ni cambie de golpe. Va en la
    hoja de la app y en la de los reportes (también en lo publicado: es solo CSS). Quien pide
    «reducir movimiento» en su equipo no ve ninguna animación. */
@@ -199,6 +207,7 @@ p { margin: 0; }
 .trace th:first-child, .trace td:first-child { text-align: left; }
 .trace tfoot td { font-weight: 600; border-top: 1px solid var(--tinta); border-bottom: none; }
 .trace .lotes { font-weight: 400; color: var(--tenue); }
+.trace td.venta .lotes { display: block; font-size: 11.5px; margin-top: 1px; }
 .trace .sub { display: block; font-weight: 400; color: var(--tenue); font-size: 11.5px; margin-top: 1px; }
 .trace .merma { color: var(--baja); }
 .trace .paso { color: var(--oro); font-weight: 600; }
@@ -254,7 +263,7 @@ p { margin: 0; }
 .ventana::backdrop { background: rgba(22, 21, 15, 0.35); }
 .ventana-cabeza { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; }
 .ventana-cabeza h3 { font-size: 15px; margin: 0; }
-.ventana .trace td:nth-child(-n+4), .ventana .trace th:nth-child(-n+4) { text-align: left; }
+.ventana .trace tbody td:nth-child(-n+4), .ventana .trace thead th:nth-child(-n+4) { text-align: left; }
 
 /* El reporte del mes (mes.html) */
 .mes-hero { padding: 28px 0 22px; }
@@ -262,6 +271,7 @@ p { margin: 0; }
 .chip.parcial { background: var(--aviso); color: var(--aviso-borde); }
 .ajustado { font-size: 12px; color: var(--aviso-borde); margin-top: 6px; line-height: 1.4; }
 .evolucion { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 22px; align-items: center; }
+/* La línea del balance del mes: en el reporte y en el inicio. */
 .grafica { width: 100%; height: auto; background: var(--papel); border: 1px solid var(--borde); border-radius: var(--radio); }
 .grafica .guia { stroke: var(--linea); stroke-width: 1; stroke-dasharray: 3 4; }
 .grafica .base { stroke: var(--borde); stroke-width: 1; }
@@ -269,6 +279,7 @@ p { margin: 0; }
 .grafica .ultimo { font-size: 12px; font-weight: 700; fill: var(--tinta); }
 /* En el celular el dibujo se encoge a la mitad: los rótulos se agrandan para seguir legibles. */
 @media (max-width: 560px) { .grafica .eje { font-size: 15px; } .grafica .ultimo { font-size: 17px; } }
+
 .extremos { display: grid; grid-template-columns: 1fr auto; gap: 6px 14px; margin: 0; font-size: 13.5px; }
 .extremos dt { color: var(--tenue); }
 .extremos dd { margin: 0; text-align: right; font-weight: 600; }
@@ -282,6 +293,7 @@ p { margin: 0; }
 .nota-mes { margin-top: 12px; padding: 10px 14px; background: var(--nota); border-radius: 8px; font-size: 13.5px; color: var(--texto); }
 .mes-manual details { margin: 10px 0; }
 .mes-manual summary { cursor: pointer; font-weight: 600; font-size: 14px; }
+.mes-manual .enlace-apertura { display: inline-block; margin: 2px 0; color: var(--tinta); font-weight: 600; font-size: 14px; }
 .formulario-mes { display: grid; gap: 10px; max-width: 520px; margin-top: 10px; }
 .formulario-mes textarea, .formulario-mes select { font: inherit; padding: 8px 10px; border: 1px solid var(--borde); border-radius: 8px; min-height: 44px; }
 .formulario-mes button { justify-self: start; }
@@ -343,6 +355,7 @@ p { margin: 0; }
 <div class="wrap">
 
 
+  
   <nav class="topnav">
     <a class="navhome" href="index.html">‹ Septiembre de 2026</a>
     <div class="navdays">
@@ -407,6 +420,7 @@ p { margin: 0; }
       <circle cx="124.0" cy="77.5" r="3.5" fill="#14705A"><title>1 sep: $160.743.000</title></circle><circle cx="142.5" cy="30.0" r="3.5" fill="#14705A"><title>2 sep: $251.954.000</title></circle><circle cx="161.0" cy="99.1" r="3.5" fill="#14705A"><title>3 sep: $119.120.000</title></circle><circle cx="179.6" cy="123.7" r="3.5" fill="#14705A"><title>4 sep: $71.908.000</title></circle><circle cx="198.1" cy="40.3" r="3.5" fill="#14705A"><title>5 sep: $232.163.000</title></circle><circle cx="216.6" cy="61.0" r="3.5" fill="#14705A"><title>6 sep: $192.333.900</title></circle><circle cx="235.1" cy="121.6" r="3.5" fill="#14705A"><title>7 sep: $75.984.000</title></circle><circle cx="253.6" cy="127.7" r="3.5" fill="#14705A"><title>8 sep: $64.193.500</title></circle><circle cx="272.1" cy="150.0" r="3.5" fill="#14705A"><title>9 sep: $21.405.000</title></circle><circle cx="290.7" cy="98.6" r="3.5" fill="#14705A"><title>10 sep: $120.249.000</title></circle><circle cx="309.2" cy="100.3" r="3.5" fill="#14705A"><title>11 sep: $116.844.140</title></circle><circle cx="327.7" cy="138.6" r="3.5" fill="#14705A"><title>12 sep: $43.302.000</title></circle><circle cx="346.2" cy="114.2" r="3.5" fill="#14705A"><title>13 sep: $90.147.000</title></circle><circle cx="364.7" cy="103.3" r="3.5" fill="#14705A"><title>14 sep: $111.156.900</title></circle><circle cx="383.3" cy="116.2" r="3.5" fill="#14705A"><title>15 sep: $86.343.000</title></circle><circle cx="401.8" cy="130.0" r="3.5" fill="#14705A"><title>17 sep: $59.852.300</title></circle><circle cx="420.3" cy="108.5" r="3.5" fill="#14705A"><title>18 sep: $101.120.300</title></circle><circle cx="438.8" cy="46.3" r="3.5" fill="#14705A"><title>19 sep: $220.613.000</title></circle><circle cx="457.3" cy="100.5" r="3.5" fill="#14705A"><title>20 sep: $116.550.000</title></circle><circle cx="475.9" cy="87.0" r="3.5" fill="#14705A"><title>21 sep: $142.428.000</title></circle><circle cx="494.4" cy="105.7" r="3.5" fill="#14705A"><title>22 sep: $106.598.000</title></circle><circle cx="512.9" cy="120.9" r="3.5" fill="#14705A"><title>23 sep: $77.254.000</title></circle><circle cx="531.4" cy="102.0" r="3.5" fill="#14705A"><title>24 sep: $113.575.240</title></circle><circle cx="549.9" cy="98.5" r="3.5" fill="#14705A"><title>25 sep: $120.427.000</title></circle><circle cx="568.4" cy="99.5" r="3.5" fill="#14705A"><title>26 sep: $118.399.000</title></circle><circle cx="587.0" cy="127.8" r="3.5" fill="#14705A"><title>28 sep: $64.026.000</title></circle><circle cx="605.5" cy="94.3" r="3.5" fill="#14705A"><title>29 sep: $128.336.010</title></circle><circle cx="624.0" cy="142.8" r="4.5" fill="#14705A"><title>30 sep: $35.326.000</title></circle>
       <text class="ultimo" x="624.0" y="132.8" text-anchor="end">$35.326.000</text>
     </svg>
+
     <dl class="extremos">
       
       <dt>Al terminar · 30 sep</dt><dd>$35.326.000</dd>
@@ -650,5 +664,6 @@ p { margin: 0; }
 
 
 </div>
+
 </body>
 </html>
