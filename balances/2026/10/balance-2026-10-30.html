@@ -13,6 +13,7 @@
 <style>
 /* El reporte del día. Va embebido en la página para que se pueda abrir suelta, enviar o
    imprimir y se vea igual (docs/publicacion.md). Sigue el diseño del sitio publicado. */
+/* Los colores y medidas de la app y de los reportes: una sola lista (docs/publicacion.md). */
 :root {
   --tinta: #16150F;
   --texto: #43413A;
@@ -20,16 +21,23 @@
   --fondo: #FAF9F6;
   --papel: #FFFFFF;
   --borde: #E3E0D6;
-  --oro-logo: #B69659;  /* El dorado del logo: solo adornos, no texto */
   --linea: #EDEBE3;
   --nota: #F2F0E9;
-  --sube: #14705A;
-  --baja: #B3261E;
+  --verde: #14705A;
+  --rojo: #B3261E;
+  /* En los reportes el color marca la dirección del cambio, no si la noticia es buena. */
+  --sube: var(--verde);
+  --baja: var(--rojo);
   --oro: #8A6512;
+  /* El dorado del logo: solo para adornos (bordes, líneas). Sobre blanco no llega al contraste
+     de un texto. */
+  --oro-logo: #B69659;
   --aviso: #FBF3E4;
   --aviso-borde: #A4521F;
   --radio: 12px;
+  --toque: 44px;
 }
+
 /* El movimiento de la app: corto y funcional, para que nada aparezca ni cambie de golpe. Va en la
    hoja de la app y en la de los reportes (también en lo publicado: es solo CSS). Quien pide
    «reducir movimiento» en su equipo no ve ninguna animación. */
@@ -203,6 +211,7 @@ p { margin: 0; }
 .trace th:first-child, .trace td:first-child { text-align: left; }
 .trace tfoot td { font-weight: 600; border-top: 1px solid var(--tinta); border-bottom: none; }
 .trace .lotes { font-weight: 400; color: var(--tenue); }
+.trace td.venta .lotes { display: block; font-size: 11.5px; margin-top: 1px; }
 .trace .sub { display: block; font-weight: 400; color: var(--tenue); font-size: 11.5px; margin-top: 1px; }
 .trace .merma { color: var(--baja); }
 .trace .paso { color: var(--oro); font-weight: 600; }
@@ -258,7 +267,7 @@ p { margin: 0; }
 .ventana::backdrop { background: rgba(22, 21, 15, 0.35); }
 .ventana-cabeza { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; }
 .ventana-cabeza h3 { font-size: 15px; margin: 0; }
-.ventana .trace td:nth-child(-n+4), .ventana .trace th:nth-child(-n+4) { text-align: left; }
+.ventana .trace tbody td:nth-child(-n+4), .ventana .trace thead th:nth-child(-n+4) { text-align: left; }
 
 /* El reporte del mes (mes.html) */
 .mes-hero { padding: 28px 0 22px; }
@@ -266,6 +275,7 @@ p { margin: 0; }
 .chip.parcial { background: var(--aviso); color: var(--aviso-borde); }
 .ajustado { font-size: 12px; color: var(--aviso-borde); margin-top: 6px; line-height: 1.4; }
 .evolucion { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 22px; align-items: center; }
+/* La línea del balance del mes: en el reporte y en el inicio. */
 .grafica { width: 100%; height: auto; background: var(--papel); border: 1px solid var(--borde); border-radius: var(--radio); }
 .grafica .guia { stroke: var(--linea); stroke-width: 1; stroke-dasharray: 3 4; }
 .grafica .base { stroke: var(--borde); stroke-width: 1; }
@@ -273,6 +283,7 @@ p { margin: 0; }
 .grafica .ultimo { font-size: 12px; font-weight: 700; fill: var(--tinta); }
 /* En el celular el dibujo se encoge a la mitad: los rótulos se agrandan para seguir legibles. */
 @media (max-width: 560px) { .grafica .eje { font-size: 15px; } .grafica .ultimo { font-size: 17px; } }
+
 .extremos { display: grid; grid-template-columns: 1fr auto; gap: 6px 14px; margin: 0; font-size: 13.5px; }
 .extremos dt { color: var(--tenue); }
 .extremos dd { margin: 0; text-align: right; font-weight: 600; }
@@ -286,6 +297,7 @@ p { margin: 0; }
 .nota-mes { margin-top: 12px; padding: 10px 14px; background: var(--nota); border-radius: 8px; font-size: 13.5px; color: var(--texto); }
 .mes-manual details { margin: 10px 0; }
 .mes-manual summary { cursor: pointer; font-weight: 600; font-size: 14px; }
+.mes-manual .enlace-apertura { display: inline-block; margin: 2px 0; color: var(--tinta); font-weight: 600; font-size: 14px; }
 .formulario-mes { display: grid; gap: 10px; max-width: 520px; margin-top: 10px; }
 .formulario-mes textarea, .formulario-mes select { font: inherit; padding: 8px 10px; border: 1px solid var(--borde); border-radius: 8px; min-height: 44px; }
 .formulario-mes button { justify-self: start; }
@@ -442,7 +454,7 @@ p { margin: 0; }
     
     <tbody>
       
-      <tr><td>En bodega <span class="lotes">· 2 lotes</span></td><td>24,35 gr</td><td>80,48 gr</td><td>0,697</td><td class="paso">56,13 gr</td><td>$25.910.000</td></tr>
+      <tr><td>En bodega <span class="lotes">· 2 lotes</span></td><td>24,35 gr</td><td>79,48 gr</td><td>0,705</td><td class="paso">56,03 gr</td><td>$25.910.000</td></tr>
 
       
       <tr><td>Pendiente x pagar <span class="lotes">· 6 lotes</span></td><td>—</td><td>275,15 gr</td><td>0,713</td><td class="paso">196,21 gr</td><td>$69.247.500</td></tr>
@@ -453,7 +465,7 @@ p { margin: 0; }
     
     <tfoot>
       
-      <tr><td>Total</td><td>24,35 gr</td><td>355,63 gr</td><td>0,710</td><td class="paso">252,34 gr</td><td>$95.157.500</td></tr>
+      <tr><td>Total</td><td>24,35 gr</td><td>354,63 gr</td><td>0,711</td><td class="paso">252,24 gr</td><td>$95.157.500</td></tr>
 
       
     </tfoot>
@@ -465,6 +477,31 @@ p { margin: 0; }
   <details class="como"><summary>¿Cómo se calcula?</summary><p class="tracenote">Cada lote llega fundido (P.F.) y su ley indica qué proporción es oro puro: el peso purificado estimado (P.P.E.) es el producto de los dos. La <b>ley media</b> es la del conjunto, el P.P.E. dividido entre el P.F. <b>El precio de compra se calcula sobre el P.P.E.</b></p></details>
   
 
+  
+  <h2 class="h2">Venta de oro</h2>
+  
+  <h3 class="h3">Venta externa, por envío</h3>
+  <div class="tracewrap">
+  <table class="trace">
+    <thead>
+      <tr><th scope="col">Venta</th><th scope="col">Gramos enviados</th><th scope="col">Liquidado</th><th scope="col">Pagado</th><th scope="col">Saldo</th><th scope="col">Margen</th></tr>
+    </thead>
+    
+    <tbody>
+      
+      <tr><td class="venta">Venta Julieth <span class="lotes">6 lotes · LOT-00147 a LOT-00152</span></td><td>196,21 gr</td><td>—</td><td>—</td><td>—</td><td>—<span class="sub">costo $69.247.500</span></td></tr>
+
+      
+    </tbody>
+    
+    
+  </table>
+</div>
+
+  
+  
+  
+  <p class="tracenote">Aquí están las ventas abiertas y las que terminaron hoy. Estas cifras no suman al balance: el dinero cuenta cuando llega a las cajas, los anticipos o la ganancia.</p>
   
 
   <h2 class="h2">En qué está representado ese valor</h2>
@@ -763,5 +800,6 @@ p { margin: 0; }
 
 
 </div>
+
 </body>
 </html>
