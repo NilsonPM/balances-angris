@@ -210,6 +210,13 @@ p { margin: 0; }
 .trace td.venta .lotes { display: block; font-size: 11.5px; margin-top: 1px; }
 .trace .sub { display: block; font-weight: 400; color: var(--tenue); font-size: 11.5px; margin-top: 1px; }
 .trace .merma { color: var(--baja); }
+/* El detalle de las cuentas, por grupos (ADR-0047): cada grupo abre con su subtotal. */
+.trace tbody + tbody tr.fila-grupo > * { border-top: 1px solid var(--borde); }
+.trace tr.fila-grupo > * { font-weight: 600; background: var(--nota); }
+.trace tr.fila-grupo th { text-align: left; color: var(--tinta); font-size: 13px; padding: 9px 10px; border-bottom: 1px solid var(--linea); white-space: nowrap; }
+.trace tr.fila-grupo .punto { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 8px; vertical-align: 0; }
+.trace.agrupada tbody tr:not(.fila-grupo):not(.sin-movimiento) td:first-child { padding-left: 27px; }
+.trace tr.sin-movimiento td { text-align: left; color: var(--tenue); font-size: 12px; font-style: italic; padding-left: 27px; white-space: normal; }
 .trace .paso { color: var(--oro); font-weight: 600; }
 .trace.trace-2col { min-width: 0; }
 .trace.trace-2col td:first-child, .trace.trace-2col th:first-child { white-space: normal; }
@@ -263,7 +270,11 @@ p { margin: 0; }
 .ventana::backdrop { background: rgba(22, 21, 15, 0.35); }
 .ventana-cabeza { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; }
 .ventana-cabeza h3 { font-size: 15px; margin: 0; }
+/* El lote que nació de una fusión dice de cuáles, debajo de su código (ADR-0025). */
+.ventana .trace .de-fusion { display: block; font-size: 11.5px; font-weight: 400; color: var(--tenue); margin-top: 1px; }
 .ventana .trace tbody td:nth-child(-n+4), .ventana .trace thead th:nth-child(-n+4) { text-align: left; }
+/* Las cuentas y su día a día: las cifras, a la derecha (ADR-0047). */
+.ventana .trace.de-cuentas tbody td:not(:first-child), .ventana .trace.de-cuentas thead th:not(:first-child) { text-align: right; }
 
 /* El reporte del mes (mes.html) */
 .mes-hero { padding: 28px 0 22px; }
@@ -434,6 +445,147 @@ p { margin: 0; }
 
 
 
+  
+  <h2 class="h2">Gastos y cuentas</h2>
+  <div class="tracewrap">
+  <table class="trace">
+    <thead>
+      <tr><th scope="col">Cuenta</th><th scope="col">En el mes</th></tr>
+    </thead>
+    
+    <tbody>
+      
+      <tr><td>Caja Auxiliar — Sobrante</td><td>$279.000</td></tr>
+
+      
+      <tr><td>Nómina</td><td>−$20.800.000</td></tr>
+
+      
+      <tr><td>Gastos de operación</td><td>−$20.731.500</td></tr>
+
+      
+      <tr><td>Caja Auxiliar — Faltante</td><td>−$70.000</td></tr>
+
+      
+    </tbody>
+    
+    
+    <tfoot>
+      
+      <tr><td>Total</td><td>−$41.322.500</td></tr>
+
+      
+    </tfoot>
+    
+  </table>
+</div>
+
+  
+
+
+  
+  <h3 class="h3">Plata disponible</h3>
+  <div class="tracewrap">
+  <table class="trace">
+    <thead>
+      <tr><th scope="col">Cuenta</th><th scope="col">Al empezar</th><th scope="col">Al terminar</th><th scope="col">Cambio</th></tr>
+    </thead>
+    
+    <tbody>
+      
+      <tr><td>Caja Principal</td><td>$16.970.000</td><td>$44.300.000</td><td>$27.330.000</td></tr>
+
+      
+      <tr><td>Caja Auxiliar</td><td>$14.276.000</td><td>$40.175.000</td><td>$25.899.000</td></tr>
+
+      
+    </tbody>
+    
+    
+    <tfoot>
+      
+      <tr><td>Total</td><td>$31.246.000</td><td>$84.475.000</td><td>$53.229.000</td></tr>
+
+      
+    </tfoot>
+    
+  </table>
+</div>
+
+  
+  <h3 class="h3">Plata que nos deben</h3>
+  <div class="tracewrap">
+  <table class="trace">
+    <thead>
+      <tr><th scope="col">Cuenta</th><th scope="col">Al empezar</th><th scope="col">Al terminar</th><th scope="col">Cambio</th></tr>
+    </thead>
+    
+    <tbody>
+      
+      <tr><td>Anticipos a trabajadores</td><td>$900.000</td><td>$0</td><td>−$900.000</td></tr>
+
+      
+      <tr><td>Mina Gris</td><td>$97.447.312</td><td>$104.509.912</td><td>$7.062.600</td></tr>
+
+      
+      <tr><td>Mina Elvis Cuenta Vieja</td><td>$18.036.300</td><td>$28.349.300</td><td>$10.313.000</td></tr>
+
+      
+      <tr><td>Grismaldo</td><td>$40.289.000</td><td>$98.059.000</td><td>$57.770.000</td></tr>
+
+      
+      <tr><td>Almacén Motores</td><td>$14.547.700</td><td>$12.286.850</td><td>−$2.260.850</td></tr>
+
+      
+      <tr><td>Anticipo a Trabajadores - MINA GRIS</td><td>—</td><td>$9.890.000</td><td>$9.890.000</td></tr>
+
+      
+      <tr><td>Anticipo a Trabajadores - MINA ELVIS</td><td>—</td><td>$740.000</td><td>$740.000</td></tr>
+
+      
+    </tbody>
+    
+    
+    <tfoot>
+      
+      <tr><td>Total</td><td>$171.220.312</td><td>$253.835.062</td><td>$82.614.750</td></tr>
+
+      
+    </tfoot>
+    
+  </table>
+</div>
+
+  
+  <h3 class="h3">Plata que debemos</h3>
+  <div class="tracewrap">
+  <table class="trace">
+    <thead>
+      <tr><th scope="col">Cuenta</th><th scope="col">Al empezar</th><th scope="col">Al terminar</th><th scope="col">Cambio</th></tr>
+    </thead>
+    
+    <tbody>
+      
+      <tr><td>Obligaciones de la compraventa</td><td>−$37.936.312</td><td>−$5.303.422</td><td>$32.632.890</td></tr>
+
+      
+    </tbody>
+    
+    
+    <tfoot>
+      
+      <tr><td>Total</td><td>−$37.936.312</td><td>−$5.303.422</td><td>$32.632.890</td></tr>
+
+      
+    </tfoot>
+    
+  </table>
+</div>
+
+  
+  <details class="como"><summary>¿Cómo se lee esta tabla?</summary><p class="tracenote">Cada saldo es lo que la cuenta aporta al cierre, con su signo: al empezar es el del último día del mes anterior; al terminar, el del último día del mes.</p></details>
+  
+
   <h2 class="h2">Compras de oro</h2>
   <div class="tracewrap">
   <table class="trace">
@@ -525,145 +677,6 @@ p { margin: 0; }
   
 
 
-
-  <h2 class="h2">Gastos y cuentas</h2>
-  <div class="tracewrap">
-  <table class="trace">
-    <thead>
-      <tr><th scope="col">Cuenta</th><th scope="col">En el mes</th></tr>
-    </thead>
-    
-    <tbody>
-      
-      <tr><td>Caja Auxiliar — $ Sobrante</td><td>$279.000</td></tr>
-
-      
-      <tr><td>Nómina</td><td>−$20.800.000</td></tr>
-
-      
-      <tr><td>Gastos CompraVenta</td><td>−$20.731.500</td></tr>
-
-      
-      <tr><td>Caja Auxiliar — $ Faltante</td><td>−$70.000</td></tr>
-
-      
-    </tbody>
-    
-    
-    <tfoot>
-      
-      <tr><td>Total</td><td>−$41.322.500</td></tr>
-
-      
-    </tfoot>
-    
-  </table>
-</div>
-
-  
-
-
-  
-  <h3 class="h3">Plata disponible</h3>
-  <div class="tracewrap">
-  <table class="trace">
-    <thead>
-      <tr><th scope="col">Cuenta</th><th scope="col">Al empezar</th><th scope="col">Al terminar</th><th scope="col">Cambio</th></tr>
-    </thead>
-    
-    <tbody>
-      
-      <tr><td>Caja Principal</td><td>$16.970.000</td><td>$44.300.000</td><td>$27.330.000</td></tr>
-
-      
-      <tr><td>Caja Auxiliar</td><td>$14.276.000</td><td>$40.175.000</td><td>$25.899.000</td></tr>
-
-      
-    </tbody>
-    
-    
-    <tfoot>
-      
-      <tr><td>Total</td><td>$31.246.000</td><td>$84.475.000</td><td>$53.229.000</td></tr>
-
-      
-    </tfoot>
-    
-  </table>
-</div>
-
-  
-  <h3 class="h3">Plata que nos deben</h3>
-  <div class="tracewrap">
-  <table class="trace">
-    <thead>
-      <tr><th scope="col">Cuenta</th><th scope="col">Al empezar</th><th scope="col">Al terminar</th><th scope="col">Cambio</th></tr>
-    </thead>
-    
-    <tbody>
-      
-      <tr><td>Anticipo a Trabajadores</td><td>$900.000</td><td>$0</td><td>−$900.000</td></tr>
-
-      
-      <tr><td>Cuenta x Cobrar MINA GRIS</td><td>$97.447.312</td><td>$104.509.912</td><td>$7.062.600</td></tr>
-
-      
-      <tr><td>Cuenta x Cobrar MINA ELVIS</td><td>$18.036.300</td><td>$28.349.300</td><td>$10.313.000</td></tr>
-
-      
-      <tr><td>Cuenta x Cobrar Grismaldo</td><td>$40.289.000</td><td>$98.059.000</td><td>$57.770.000</td></tr>
-
-      
-      <tr><td>Cuenta x Cobrar Motores</td><td>$14.547.700</td><td>$12.286.850</td><td>−$2.260.850</td></tr>
-
-      
-      <tr><td>Anticipo a Trabajadores - MINA GRIS</td><td>—</td><td>$9.890.000</td><td>$9.890.000</td></tr>
-
-      
-      <tr><td>Anticipo a Trabajadores - MINA ELVIS</td><td>—</td><td>$740.000</td><td>$740.000</td></tr>
-
-      
-    </tbody>
-    
-    
-    <tfoot>
-      
-      <tr><td>Total</td><td>$171.220.312</td><td>$253.835.062</td><td>$82.614.750</td></tr>
-
-      
-    </tfoot>
-    
-  </table>
-</div>
-
-  
-  <h3 class="h3">Plata que debemos</h3>
-  <div class="tracewrap">
-  <table class="trace">
-    <thead>
-      <tr><th scope="col">Cuenta</th><th scope="col">Al empezar</th><th scope="col">Al terminar</th><th scope="col">Cambio</th></tr>
-    </thead>
-    
-    <tbody>
-      
-      <tr><td>Cuenta x Pagar CompraVenta</td><td>−$37.936.312</td><td>−$5.303.422</td><td>$32.632.890</td></tr>
-
-      
-    </tbody>
-    
-    
-    <tfoot>
-      
-      <tr><td>Total</td><td>−$37.936.312</td><td>−$5.303.422</td><td>$32.632.890</td></tr>
-
-      
-    </tfoot>
-    
-  </table>
-</div>
-
-  
-  <details class="como"><summary>¿Cómo se lee esta tabla?</summary><p class="tracenote">Cada saldo es lo que la cuenta aporta al cierre, con su signo: al empezar es el del último día del mes anterior; al terminar, el del último día del mes.</p></details>
 
 
 </div>
