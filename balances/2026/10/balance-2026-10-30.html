@@ -214,6 +214,13 @@ p { margin: 0; }
 .trace td.venta .lotes { display: block; font-size: 11.5px; margin-top: 1px; }
 .trace .sub { display: block; font-weight: 400; color: var(--tenue); font-size: 11.5px; margin-top: 1px; }
 .trace .merma { color: var(--baja); }
+/* El detalle de las cuentas, por grupos (ADR-0047): cada grupo abre con su subtotal. */
+.trace tbody + tbody tr.fila-grupo > * { border-top: 1px solid var(--borde); }
+.trace tr.fila-grupo > * { font-weight: 600; background: var(--nota); }
+.trace tr.fila-grupo th { text-align: left; color: var(--tinta); font-size: 13px; padding: 9px 10px; border-bottom: 1px solid var(--linea); white-space: nowrap; }
+.trace tr.fila-grupo .punto { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 8px; vertical-align: 0; }
+.trace.agrupada tbody tr:not(.fila-grupo):not(.sin-movimiento) td:first-child { padding-left: 27px; }
+.trace tr.sin-movimiento td { text-align: left; color: var(--tenue); font-size: 12px; font-style: italic; padding-left: 27px; white-space: normal; }
 .trace .paso { color: var(--oro); font-weight: 600; }
 .trace.trace-2col { min-width: 0; }
 .trace.trace-2col td:first-child, .trace.trace-2col th:first-child { white-space: normal; }
@@ -267,7 +274,11 @@ p { margin: 0; }
 .ventana::backdrop { background: rgba(22, 21, 15, 0.35); }
 .ventana-cabeza { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; }
 .ventana-cabeza h3 { font-size: 15px; margin: 0; }
+/* El lote que nació de una fusión dice de cuáles, debajo de su código (ADR-0025). */
+.ventana .trace .de-fusion { display: block; font-size: 11.5px; font-weight: 400; color: var(--tenue); margin-top: 1px; }
 .ventana .trace tbody td:nth-child(-n+4), .ventana .trace thead th:nth-child(-n+4) { text-align: left; }
+/* Las cuentas y su día a día: las cifras, a la derecha (ADR-0047). */
+.ventana .trace.de-cuentas tbody td:not(:first-child), .ventana .trace.de-cuentas thead th:not(:first-child) { text-align: right; }
 
 /* El reporte del mes (mes.html) */
 .mes-hero { padding: 28px 0 22px; }
@@ -396,7 +407,7 @@ p { margin: 0; }
 </span></div><div class="seg" style="width:51.37%; background:#A4521F;" tabindex="0" aria-describedby="rubro-nos_deben">51%<span class="tip" id="rubro-nos_deben" role="tooltip" style="left:6.1%;"><span class="tip-ttl"><span class="dot" style="background:#A4521F;"></span>Plata que nos deben</span>
 <span class="tip-cifra">$242.984.912 · 70% del acumulado</span>
 <span class="tip-txt">Saldo que la mina, el motor y los trabajadores tienen pendiente de regresar.</span>
-<span class="tip-lista"><span>Cuenta x Cobrar MINA GRIS</span><span>$102.259.912</span><span>Cuenta x Cobrar Grismaldo</span><span>$98.059.000</span><span>Cuenta x Cobrar MINA ELVIS</span><span>$27.749.300</span><span>Anticipo a Trabajadores - MINA GRIS</span><span>$9.890.000</span><span>Cuenta x Cobrar Motores</span><span>$4.286.700</span><span>Anticipo a Trabajadores - MINA ELVIS</span><span>$740.000</span></span>
+<span class="tip-lista"><span>Mina Gris · General</span><span>$102.259.912</span><span>Grismaldo · General</span><span>$98.059.000</span><span>Mina Elvis Cuenta Vieja</span><span>$27.749.300</span><span>Anticipo a Trabajadores - MINA GRIS</span><span>$9.890.000</span><span>Almacén Motores · General</span><span>$4.286.700</span><span>Anticipo a Trabajadores - MINA ELVIS</span><span>$740.000</span></span>
 </span></div><div class="seg thin" style="width:5.48%; background:#8A6512;" tabindex="0" aria-describedby="rubro-oro">5%<span class="tip" id="rubro-oro" role="tooltip" style="right:37.05%;"><span class="tip-ttl"><span class="dot" style="background:#8A6512;"></span>Oro en inventario</span>
 <span class="tip-cifra">$25.910.000 · 7% del acumulado</span>
 <span class="tip-txt">Solo el oro que sigue siendo nuestro. Abajo está el inventario completo, con los lotes pendientes de pago, que no cuentan aquí.</span>
@@ -404,15 +415,15 @@ p { margin: 0; }
 </span></div><div class="seg" style="width:15.94%; background:#1F6F7A;" tabindex="0" aria-describedby="rubro-debemos">16%<span class="tip" id="rubro-debemos" role="tooltip" style="right:21.11%;"><span class="tip-ttl"><span class="dot" style="background:#1F6F7A;"></span>Plata que debemos</span>
 <span class="tip-cifra">$75.396.578 · 22% del acumulado</span>
 <span class="tip-txt">Las cuentas por pagar y los anticipos por venta de oro: plata recibida que se paga con material.</span>
-<span class="tip-lista"><span>Anticipo por Venta de Oro - Blas</span><span>$80.700.000</span><span>Cuenta x Pagar CompraVenta</span><span>−$5.303.422</span></span>
+<span class="tip-lista"><span>Anticipos recibidos por oro — Blas</span><span>$80.700.000</span><span>Obligaciones de la compraventa</span><span>−$5.303.422</span></span>
 </span></div><div class="seg thin" style="width:7.74%; background:#6B3FA0;" tabindex="0" aria-describedby="rubro-resultado">8%<span class="tip" id="rubro-resultado" role="tooltip" style="right:13.37%;"><span class="tip-ttl"><span class="dot" style="background:#6B3FA0;"></span>Resultado por venta de oro</span>
 <span class="tip-cifra">$36.586.120 · 11% del acumulado</span>
 <span class="tip-txt">Lo que se ganó o se perdió al vender oro. No es un saldo aparte: ese dinero ya está contado en las cajas.</span>
-<span class="tip-lista"><span>Ganancia x Venta Oro</span><span>$36.586.120</span></span>
+<span class="tip-lista"><span>Ganancia en venta de oro</span><span>$36.586.120</span></span>
 </span></div><div class="seg" style="width:13.37%; background:#5A5E6B;" tabindex="0" aria-describedby="rubro-gastos">13%<span class="tip" id="rubro-gastos" role="tooltip" style="right:0.0%;"><span class="tip-ttl"><span class="dot" style="background:#5A5E6B;"></span>Gastos y ajustes</span>
 <span class="tip-cifra">−$63.231.500 · resta el 18% del acumulado</span>
 <span class="tip-txt">Acumulado de gastos, nómina, sobrantes y faltantes de caja. El libro los resta del valor del día.</span>
-<span class="tip-lista"><span>Gastos CompraVenta</span><span>−$42.568.500</span><span>Nómina</span><span>−$20.800.000</span><span>Caja Auxiliar — $ Sobrante</span><span>$448.000</span><span>Caja Auxiliar — $ Faltante</span><span>−$311.000</span></span>
+<span class="tip-lista"><span>Gastos de operación · General</span><span>−$42.568.500</span><span>Nómina</span><span>−$20.800.000</span><span>Caja Auxiliar — Sobrante</span><span>$448.000</span><span>Caja Auxiliar — Faltante</span><span>−$311.000</span></span>
 </span></div>
     </div>
     <div class="keys">
@@ -423,7 +434,7 @@ p { margin: 0; }
 </span></span><span class="key" tabindex="0" aria-describedby="leyenda-nos_deben"><span class="dot" style="background:#A4521F;"></span>Plata que nos deben<span class="tip" id="leyenda-nos_deben" role="tooltip"><span class="tip-ttl"><span class="dot" style="background:#A4521F;"></span>Plata que nos deben</span>
 <span class="tip-cifra">$242.984.912 · 70% del acumulado</span>
 <span class="tip-txt">Saldo que la mina, el motor y los trabajadores tienen pendiente de regresar.</span>
-<span class="tip-lista"><span>Cuenta x Cobrar MINA GRIS</span><span>$102.259.912</span><span>Cuenta x Cobrar Grismaldo</span><span>$98.059.000</span><span>Cuenta x Cobrar MINA ELVIS</span><span>$27.749.300</span><span>Anticipo a Trabajadores - MINA GRIS</span><span>$9.890.000</span><span>Cuenta x Cobrar Motores</span><span>$4.286.700</span><span>Anticipo a Trabajadores - MINA ELVIS</span><span>$740.000</span></span>
+<span class="tip-lista"><span>Mina Gris · General</span><span>$102.259.912</span><span>Grismaldo · General</span><span>$98.059.000</span><span>Mina Elvis Cuenta Vieja</span><span>$27.749.300</span><span>Anticipo a Trabajadores - MINA GRIS</span><span>$9.890.000</span><span>Almacén Motores · General</span><span>$4.286.700</span><span>Anticipo a Trabajadores - MINA ELVIS</span><span>$740.000</span></span>
 </span></span><span class="key" tabindex="0" aria-describedby="leyenda-oro"><span class="dot" style="background:#8A6512;"></span>Oro en inventario<span class="tip" id="leyenda-oro" role="tooltip"><span class="tip-ttl"><span class="dot" style="background:#8A6512;"></span>Oro en inventario</span>
 <span class="tip-cifra">$25.910.000 · 7% del acumulado</span>
 <span class="tip-txt">Solo el oro que sigue siendo nuestro. Abajo está el inventario completo, con los lotes pendientes de pago, que no cuentan aquí.</span>
@@ -431,78 +442,18 @@ p { margin: 0; }
 </span></span><span class="key" tabindex="0" aria-describedby="leyenda-debemos"><span class="dot" style="background:#1F6F7A;"></span>Plata que debemos<span class="tip" id="leyenda-debemos" role="tooltip"><span class="tip-ttl"><span class="dot" style="background:#1F6F7A;"></span>Plata que debemos</span>
 <span class="tip-cifra">$75.396.578 · 22% del acumulado</span>
 <span class="tip-txt">Las cuentas por pagar y los anticipos por venta de oro: plata recibida que se paga con material.</span>
-<span class="tip-lista"><span>Anticipo por Venta de Oro - Blas</span><span>$80.700.000</span><span>Cuenta x Pagar CompraVenta</span><span>−$5.303.422</span></span>
+<span class="tip-lista"><span>Anticipos recibidos por oro — Blas</span><span>$80.700.000</span><span>Obligaciones de la compraventa</span><span>−$5.303.422</span></span>
 </span></span><span class="key" tabindex="0" aria-describedby="leyenda-resultado"><span class="dot" style="background:#6B3FA0;"></span>Resultado por venta de oro<span class="tip" id="leyenda-resultado" role="tooltip"><span class="tip-ttl"><span class="dot" style="background:#6B3FA0;"></span>Resultado por venta de oro</span>
 <span class="tip-cifra">$36.586.120 · 11% del acumulado</span>
 <span class="tip-txt">Lo que se ganó o se perdió al vender oro. No es un saldo aparte: ese dinero ya está contado en las cajas.</span>
-<span class="tip-lista"><span>Ganancia x Venta Oro</span><span>$36.586.120</span></span>
+<span class="tip-lista"><span>Ganancia en venta de oro</span><span>$36.586.120</span></span>
 </span></span><span class="key" tabindex="0" aria-describedby="leyenda-gastos"><span class="dot" style="background:#5A5E6B;"></span>Gastos y ajustes <span class="resta">(resta)</span><span class="tip" id="leyenda-gastos" role="tooltip"><span class="tip-ttl"><span class="dot" style="background:#5A5E6B;"></span>Gastos y ajustes</span>
 <span class="tip-cifra">−$63.231.500 · resta el 18% del acumulado</span>
 <span class="tip-txt">Acumulado de gastos, nómina, sobrantes y faltantes de caja. El libro los resta del valor del día.</span>
-<span class="tip-lista"><span>Gastos CompraVenta</span><span>−$42.568.500</span><span>Nómina</span><span>−$20.800.000</span><span>Caja Auxiliar — $ Sobrante</span><span>$448.000</span><span>Caja Auxiliar — $ Faltante</span><span>−$311.000</span></span>
+<span class="tip-lista"><span>Gastos de operación · General</span><span>−$42.568.500</span><span>Nómina</span><span>−$20.800.000</span><span>Caja Auxiliar — Sobrante</span><span>$448.000</span><span>Caja Auxiliar — Faltante</span><span>−$311.000</span></span>
 </span></span>
     </div>
   </div>
-
-  
-  <h2 class="h2">Inventario de oro y su estado</h2>
-  <div class="tracewrap">
-  <table class="trace">
-    <thead>
-      <tr><th scope="col">Estado</th><th scope="col">P.A.</th><th scope="col">P.F.</th><th scope="col">Ley media</th><th scope="col">P.P.E.</th><th scope="col">Precio de compra</th></tr>
-    </thead>
-    
-    <tbody>
-      
-      <tr><td>En bodega <span class="lotes">· 2 lotes</span></td><td>24,35 gr</td><td>79,48 gr</td><td>0,705</td><td class="paso">56,03 gr</td><td>$25.910.000</td></tr>
-
-      
-      <tr><td>Pendiente x pagar <span class="lotes">· 6 lotes</span></td><td>—</td><td>275,15 gr</td><td>0,713</td><td class="paso">196,21 gr</td><td>$69.247.500</td></tr>
-
-      
-    </tbody>
-    
-    
-    <tfoot>
-      
-      <tr><td>Total</td><td>24,35 gr</td><td>354,63 gr</td><td>0,711</td><td class="paso">252,24 gr</td><td>$95.157.500</td></tr>
-
-      
-    </tfoot>
-    
-  </table>
-</div>
-
-  
-  <details class="como"><summary>¿Cómo se calcula?</summary><p class="tracenote">Cada lote llega fundido (P.F.) y su ley indica qué proporción es oro puro: el peso purificado estimado (P.P.E.) es el producto de los dos. La <b>ley media</b> es la del conjunto, el P.P.E. dividido entre el P.F. <b>El precio de compra se calcula sobre el P.P.E.</b></p></details>
-  
-
-  
-  <h2 class="h2">Venta de oro</h2>
-  
-  <h3 class="h3">Venta externa, por envío</h3>
-  <div class="tracewrap">
-  <table class="trace">
-    <thead>
-      <tr><th scope="col">Venta</th><th scope="col">Gramos enviados</th><th scope="col">Liquidado</th><th scope="col">Pagado</th><th scope="col">Saldo</th><th scope="col">Margen</th></tr>
-    </thead>
-    
-    <tbody>
-      
-      <tr><td class="venta">Venta Julieth <span class="lotes">6 lotes · LOT-00147 a LOT-00152</span></td><td>196,21 gr</td><td>—</td><td>—</td><td>—</td><td>—<span class="sub">costo $69.247.500</span></td></tr>
-
-      
-    </tbody>
-    
-    
-  </table>
-</div>
-
-  
-  
-  
-  <p class="tracenote">Aquí están las ventas abiertas y las que terminaron hoy. Estas cifras no suman al balance: el dinero cuenta cuando llega a las cajas, los anticipos o la ganancia.</p>
-  
 
   <h2 class="h2">En qué está representado ese valor</h2>
   <div class="grid">
@@ -574,6 +525,165 @@ p { margin: 0; }
     </div>
     
   </div>
+
+  <h2 class="h2">Detalle de las cuentas: el día, el mes y el histórico</h2>
+  <div class="tracewrap">
+  <table class="trace agrupada">
+    <thead>
+      <tr><th scope="col">Cuenta</th><th scope="col">En el día</th><th scope="col">En el mes</th><th scope="col">Histórico</th></tr>
+    </thead>
+    
+    <tbody>
+      
+      <tr class="fila-grupo"><th scope="rowgroup"><span class="punto" style="background:#14705A;" aria-hidden="true"></span>Plata disponible</th><td>$28.862.000</td><td>—</td><td>—</td></tr>
+
+      
+      <tr><td>Caja Principal</td><td>$14.500.000</td><td>—</td><td>—</td></tr>
+
+      
+      <tr><td>Caja Auxiliar</td><td>$14.362.000</td><td>—</td><td>—</td></tr>
+
+      
+    </tbody>
+    
+    <tbody>
+      
+      <tr class="fila-grupo"><th scope="rowgroup"><span class="punto" style="background:#A4521F;" aria-hidden="true"></span>Cuentas por cobrar</th><td>$2.930.000</td><td>$160.556.600</td><td>$79.498.312</td></tr>
+
+      
+      <tr><td>Mina Gris <span class="lotes">· 2 subcuentas</span></td><td>$2.010.000</td><td>$91.934.600</td><td>$18.205.312</td></tr>
+
+      
+      <tr><td>Mina Elvis <span class="lotes">· 2 subcuentas</span></td><td>$770.000</td><td>$8.943.000</td><td>$18.776.300</td></tr>
+
+      
+      <tr><td>Grismaldo</td><td>$150.000</td><td>$67.620.000</td><td>$30.289.000</td></tr>
+
+      
+      <tr><td>Almacén Motores</td><td>—</td><td class="merma">−$7.941.000</td><td>$12.227.700</td></tr>
+
+      
+    </tbody>
+    
+    <tbody>
+      
+      <tr class="fila-grupo"><th scope="rowgroup"><span class="punto" style="background:#1F6F7A;" aria-hidden="true"></span>Cuentas por pagar</th><td>$80.700.000</td><td>$1.746.000</td><td class="merma">−$7.049.422</td></tr>
+
+      
+      <tr><td>Obligaciones de la compraventa</td><td>—</td><td>$1.746.000</td><td class="merma">−$7.049.422</td></tr>
+
+      
+      <tr><td>Anticipos recibidos por oro <span class="lotes">· 1 subcuenta</span></td><td>$80.700.000</td><td>—</td><td>—</td></tr>
+
+      
+    </tbody>
+    
+    <tbody>
+      
+      <tr class="fila-grupo"><th scope="rowgroup"><span class="punto" style="background:#6B3FA0;" aria-hidden="true"></span>Resultado por venta de oro</th><td>—</td><td>$36.586.120</td><td>—</td></tr>
+
+      
+      <tr><td>Ganancia en venta de oro</td><td>—</td><td>$36.586.120</td><td>—</td></tr>
+
+      
+    </tbody>
+    
+    <tbody>
+      
+      <tr class="fila-grupo"><th scope="rowgroup"><span class="punto" style="background:#5A5E6B;" aria-hidden="true"></span>Gastos del negocio</th><td class="merma">−$11.239.000</td><td class="merma">−$30.212.500</td><td class="merma">−$21.917.000</td></tr>
+
+      
+      <tr><td>Gastos de operación <span class="lotes">· 2 subcuentas</span></td><td class="merma">−$11.239.000</td><td class="merma">−$30.212.500</td><td class="merma">−$21.917.000</td></tr>
+
+      
+    </tbody>
+    
+    <tbody>
+      
+      <tr class="fila-grupo"><th scope="rowgroup"><span class="punto" style="background:#8A5A2B;" aria-hidden="true"></span>Sobrantes y faltantes de caja</th><td class="merma">−$57.000</td><td>$259.000</td><td class="merma">−$65.000</td></tr>
+
+      
+      <tr><td>Caja Auxiliar — Sobrante</td><td>—</td><td>$272.000</td><td>$176.000</td></tr>
+
+      
+      <tr><td>Caja Auxiliar — Faltante</td><td class="merma">−$57.000</td><td class="merma">−$13.000</td><td class="merma">−$241.000</td></tr>
+
+      
+    </tbody>
+    
+    
+    <tfoot>
+      
+      <tr><td>Total</td><td>$101.196.000</td><td>$168.935.220</td><td>$50.466.890</td></tr>
+
+      
+    </tfoot>
+    
+  </table>
+</div>
+
+  
+  <details class="como"><summary>¿Cómo se lee esta tabla?</summary><p class="tracenote">Las cuentas van por grupos, cada uno con su subtotal, en el orden de la barra; los sobrantes y faltantes de caja van aparte de los gastos. Cada cifra es lo que la cuenta aporta al cierre, con su signo. Las cuentas sin ninguna cifra ese día no llevan fila: se nombran al final de su grupo, en «Sin movimiento». El guion significa que ese día no se registró nada, no que valga cero. Las cifras en rojo restan.</p></details>
+
+  
+  <h2 class="h2">Inventario de oro y su estado</h2>
+  <div class="tracewrap">
+  <table class="trace">
+    <thead>
+      <tr><th scope="col">Estado</th><th scope="col">P.A.</th><th scope="col">P.F.</th><th scope="col">Ley media</th><th scope="col">P.P.E.</th><th scope="col">Precio de compra</th></tr>
+    </thead>
+    
+    <tbody>
+      
+      <tr><td>En bodega <span class="lotes">· 2 lotes</span></td><td>24,35 gr</td><td>79,48 gr</td><td>0,705</td><td class="paso">56,03 gr</td><td>$25.910.000</td></tr>
+
+      
+      <tr><td>Pendiente x pagar <span class="lotes">· 6 lotes</span></td><td>—</td><td>275,15 gr</td><td>0,713</td><td class="paso">196,21 gr</td><td>$69.247.500</td></tr>
+
+      
+    </tbody>
+    
+    
+    <tfoot>
+      
+      <tr><td>Total</td><td>24,35 gr</td><td>354,63 gr</td><td>0,711</td><td class="paso">252,24 gr</td><td>$95.157.500</td></tr>
+
+      
+    </tfoot>
+    
+  </table>
+</div>
+
+  
+  <details class="como"><summary>¿Cómo se calcula?</summary><p class="tracenote">Cada lote llega fundido (P.F.) y su ley indica qué proporción es oro puro: el peso purificado estimado (P.P.E.) es el producto de los dos. La <b>ley media</b> es la del conjunto, el P.P.E. dividido entre el P.F. <b>El precio de compra se calcula sobre el P.P.E.</b></p></details>
+  
+
+  
+  <h2 class="h2">Venta de oro</h2>
+  
+  <h3 class="h3">Venta externa, por envío</h3>
+  <div class="tracewrap">
+  <table class="trace">
+    <thead>
+      <tr><th scope="col">Venta</th><th scope="col">Gramos enviados</th><th scope="col">Liquidado</th><th scope="col">Pagado</th><th scope="col">Saldo</th><th scope="col">Margen</th></tr>
+    </thead>
+    
+    <tbody>
+      
+      <tr><td class="venta">Venta Julieth <span class="lotes">6 lotes · LOT-00147 a LOT-00152</span></td><td>196,21 gr</td><td>—</td><td>—</td><td>—</td><td>—<span class="sub">costo $69.247.500</span></td></tr>
+
+      
+    </tbody>
+    
+    
+  </table>
+</div>
+
+  
+  
+  
+  <p class="tracenote">Aquí están las ventas abiertas y las que terminaron hoy. Estas cifras no suman al balance: el dinero cuenta cuando llega a las cajas, los anticipos o la ganancia.</p>
+  
 
   
   <h2 class="h2">Quién responde por cada monto</h2>
@@ -708,77 +818,6 @@ p { margin: 0; }
   </div>
   <p class="tracenote">Esta sección no suma el balance del día: el oro no tiene responsable.</p>
   
-
-  <h2 class="h2">Detalle de las cuentas: el día, el mes y el histórico</h2>
-  <div class="tracewrap">
-  <table class="trace">
-    <thead>
-      <tr><th scope="col">Cuenta</th><th scope="col">En el día</th><th scope="col">En el mes</th><th scope="col">Histórico</th></tr>
-    </thead>
-    
-    <tbody>
-      
-      <tr><td>Caja Principal</td><td>$14.500.000</td><td>—</td><td>—</td></tr>
-
-      
-      <tr><td>Caja Auxiliar</td><td>$14.362.000</td><td>—</td><td>—</td></tr>
-
-      
-      <tr><td>Cuenta x Cobrar MINA GRIS <span class="lotes">· 1 subcuenta</span></td><td>$2.010.000</td><td>$91.934.600</td><td>$18.205.312</td></tr>
-
-      
-      <tr><td>Cuenta x Cobrar MINA ELVIS <span class="lotes">· 1 subcuenta</span></td><td>$770.000</td><td>$8.943.000</td><td>$18.776.300</td></tr>
-
-      
-      <tr><td>Cuenta x Cobrar Grismaldo</td><td>$150.000</td><td>$67.620.000</td><td>$30.289.000</td></tr>
-
-      
-      <tr><td>Caja Auxiliar — $ Sobrante</td><td>—</td><td>$272.000</td><td>$176.000</td></tr>
-
-      
-      <tr><td>Ganancia x Venta Oro</td><td>—</td><td>$36.586.120</td><td>—</td></tr>
-
-      
-      <tr><td>Cuenta x Cobrar Motores</td><td>—</td><td class="merma">−$7.941.000</td><td>$12.227.700</td></tr>
-
-      
-      <tr><td>Anticipos por Venta de Oro <span class="lotes">· 1 subcuenta</span></td><td>$80.700.000</td><td>—</td><td>—</td></tr>
-
-      
-    </tbody>
-    
-    <tbody>
-      
-      <tr><td>Cuenta x Pagar CompraVenta</td><td>—</td><td>$1.746.000</td><td class="merma">−$7.049.422</td></tr>
-
-      
-      <tr><td>Gastos CompraVenta <span class="lotes">· 1 subcuenta</span></td><td class="merma">−$11.239.000</td><td class="merma">−$30.212.500</td><td class="merma">−$21.917.000</td></tr>
-
-      
-      <tr><td>Caja Auxiliar — $ Faltante</td><td class="merma">−$57.000</td><td class="merma">−$13.000</td><td class="merma">−$241.000</td></tr>
-
-      
-    </tbody>
-    
-    
-    <tfoot>
-      
-      <tr><td>Suman</td><td>$112.492.000</td><td>$197.414.720</td><td>$79.674.312</td></tr>
-
-      
-      <tr><td>Restan</td><td class="merma">−$11.296.000</td><td class="merma">−$28.479.500</td><td class="merma">−$29.207.422</td></tr>
-
-      
-      <tr><td>Total</td><td>$101.196.000</td><td>$168.935.220</td><td>$50.466.890</td></tr>
-
-      
-    </tfoot>
-    
-  </table>
-</div>
-
-  
-  <details class="como"><summary>¿Cómo se lee esta tabla?</summary><p class="tracenote">Cada cifra es lo que la cuenta aporta al cierre, con su signo. El guion significa que ese día no se registró nada, no que valga cero. Las cifras en rojo restan.</p></details>
 
   
   <h2 class="h2">De dónde sale cada cifra de cierre</h2>
