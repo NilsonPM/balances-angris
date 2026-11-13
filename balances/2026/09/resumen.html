@@ -32,6 +32,19 @@
   --aviso-borde: #A4521F;
   --radio: 12px;
   --toque: 44px;
+  /* Los botones son más bajos que el resto de lo que se toca: 32 px con mouse y 36 px con el dedo
+     (decisión del 11/11/2026). Los de una fila de tabla, un paso menos. */
+  --boton: 32px;
+  --boton-fila: 28px;
+  --icono: 18px;
+  /* Las casillas (campos y listas), del alto de los botones. Con el dedo la letra es de 16 px:
+     con menos, el iPhone acerca la pantalla al tocar la casilla. */
+  --campo: 32px;
+  --letra-campo: 14px;
+  --opcion: 32px;
+}
+@media (pointer: coarse) {
+  :root { --boton: 36px; --boton-fila: 32px; --icono: 20px; --campo: 36px; --letra-campo: 16px; --opcion: 40px; }
 }
 
 /* El movimiento de la app: corto y funcional, para que nada aparezca ni cambie de golpe. Va en la
@@ -83,8 +96,8 @@ p { margin: 0; }
 .privado { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; padding: 12px 14px; margin-bottom: 16px; border: 1px dashed var(--borde); border-radius: var(--radio); font-size: 14px; color: var(--texto); }
 .privado form { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; }
 .privado label { display: grid; gap: 2px; font-size: 12.5px; color: var(--tenue); }
-.privado input { font: inherit; padding: 8px 10px; min-height: 44px; border: 1px solid var(--borde); border-radius: 8px; }
-.privado button { font: inherit; font-weight: 600; min-height: 44px; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--tinta); background: var(--tinta); color: #fff; cursor: pointer; }
+.privado input { font: inherit; font-size: var(--letra-campo); padding: 4px 10px; min-height: var(--campo); border: 1px solid var(--borde); border-radius: 8px; }
+.privado button { font: inherit; font-size: 13.5px; font-weight: 600; min-height: var(--boton); padding: 4px 12px; border-radius: 8px; border: 1px solid var(--tinta); background: var(--tinta); color: #fff; cursor: pointer; }
 .privado button[disabled] { opacity: .45; cursor: not-allowed; }
 .privado .tenue { font-size: 12.5px; color: var(--tenue); }
 .privado-detalle { display: block; margin: 32px 0 0; }
@@ -102,7 +115,7 @@ p { margin: 0; }
 .cabeza-dia > .destino { margin-top: -4px; text-align: right; }
 .acciones-dia { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; }
 .acciones { position: relative; }
-.acciones > summary { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 6px 14px; border: 1px solid var(--tinta); border-radius: 8px; background: var(--nota); font-weight: 600; cursor: pointer; list-style: none; }
+.acciones > summary { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; min-height: var(--boton, 44px); padding: 4px 12px; border: 1px solid var(--tinta); border-radius: 8px; background: var(--nota); font-weight: 600; cursor: pointer; list-style: none; }
 .acciones > summary:hover { background: var(--borde); }
 .acciones > summary::-webkit-details-marker { display: none; }
 .acciones > summary::after { content: '▾'; color: var(--tenue); transition: transform var(--medio) var(--curva); }
@@ -235,12 +248,42 @@ p { margin: 0; }
 .aviso { margin-top: 14px; background: var(--aviso); border-left: 3px solid var(--aviso-borde); border-radius: 0 8px 8px 0; padding: 12px 16px; font-size: 13.5px; color: var(--texto); }
 .aviso b, .note b { font-weight: 600; color: var(--tinta); }
 
-/* Quién responde */
-.who { background: var(--papel); border: 1px solid var(--borde); border-radius: var(--radio); padding: 16px 18px; display: flex; align-items: center; gap: 14px; }
-.av { width: 42px; height: 42px; border-radius: 50%; flex: none; display: flex; align-items: center; justify-content: center; font-size: 15.5px; font-weight: 600; }
-.who .nm { font-size: 15px; font-weight: 600; letter-spacing: -0.005em; }
-.who .rl { font-size: 12.5px; color: var(--tenue); margin: 1px 0 5px; }
-.who .vl { font-size: 19px; font-weight: 600; letter-spacing: -0.02em; }
+/* Quién responde, por unidad de negocio (ADR-0059). El nombre y los totales de la unidad van
+   encima de su tarjeta: los totales son lo que importa; las filas, el detalle. */
+.unidad { margin-top: 22px; }
+.unidad-cabeza { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 6px 24px; margin: 0 4px 8px; }
+.unidad-nombre { margin: 0; font-size: 17px; font-weight: 650; letter-spacing: -0.01em; }
+.unidad-totales { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 28px; margin: 0; }
+.unidad-totales div { text-align: right; }
+.unidad-totales dt { font-size: 11.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--tenue); }
+.unidad-totales dd { margin: 0; font-size: 22px; font-weight: 650; letter-spacing: -0.02em; line-height: 1.15; }
+.unidad-totales dd.merma { color: var(--baja); }
+.unidad-tarjeta { background: var(--papel); border: 1px solid var(--borde); border-radius: var(--radio); overflow-x: auto; }
+.quien { width: 100%; border-collapse: collapse; font-size: 14px; }
+.quien th { text-align: right; font-weight: 600; color: var(--tenue); font-size: 12px; padding: 9px 16px; border-bottom: 1px solid var(--borde); background: var(--fondo); white-space: nowrap; }
+.quien td { text-align: right; padding: 11px 16px; border-bottom: 1px solid var(--linea); white-space: nowrap; }
+.quien tbody tr:last-child td { border-bottom: none; }
+.quien th:first-child, .quien td:first-child { text-align: left; white-space: normal; }
+.quien th:not(:first-child), .quien td:not(:first-child) { width: 9.5em; }
+.quien td.historico { font-weight: 650; }
+.quien td.merma { color: var(--baja); }
+.quien td.vacio { color: var(--tenue); }
+.quien-rol { font-weight: 600; }
+.quien-nombre { font-size: 13px; color: var(--tenue); }
+.punto { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 10px; vertical-align: 1px; flex: none; }
+.quien-leyenda { margin-top: 18px; }
+.quien-leyenda .key { cursor: default; font-size: 13px; }
+.quien-leyenda .punto { margin-right: 0; }
+@media (max-width: 560px) {
+  .unidad-cabeza { flex-direction: column; align-items: flex-start; }
+  .unidad-totales { justify-content: flex-start; }
+  .unidad-totales div { text-align: left; }
+  .unidad-totales dd { font-size: 19px; }
+  .quien { font-size: 13px; }
+  .quien th, .quien td { padding: 9px 8px; }
+  .quien th:not(:first-child), .quien td:not(:first-child) { width: auto; }
+  .quien-nombre { display: block; margin-left: 18px; }
+}
 
 .note { margin-top: 34px; background: var(--nota); border-radius: var(--radio); padding: 18px 20px; font-size: 13.5px; color: var(--texto); line-height: 1.6; }
 .note p { margin-bottom: 8px; }
@@ -306,7 +349,8 @@ p { margin: 0; }
 .mes-manual summary { cursor: pointer; font-weight: 600; font-size: 14px; }
 .mes-manual .enlace-apertura { display: inline-block; margin: 2px 0; color: var(--tinta); font-weight: 600; font-size: 14px; }
 .formulario-mes { display: grid; gap: 10px; max-width: 520px; margin-top: 10px; }
-.formulario-mes textarea, .formulario-mes select { font: inherit; padding: 8px 10px; border: 1px solid var(--borde); border-radius: 8px; min-height: 44px; }
+.formulario-mes textarea, .formulario-mes select { font: inherit; padding: 4px 10px; border: 1px solid var(--borde); border-radius: 8px; min-height: var(--campo, 44px); }
+.formulario-mes textarea { min-height: 76px; padding: 8px 10px; }
 .formulario-mes button { justify-self: start; }
 .en-linea { display: inline; }
 .privado .quitar-mes { min-height: 0; padding: 2px 8px; font-size: 12.5px; background: none; color: var(--baja); border-color: var(--borde); }
@@ -446,6 +490,102 @@ p { margin: 0; }
 
 
   
+  <h2 class="h2">Compras de oro</h2>
+  <div class="tracewrap">
+  <table class="trace">
+    <thead>
+      <tr><th scope="col">Unidad</th><th scope="col">Lotes</th><th scope="col">P.F.</th><th scope="col">P.P.E.</th><th scope="col">Pagado</th><th scope="col">Por gramo</th></tr>
+    </thead>
+    
+    <tbody>
+      
+      <tr><td>Compraventa</td><td>45</td><td>2.009,26 g</td><td class="paso">1.459,09 g</td><td>$599.789.000</td><td>$382.945/gr</td></tr>
+
+      
+      <tr><td>Mina Gris</td><td>4</td><td>293,27 g</td><td class="paso">230,26 g</td><td>$89.132.350</td><td>$387.090/gr</td></tr>
+
+      
+    </tbody>
+    
+    
+    <tfoot>
+      
+      <tr><td>Total</td><td>49</td><td>2.302,53 g</td><td class="paso">1.689,36 g</td><td>$688.921.350</td><td>$383.510/gr</td></tr>
+
+      
+    </tfoot>
+    
+  </table>
+</div>
+
+  
+  <details class="como"><summary>¿Cómo se calcula?</summary><p class="tracenote">Los lotes recibidos en el mes, con los pesos del último día en que aparecen. El precio por gramo se lee contra el P.P.E., solo de los lotes que ya lo tienen.</p></details>
+  
+
+
+
+  <h2 class="h2">Ventas y ganancia</h2>
+  <div class="tracewrap">
+  <table class="trace">
+    <thead>
+      <tr><th scope="col">Venta</th><th scope="col">Canal</th><th scope="col">Gramos</th><th scope="col">Vendido</th><th scope="col">Costo</th><th scope="col">Margen</th><th scope="col">Estado</th></tr>
+    </thead>
+    
+    <tbody>
+      
+      <tr><td>28/08-30/08 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>311,29 g</td><td>$125.502.600</td><td>$122.593.000</td><td class="paso">$2.909.600</td><td>Cerrada</td></tr>
+
+      
+      <tr><td>31/08-04/09 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>198,09 g</td><td>$79.916.100</td><td>$76.993.000</td><td class="paso">$2.923.100</td><td>Cerrada</td></tr>
+
+      
+      <tr><td>05/09-06/09 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>226,64 g</td><td>$87.334.500</td><td>$86.793.000</td><td class="paso">$541.500</td><td>Cerrada</td></tr>
+
+      
+      <tr><td>07/09-08/09 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>105,06 g</td><td>$41.335.140</td><td>$39.497.000</td><td class="paso">$1.838.140</td><td>Cerrada</td></tr>
+
+      
+      <tr><td>09/09-12/09 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>241,50 g</td><td>$93.420.250</td><td>$88.463.350</td><td class="paso">$4.956.900</td><td>Cerrada</td></tr>
+
+      
+      <tr><td>13-09/17-09 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>328,35 g</td><td>$129.874.220</td><td>$123.775.000</td><td class="paso">$6.099.220</td><td>Cerrada</td></tr>
+
+      
+      <tr><td>17/09-20/09 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>170,76 g</td><td>$69.240.000</td><td>$66.498.000</td><td class="paso">$2.742.000</td><td>Cerrada</td></tr>
+
+      
+      <tr><td>21/9-23/9 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>126,60 g</td><td>$53.358.240</td><td>$49.725.000</td><td class="paso">$3.633.240</td><td>Cerrada</td></tr>
+
+      
+      <tr><td>24/09-28-09 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>248,78 g</td><td>—</td><td>$97.880.000</td><td>—</td><td>Abierta</td></tr>
+
+      
+      <tr><td>24/09-28/09 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>248,78 g</td><td>$103.124.010</td><td>$97.880.000</td><td class="paso">$5.244.010</td><td>Cerrada</td></tr>
+
+      
+      <tr><td>28/09-30/09 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>139,95 g</td><td>—</td><td>$45.440.000</td><td>—</td><td>Abierta</td></tr>
+
+      
+    </tbody>
+    
+    
+    <tfoot>
+      
+      <tr><td>Cerradas · 9</td><td></td><td>1.957,07 g</td><td>$783.105.060</td><td>$752.217.350</td><td>$30.887.710</td><td></td></tr>
+
+      
+    </tfoot>
+    
+  </table>
+</div>
+
+  <p class="resultado-mes"><span>Resultado por venta de oro del mes</span> <b>$30.886.890</b></p>
+  <details class="como"><summary>¿Cómo se calcula?</summary><p class="tracenote">El resultado es el de las cuentas de ganancia y pérdida por venta de oro del mes, la cifra del libro; los márgenes de cada venta son su detalle.</p></details>
+  
+
+
+
+  
   <h2 class="h2">Gastos y cuentas</h2>
   <div class="tracewrap">
   <table class="trace">
@@ -579,101 +719,6 @@ p { margin: 0; }
   
   <details class="como"><summary>¿Cómo se lee esta tabla?</summary><p class="tracenote">Cada saldo es lo que la cuenta aporta al cierre, con su signo: al empezar es el del último día del mes anterior; al terminar, el del último día del mes.</p></details>
   
-
-  <h2 class="h2">Compras de oro</h2>
-  <div class="tracewrap">
-  <table class="trace">
-    <thead>
-      <tr><th scope="col">Unidad</th><th scope="col">Lotes</th><th scope="col">P.F.</th><th scope="col">P.P.E.</th><th scope="col">Pagado</th><th scope="col">Por gramo</th></tr>
-    </thead>
-    
-    <tbody>
-      
-      <tr><td>Compraventa</td><td>45</td><td>2.009,26 g</td><td class="paso">1.459,09 g</td><td>$599.789.000</td><td>$382.945/gr</td></tr>
-
-      
-      <tr><td>Mina Gris</td><td>4</td><td>293,27 g</td><td class="paso">230,26 g</td><td>$89.132.350</td><td>$387.090/gr</td></tr>
-
-      
-    </tbody>
-    
-    
-    <tfoot>
-      
-      <tr><td>Total</td><td>49</td><td>2.302,53 g</td><td class="paso">1.689,36 g</td><td>$688.921.350</td><td>$383.510/gr</td></tr>
-
-      
-    </tfoot>
-    
-  </table>
-</div>
-
-  
-  <details class="como"><summary>¿Cómo se calcula?</summary><p class="tracenote">Los lotes recibidos en el mes, con los pesos del último día en que aparecen. El precio por gramo se lee contra el P.P.E., solo de los lotes que ya lo tienen.</p></details>
-  
-
-
-
-  <h2 class="h2">Ventas y ganancia</h2>
-  <div class="tracewrap">
-  <table class="trace">
-    <thead>
-      <tr><th scope="col">Venta</th><th scope="col">Canal</th><th scope="col">Gramos</th><th scope="col">Vendido</th><th scope="col">Costo</th><th scope="col">Margen</th><th scope="col">Estado</th></tr>
-    </thead>
-    
-    <tbody>
-      
-      <tr><td>28/08-30/08 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>311,29 g</td><td>$125.502.600</td><td>$122.593.000</td><td class="paso">$2.909.600</td><td>Cerrada</td></tr>
-
-      
-      <tr><td>31/08-04/09 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>198,09 g</td><td>$79.916.100</td><td>$76.993.000</td><td class="paso">$2.923.100</td><td>Cerrada</td></tr>
-
-      
-      <tr><td>05/09-06/09 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>226,64 g</td><td>$87.334.500</td><td>$86.793.000</td><td class="paso">$541.500</td><td>Cerrada</td></tr>
-
-      
-      <tr><td>07/09-08/09 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>105,06 g</td><td>$41.335.140</td><td>$39.497.000</td><td class="paso">$1.838.140</td><td>Cerrada</td></tr>
-
-      
-      <tr><td>09/09-12/09 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>241,50 g</td><td>$93.420.250</td><td>$88.463.350</td><td class="paso">$4.956.900</td><td>Cerrada</td></tr>
-
-      
-      <tr><td>13-09/17-09 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>328,35 g</td><td>$129.874.220</td><td>$123.775.000</td><td class="paso">$6.099.220</td><td>Cerrada</td></tr>
-
-      
-      <tr><td>17/09-20/09 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>170,76 g</td><td>$69.240.000</td><td>$66.498.000</td><td class="paso">$2.742.000</td><td>Cerrada</td></tr>
-
-      
-      <tr><td>21/9-23/9 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>126,60 g</td><td>$53.358.240</td><td>$49.725.000</td><td class="paso">$3.633.240</td><td>Cerrada</td></tr>
-
-      
-      <tr><td>24/09-28-09 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>248,78 g</td><td>—</td><td>$97.880.000</td><td>—</td><td>Abierta</td></tr>
-
-      
-      <tr><td>24/09-28/09 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>248,78 g</td><td>$103.124.010</td><td>$97.880.000</td><td class="paso">$5.244.010</td><td>Cerrada</td></tr>
-
-      
-      <tr><td>28/09-30/09 <span class="lotes">Venta externa, por envío</span></td><td>Venta Externa A</td><td>139,95 g</td><td>—</td><td>$45.440.000</td><td>—</td><td>Abierta</td></tr>
-
-      
-    </tbody>
-    
-    
-    <tfoot>
-      
-      <tr><td>Cerradas · 9</td><td></td><td>1.957,07 g</td><td>$783.105.060</td><td>$752.217.350</td><td>$30.887.710</td><td></td></tr>
-
-      
-    </tfoot>
-    
-  </table>
-</div>
-
-  <p class="resultado-mes"><span>Resultado por venta de oro del mes</span> <b>$30.886.890</b></p>
-  <details class="como"><summary>¿Cómo se calcula?</summary><p class="tracenote">El resultado es el de las cuentas de ganancia y pérdida por venta de oro del mes, la cifra del libro; los márgenes de cada venta son su detalle.</p></details>
-  
-
-
 
 
 </div>
