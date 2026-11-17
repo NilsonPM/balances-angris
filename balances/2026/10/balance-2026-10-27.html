@@ -13,6 +13,7 @@
 <style>
 /* El reporte del día. Va embebido en la página para que se pueda abrir suelta, enviar o
    imprimir y se vea igual (docs/publicacion.md). Sigue el diseño del sitio publicado. */
+/* Los colores y medidas de la app y de los reportes: una sola lista (docs/publicacion.md). */
 :root {
   --tinta: #16150F;
   --texto: #43413A;
@@ -20,16 +21,36 @@
   --fondo: #FAF9F6;
   --papel: #FFFFFF;
   --borde: #E3E0D6;
-  --oro-logo: #B69659;  /* El dorado del logo: solo adornos, no texto */
   --linea: #EDEBE3;
   --nota: #F2F0E9;
-  --sube: #14705A;
-  --baja: #B3261E;
+  --verde: #14705A;
+  --rojo: #B3261E;
+  /* En los reportes el color marca la dirección del cambio, no si la noticia es buena. */
+  --sube: var(--verde);
+  --baja: var(--rojo);
   --oro: #8A6512;
+  /* El dorado del logo: solo para adornos (bordes, líneas). Sobre blanco no llega al contraste
+     de un texto. */
+  --oro-logo: #B69659;
   --aviso: #FBF3E4;
   --aviso-borde: #A4521F;
   --radio: 12px;
+  --toque: 44px;
+  /* Los botones son más bajos que el resto de lo que se toca: 32 px con mouse y 36 px con el dedo
+     (decisión del 11/11/2026). Los de una fila de tabla, un paso menos. */
+  --boton: 32px;
+  --boton-fila: 28px;
+  --icono: 18px;
+  /* Las casillas (campos y listas), del alto de los botones. Con el dedo la letra es de 16 px:
+     con menos, el iPhone acerca la pantalla al tocar la casilla. */
+  --campo: 32px;
+  --letra-campo: 14px;
+  --opcion: 32px;
 }
+@media (pointer: coarse) {
+  :root { --boton: 36px; --boton-fila: 32px; --icono: 20px; --campo: 36px; --letra-campo: 16px; --opcion: 40px; }
+}
+
 /* El movimiento de la app: corto y funcional, para que nada aparezca ni cambie de golpe. Va en la
    hoja de la app y en la de los reportes (también en lo publicado: es solo CSS). Quien pide
    «reducir movimiento» en su equipo no ve ninguna animación. */
@@ -79,8 +100,8 @@ p { margin: 0; }
 .privado { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; padding: 12px 14px; margin-bottom: 16px; border: 1px dashed var(--borde); border-radius: var(--radio); font-size: 14px; color: var(--texto); }
 .privado form { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; }
 .privado label { display: grid; gap: 2px; font-size: 12.5px; color: var(--tenue); }
-.privado input { font: inherit; padding: 8px 10px; min-height: 44px; border: 1px solid var(--borde); border-radius: 8px; }
-.privado button { font: inherit; font-weight: 600; min-height: 44px; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--tinta); background: var(--tinta); color: #fff; cursor: pointer; }
+.privado input { font: inherit; font-size: var(--letra-campo); padding: 4px 10px; min-height: var(--campo); border: 1px solid var(--borde); border-radius: 8px; }
+.privado button { font: inherit; font-size: 13.5px; font-weight: 600; min-height: var(--boton); padding: 4px 12px; border-radius: 8px; border: 1px solid var(--tinta); background: var(--tinta); color: #fff; cursor: pointer; }
 .privado button[disabled] { opacity: .45; cursor: not-allowed; }
 .privado .tenue { font-size: 12.5px; color: var(--tenue); }
 .privado-detalle { display: block; margin: 32px 0 0; }
@@ -98,7 +119,7 @@ p { margin: 0; }
 .cabeza-dia > .destino { margin-top: -4px; text-align: right; }
 .acciones-dia { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; }
 .acciones { position: relative; }
-.acciones > summary { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 6px 14px; border: 1px solid var(--tinta); border-radius: 8px; background: var(--nota); font-weight: 600; cursor: pointer; list-style: none; }
+.acciones > summary { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; min-height: var(--boton, 44px); padding: 4px 12px; border: 1px solid var(--tinta); border-radius: 8px; background: var(--nota); font-weight: 600; cursor: pointer; list-style: none; }
 .acciones > summary:hover { background: var(--borde); }
 .acciones > summary::-webkit-details-marker { display: none; }
 .acciones > summary::after { content: '▾'; color: var(--tenue); transition: transform var(--medio) var(--curva); }
@@ -203,8 +224,16 @@ p { margin: 0; }
 .trace th:first-child, .trace td:first-child { text-align: left; }
 .trace tfoot td { font-weight: 600; border-top: 1px solid var(--tinta); border-bottom: none; }
 .trace .lotes { font-weight: 400; color: var(--tenue); }
+.trace td.venta .lotes { display: block; font-size: 11.5px; margin-top: 1px; }
 .trace .sub { display: block; font-weight: 400; color: var(--tenue); font-size: 11.5px; margin-top: 1px; }
 .trace .merma { color: var(--baja); }
+/* El detalle de las cuentas, por grupos (ADR-0047): cada grupo abre con su subtotal. */
+.trace tbody + tbody tr.fila-grupo > * { border-top: 1px solid var(--borde); }
+.trace tr.fila-grupo > * { font-weight: 600; background: var(--nota); }
+.trace tr.fila-grupo th { text-align: left; color: var(--tinta); font-size: 13px; padding: 9px 10px; border-bottom: 1px solid var(--linea); white-space: nowrap; }
+.trace tr.fila-grupo .punto { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 8px; vertical-align: 0; }
+.trace.agrupada tbody tr:not(.fila-grupo):not(.sin-movimiento) td:first-child { padding-left: 27px; }
+.trace tr.sin-movimiento td { text-align: left; color: var(--tenue); font-size: 12px; font-style: italic; padding-left: 27px; white-space: normal; }
 .trace .paso { color: var(--oro); font-weight: 600; }
 .trace.trace-2col { min-width: 0; }
 .trace.trace-2col td:first-child, .trace.trace-2col th:first-child { white-space: normal; }
@@ -223,12 +252,42 @@ p { margin: 0; }
 .aviso { margin-top: 14px; background: var(--aviso); border-left: 3px solid var(--aviso-borde); border-radius: 0 8px 8px 0; padding: 12px 16px; font-size: 13.5px; color: var(--texto); }
 .aviso b, .note b { font-weight: 600; color: var(--tinta); }
 
-/* Quién responde */
-.who { background: var(--papel); border: 1px solid var(--borde); border-radius: var(--radio); padding: 16px 18px; display: flex; align-items: center; gap: 14px; }
-.av { width: 42px; height: 42px; border-radius: 50%; flex: none; display: flex; align-items: center; justify-content: center; font-size: 15.5px; font-weight: 600; }
-.who .nm { font-size: 15px; font-weight: 600; letter-spacing: -0.005em; }
-.who .rl { font-size: 12.5px; color: var(--tenue); margin: 1px 0 5px; }
-.who .vl { font-size: 19px; font-weight: 600; letter-spacing: -0.02em; }
+/* Quién responde, por unidad de negocio (ADR-0059). El nombre y los totales de la unidad van
+   encima de su tarjeta: los totales son lo que importa; las filas, el detalle. */
+.unidad { margin-top: 22px; }
+.unidad-cabeza { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 6px 24px; margin: 0 4px 8px; }
+.unidad-nombre { margin: 0; font-size: 17px; font-weight: 650; letter-spacing: -0.01em; }
+.unidad-totales { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 28px; margin: 0; }
+.unidad-totales div { text-align: right; }
+.unidad-totales dt { font-size: 11.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--tenue); }
+.unidad-totales dd { margin: 0; font-size: 22px; font-weight: 650; letter-spacing: -0.02em; line-height: 1.15; }
+.unidad-totales dd.merma { color: var(--baja); }
+.unidad-tarjeta { background: var(--papel); border: 1px solid var(--borde); border-radius: var(--radio); overflow-x: auto; }
+.quien { width: 100%; border-collapse: collapse; font-size: 14px; }
+.quien th { text-align: right; font-weight: 600; color: var(--tenue); font-size: 12px; padding: 9px 16px; border-bottom: 1px solid var(--borde); background: var(--fondo); white-space: nowrap; }
+.quien td { text-align: right; padding: 11px 16px; border-bottom: 1px solid var(--linea); white-space: nowrap; }
+.quien tbody tr:last-child td { border-bottom: none; }
+.quien th:first-child, .quien td:first-child { text-align: left; white-space: normal; }
+.quien th:not(:first-child), .quien td:not(:first-child) { width: 9.5em; }
+.quien td.historico { font-weight: 650; }
+.quien td.merma { color: var(--baja); }
+.quien td.vacio { color: var(--tenue); }
+.quien-rol { font-weight: 600; }
+.quien-nombre { font-size: 13px; color: var(--tenue); }
+.punto { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 10px; vertical-align: 1px; flex: none; }
+.quien-leyenda { margin-top: 18px; }
+.quien-leyenda .key { cursor: default; font-size: 13px; }
+.quien-leyenda .punto { margin-right: 0; }
+@media (max-width: 560px) {
+  .unidad-cabeza { flex-direction: column; align-items: flex-start; }
+  .unidad-totales { justify-content: flex-start; }
+  .unidad-totales div { text-align: left; }
+  .unidad-totales dd { font-size: 19px; }
+  .quien { font-size: 13px; }
+  .quien th, .quien td { padding: 9px 8px; }
+  .quien th:not(:first-child), .quien td:not(:first-child) { width: auto; }
+  .quien-nombre { display: block; margin-left: 18px; }
+}
 
 .note { margin-top: 34px; background: var(--nota); border-radius: var(--radio); padding: 18px 20px; font-size: 13.5px; color: var(--texto); line-height: 1.6; }
 .note p { margin-bottom: 8px; }
@@ -258,7 +317,11 @@ p { margin: 0; }
 .ventana::backdrop { background: rgba(22, 21, 15, 0.35); }
 .ventana-cabeza { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; }
 .ventana-cabeza h3 { font-size: 15px; margin: 0; }
-.ventana .trace td:nth-child(-n+4), .ventana .trace th:nth-child(-n+4) { text-align: left; }
+/* El lote que nació de una fusión dice de cuáles, debajo de su código (ADR-0025). */
+.ventana .trace .de-fusion { display: block; font-size: 11.5px; font-weight: 400; color: var(--tenue); margin-top: 1px; }
+.ventana .trace tbody td:nth-child(-n+4), .ventana .trace thead th:nth-child(-n+4) { text-align: left; }
+/* Las cuentas y su día a día: las cifras, a la derecha (ADR-0047). */
+.ventana .trace.de-cuentas tbody td:not(:first-child), .ventana .trace.de-cuentas thead th:not(:first-child) { text-align: right; }
 
 /* El reporte del mes (mes.html) */
 .mes-hero { padding: 28px 0 22px; }
@@ -266,6 +329,7 @@ p { margin: 0; }
 .chip.parcial { background: var(--aviso); color: var(--aviso-borde); }
 .ajustado { font-size: 12px; color: var(--aviso-borde); margin-top: 6px; line-height: 1.4; }
 .evolucion { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 22px; align-items: center; }
+/* La línea del balance del mes: en el reporte y en el inicio. */
 .grafica { width: 100%; height: auto; background: var(--papel); border: 1px solid var(--borde); border-radius: var(--radio); }
 .grafica .guia { stroke: var(--linea); stroke-width: 1; stroke-dasharray: 3 4; }
 .grafica .base { stroke: var(--borde); stroke-width: 1; }
@@ -273,6 +337,7 @@ p { margin: 0; }
 .grafica .ultimo { font-size: 12px; font-weight: 700; fill: var(--tinta); }
 /* En el celular el dibujo se encoge a la mitad: los rótulos se agrandan para seguir legibles. */
 @media (max-width: 560px) { .grafica .eje { font-size: 15px; } .grafica .ultimo { font-size: 17px; } }
+
 .extremos { display: grid; grid-template-columns: 1fr auto; gap: 6px 14px; margin: 0; font-size: 13.5px; }
 .extremos dt { color: var(--tenue); }
 .extremos dd { margin: 0; text-align: right; font-weight: 600; }
@@ -286,8 +351,10 @@ p { margin: 0; }
 .nota-mes { margin-top: 12px; padding: 10px 14px; background: var(--nota); border-radius: 8px; font-size: 13.5px; color: var(--texto); }
 .mes-manual details { margin: 10px 0; }
 .mes-manual summary { cursor: pointer; font-weight: 600; font-size: 14px; }
+.mes-manual .enlace-apertura { display: inline-block; margin: 2px 0; color: var(--tinta); font-weight: 600; font-size: 14px; }
 .formulario-mes { display: grid; gap: 10px; max-width: 520px; margin-top: 10px; }
-.formulario-mes textarea, .formulario-mes select { font: inherit; padding: 8px 10px; border: 1px solid var(--borde); border-radius: 8px; min-height: 44px; }
+.formulario-mes textarea, .formulario-mes select { font: inherit; padding: 4px 10px; border: 1px solid var(--borde); border-radius: 8px; min-height: var(--campo, 44px); }
+.formulario-mes textarea { min-height: 76px; padding: 8px 10px; }
 .formulario-mes button { justify-self: start; }
 .en-linea { display: inline; }
 .privado .quitar-mes { min-height: 0; padding: 2px 8px; font-size: 12.5px; background: none; color: var(--baja); border-color: var(--borde); }
@@ -384,7 +451,7 @@ p { margin: 0; }
 </span></div><div class="seg" style="width:58.77%; background:#A4521F;" tabindex="0" aria-describedby="rubro-nos_deben">59%<span class="tip" id="rubro-nos_deben" role="tooltip" style="left:1.88%;"><span class="tip-ttl"><span class="dot" style="background:#A4521F;"></span>Plata que nos deben</span>
 <span class="tip-cifra">$231.755.912 · 78% del acumulado</span>
 <span class="tip-txt">Saldo que la mina, el motor y los trabajadores tienen pendiente de regresar.</span>
-<span class="tip-lista"><span>Cuenta x Cobrar MINA GRIS</span><span>$99.589.912</span><span>Cuenta x Cobrar Grismaldo</span><span>$90.470.000</span><span>Cuenta x Cobrar MINA ELVIS</span><span>$26.779.300</span><span>Anticipo a Trabajadores - MINA GRIS</span><span>$9.890.000</span><span>Cuenta x Cobrar Motores</span><span>$4.286.700</span><span>Anticipo a Trabajadores - MINA ELVIS</span><span>$740.000</span></span>
+<span class="tip-lista"><span>Mina Gris · General</span><span>$99.589.912</span><span>Grismaldo · General</span><span>$90.470.000</span><span>Mina Elvis · Cuenta vieja (hasta 31/10/2026)</span><span>$26.779.300</span><span>Mina Gris · Anticipos a trabajadores</span><span>$9.890.000</span><span>Almacén Motores · General</span><span>$4.286.700</span><span>Mina Elvis · Anticipos a trabajadores</span><span>$740.000</span></span>
 </span></div><div class="seg" style="width:11.29%; background:#8A6512;" tabindex="0" aria-describedby="rubro-oro">11%<span class="tip" id="rubro-oro" role="tooltip" style="right:28.06%;"><span class="tip-ttl"><span class="dot" style="background:#8A6512;"></span>Oro en inventario</span>
 <span class="tip-cifra">$44.523.000 · 15% del acumulado</span>
 <span class="tip-txt">3 lotes en bodega, valorados a su precio de compra.</span>
@@ -392,15 +459,15 @@ p { margin: 0; }
 </span></div><div class="seg thin" style="width:6.26%; background:#1F6F7A;" tabindex="0" aria-describedby="rubro-debemos">6%<span class="tip" id="rubro-debemos" role="tooltip" style="right:21.8%;"><span class="tip-ttl"><span class="dot" style="background:#1F6F7A;"></span>Plata que debemos</span>
 <span class="tip-cifra">$24.696.578 · 8% del acumulado</span>
 <span class="tip-txt">Las cuentas por pagar y los anticipos por venta de oro: plata recibida que se paga con material.</span>
-<span class="tip-lista"><span>Anticipo por Venta de Oro - Grismaldo</span><span>$30.000.000</span><span>Cuenta x Pagar CompraVenta</span><span>−$5.303.422</span></span>
+<span class="tip-lista"><span>Anticipos por oro — Julieth</span><span>$30.000.000</span><span>Obligaciones de la compraventa</span><span>−$5.303.422</span></span>
 </span></div><div class="seg" style="width:9.28%; background:#6B3FA0;" tabindex="0" aria-describedby="rubro-resultado">9%<span class="tip" id="rubro-resultado" role="tooltip" style="right:12.52%;"><span class="tip-ttl"><span class="dot" style="background:#6B3FA0;"></span>Resultado por venta de oro</span>
 <span class="tip-cifra">$36.586.120 · 12% del acumulado</span>
 <span class="tip-txt">Lo que se ganó o se perdió al vender oro. No es un saldo aparte: ese dinero ya está contado en las cajas.</span>
-<span class="tip-lista"><span>Ganancia x Venta Oro</span><span>$36.586.120</span></span>
+<span class="tip-lista"><span>Ganancia en venta de oro</span><span>$36.586.120</span></span>
 </span></div><div class="seg" style="width:12.52%; background:#5A5E6B;" tabindex="0" aria-describedby="rubro-gastos">13%<span class="tip" id="rubro-gastos" role="tooltip" style="right:0%;"><span class="tip-ttl"><span class="dot" style="background:#5A5E6B;"></span>Gastos y ajustes</span>
 <span class="tip-cifra">−$49.388.000 · resta el 17% del acumulado</span>
 <span class="tip-txt">Acumulado de gastos, nómina, sobrantes y faltantes de caja. El libro los resta del valor del día.</span>
-<span class="tip-lista"><span>Gastos CompraVenta</span><span>−$39.580.000</span><span>Nómina</span><span>−$10.000.000</span><span>Caja Auxiliar — $ Sobrante</span><span>$442.000</span><span>Caja Auxiliar — $ Faltante</span><span>−$250.000</span></span>
+<span class="tip-lista"><span>Gastos de operación · General</span><span>−$39.580.000</span><span>Nómina</span><span>−$10.000.000</span><span>Caja Auxiliar — Sobrante</span><span>$442.000</span><span>Caja Auxiliar — Faltante</span><span>−$250.000</span></span>
 </span></div>
     </div>
     <div class="keys">
@@ -411,7 +478,7 @@ p { margin: 0; }
 </span></span><span class="key" tabindex="0" aria-describedby="leyenda-nos_deben"><span class="dot" style="background:#A4521F;"></span>Plata que nos deben<span class="tip" id="leyenda-nos_deben" role="tooltip"><span class="tip-ttl"><span class="dot" style="background:#A4521F;"></span>Plata que nos deben</span>
 <span class="tip-cifra">$231.755.912 · 78% del acumulado</span>
 <span class="tip-txt">Saldo que la mina, el motor y los trabajadores tienen pendiente de regresar.</span>
-<span class="tip-lista"><span>Cuenta x Cobrar MINA GRIS</span><span>$99.589.912</span><span>Cuenta x Cobrar Grismaldo</span><span>$90.470.000</span><span>Cuenta x Cobrar MINA ELVIS</span><span>$26.779.300</span><span>Anticipo a Trabajadores - MINA GRIS</span><span>$9.890.000</span><span>Cuenta x Cobrar Motores</span><span>$4.286.700</span><span>Anticipo a Trabajadores - MINA ELVIS</span><span>$740.000</span></span>
+<span class="tip-lista"><span>Mina Gris · General</span><span>$99.589.912</span><span>Grismaldo · General</span><span>$90.470.000</span><span>Mina Elvis · Cuenta vieja (hasta 31/10/2026)</span><span>$26.779.300</span><span>Mina Gris · Anticipos a trabajadores</span><span>$9.890.000</span><span>Almacén Motores · General</span><span>$4.286.700</span><span>Mina Elvis · Anticipos a trabajadores</span><span>$740.000</span></span>
 </span></span><span class="key" tabindex="0" aria-describedby="leyenda-oro"><span class="dot" style="background:#8A6512;"></span>Oro en inventario<span class="tip" id="leyenda-oro" role="tooltip"><span class="tip-ttl"><span class="dot" style="background:#8A6512;"></span>Oro en inventario</span>
 <span class="tip-cifra">$44.523.000 · 15% del acumulado</span>
 <span class="tip-txt">3 lotes en bodega, valorados a su precio de compra.</span>
@@ -419,43 +486,18 @@ p { margin: 0; }
 </span></span><span class="key" tabindex="0" aria-describedby="leyenda-debemos"><span class="dot" style="background:#1F6F7A;"></span>Plata que debemos<span class="tip" id="leyenda-debemos" role="tooltip"><span class="tip-ttl"><span class="dot" style="background:#1F6F7A;"></span>Plata que debemos</span>
 <span class="tip-cifra">$24.696.578 · 8% del acumulado</span>
 <span class="tip-txt">Las cuentas por pagar y los anticipos por venta de oro: plata recibida que se paga con material.</span>
-<span class="tip-lista"><span>Anticipo por Venta de Oro - Grismaldo</span><span>$30.000.000</span><span>Cuenta x Pagar CompraVenta</span><span>−$5.303.422</span></span>
+<span class="tip-lista"><span>Anticipos por oro — Julieth</span><span>$30.000.000</span><span>Obligaciones de la compraventa</span><span>−$5.303.422</span></span>
 </span></span><span class="key" tabindex="0" aria-describedby="leyenda-resultado"><span class="dot" style="background:#6B3FA0;"></span>Resultado por venta de oro<span class="tip" id="leyenda-resultado" role="tooltip"><span class="tip-ttl"><span class="dot" style="background:#6B3FA0;"></span>Resultado por venta de oro</span>
 <span class="tip-cifra">$36.586.120 · 12% del acumulado</span>
 <span class="tip-txt">Lo que se ganó o se perdió al vender oro. No es un saldo aparte: ese dinero ya está contado en las cajas.</span>
-<span class="tip-lista"><span>Ganancia x Venta Oro</span><span>$36.586.120</span></span>
+<span class="tip-lista"><span>Ganancia en venta de oro</span><span>$36.586.120</span></span>
 </span></span><span class="key" tabindex="0" aria-describedby="leyenda-gastos"><span class="dot" style="background:#5A5E6B;"></span>Gastos y ajustes <span class="resta">(resta)</span><span class="tip" id="leyenda-gastos" role="tooltip"><span class="tip-ttl"><span class="dot" style="background:#5A5E6B;"></span>Gastos y ajustes</span>
 <span class="tip-cifra">−$49.388.000 · resta el 17% del acumulado</span>
 <span class="tip-txt">Acumulado de gastos, nómina, sobrantes y faltantes de caja. El libro los resta del valor del día.</span>
-<span class="tip-lista"><span>Gastos CompraVenta</span><span>−$39.580.000</span><span>Nómina</span><span>−$10.000.000</span><span>Caja Auxiliar — $ Sobrante</span><span>$442.000</span><span>Caja Auxiliar — $ Faltante</span><span>−$250.000</span></span>
+<span class="tip-lista"><span>Gastos de operación · General</span><span>−$39.580.000</span><span>Nómina</span><span>−$10.000.000</span><span>Caja Auxiliar — Sobrante</span><span>$442.000</span><span>Caja Auxiliar — Faltante</span><span>−$250.000</span></span>
 </span></span>
     </div>
   </div>
-
-  
-  <h2 class="h2">Inventario de oro y su estado</h2>
-  <div class="tracewrap">
-  <table class="trace">
-    <thead>
-      <tr><th scope="col">Estado</th><th scope="col">P.F.</th><th scope="col">Ley media</th><th scope="col">P.P.E.</th><th scope="col">Precio de compra</th></tr>
-    </thead>
-    
-    
-    <tfoot>
-      
-      <tr><td>Total · en bodega</td><td>174,08 gr</td><td>0,725</td><td class="paso">126,28 gr</td><td>$44.523.000</td></tr>
-
-      
-    </tfoot>
-    
-  </table>
-</div>
-
-  
-  <details class="como"><summary>¿Cómo se calcula?</summary><p class="tracenote">Cada lote llega fundido (P.F.) y su ley indica qué proporción es oro puro: el peso purificado estimado (P.P.E.) es el producto de los dos. La <b>ley media</b> es la del conjunto, el P.P.E. dividido entre el P.F. <b>El precio de compra se calcula sobre el P.P.E.</b></p></details>
-  
-
-  
 
   <h2 class="h2">En qué está representado ese valor</h2>
   <div class="grid">
@@ -529,198 +571,115 @@ p { margin: 0; }
   </div>
 
   
-  <h2 class="h2">Quién responde por cada monto</h2>
-  <div class="grid">
+  
+  <h2 class="h2">Inventario de oro y su estado</h2>
+  <div class="tracewrap">
+  <table class="trace">
+    <thead>
+      <tr><th scope="col">Estado</th><th scope="col">P.F.</th><th scope="col">Ley media</th><th scope="col">P.P.E.</th><th scope="col">Precio de compra</th></tr>
+    </thead>
     
-    <div class="who">
-      <div class="av" style="background:#E6F1EA; color:#14705A;">C</div>
-      <div>
-        <p class="nm">Carlos</p>
-        <p class="rl">Caja principal</p>
-        <p class="vl">$302.000</p>
-      </div>
-    </div>
     
-    <div class="who">
-      <div class="av" style="background:#E6F1EA; color:#14705A;">F</div>
-      <div>
-        <p class="nm">Fabián</p>
-        <p class="rl">Caja auxiliar</p>
-        <p class="vl">$7.097.000</p>
-      </div>
-    </div>
+    <tfoot>
+      
+      <tr><td>Total · en bodega</td><td>174,08 gr</td><td>0,725</td><td class="paso">126,28 gr</td><td>$44.523.000</td></tr>
+
+      
+    </tfoot>
     
-    <div class="who">
-      <div class="av" style="background:#F6EAE2; color:#A4521F;">M</div>
-      <div>
-        <p class="nm">Mina Gris</p>
-        <p class="rl">Cuenta por cobrar</p>
-        <p class="vl">$99.589.912</p>
-      </div>
-    </div>
-    
-    <div class="who">
-      <div class="av" style="background:#F6EAE2; color:#A4521F;">M</div>
-      <div>
-        <p class="nm">Mina Elvis</p>
-        <p class="rl">Cuenta por cobrar</p>
-        <p class="vl">$26.779.300</p>
-      </div>
-    </div>
-    
-    <div class="who">
-      <div class="av" style="background:#F6EAE2; color:#A4521F;">G</div>
-      <div>
-        <p class="nm">Grismaldo</p>
-        <p class="rl">Cuenta por cobrar</p>
-        <p class="vl">$90.470.000</p>
-      </div>
-    </div>
-    
-    <div class="who">
-      <div class="av" style="background:#EDEEF1; color:#5A5E6B;">F</div>
-      <div>
-        <p class="nm">Fabián</p>
-        <p class="rl">Sobrantes y faltantes del mes</p>
-        <p class="vl">$257.000</p>
-      </div>
-    </div>
-    
-    <div class="who">
-      <div class="av" style="background:#EFE8F5; color:#6B3FA0;">L</div>
-      <div>
-        <p class="nm">La compraventa</p>
-        <p class="rl">Resultado de ventas</p>
-        <p class="vl">$36.586.120</p>
-      </div>
-    </div>
-    
-    <div class="who">
-      <div class="av" style="background:#E3F0F1; color:#1F6F7A;">L</div>
-      <div>
-        <p class="nm">La compraventa</p>
-        <p class="rl">Cuentas por pagar</p>
-        <p class="vl">−$5.303.422</p>
-      </div>
-    </div>
-    
-    <div class="who">
-      <div class="av" style="background:#EDEEF1; color:#5A5E6B;">L</div>
-      <div>
-        <p class="nm">La compraventa</p>
-        <p class="rl">Nómina</p>
-        <p class="vl">−$10.000.000</p>
-      </div>
-    </div>
-    
-    <div class="who">
-      <div class="av" style="background:#EDEEF1; color:#5A5E6B;">L</div>
-      <div>
-        <p class="nm">La compraventa</p>
-        <p class="rl">Gastos del mes</p>
-        <p class="vl">−$17.663.000</p>
-      </div>
-    </div>
-    
-    <div class="who">
-      <div class="av" style="background:#F6EAE2; color:#A4521F;">M</div>
-      <div>
-        <p class="nm">Motores</p>
-        <p class="rl">Cuenta por cobrar</p>
-        <p class="vl">$4.286.700</p>
-      </div>
-    </div>
-    
-    <div class="who">
-      <div class="av" style="background:#E3F0F1; color:#1F6F7A;">G</div>
-      <div>
-        <p class="nm">Grismaldo</p>
-        <p class="rl">Anticipo por venta de oro</p>
-        <p class="vl">$30.000.000</p>
-      </div>
-    </div>
-    
-    <div class="who">
-      <div class="av" style="background:#F6EAE2; color:#A4521F;">M</div>
-      <div>
-        <p class="nm">Mina Gris</p>
-        <p class="rl">Anticipo a trabajadores</p>
-        <p class="vl">$9.890.000</p>
-      </div>
-    </div>
-    
-    <div class="who">
-      <div class="av" style="background:#F6EAE2; color:#A4521F;">M</div>
-      <div>
-        <p class="nm">Mina Elvis</p>
-        <p class="rl">Anticipo a trabajadores</p>
-        <p class="vl">$740.000</p>
-      </div>
-    </div>
-    
-  </div>
-  <p class="tracenote">Esta sección no suma el balance del día: el oro no tiene responsable.</p>
+  </table>
+</div>
+
+  
+  <details class="como"><summary>¿Cómo se calcula?</summary><p class="tracenote">Cada lote llega fundido (P.F.) y su ley indica qué proporción es oro puro: el peso purificado estimado (P.P.E.) es el producto de los dos. La <b>ley media</b> es la del conjunto, el P.P.E. dividido entre el P.F. <b>El precio de compra se calcula sobre el P.P.E.</b></p></details>
+  
+
   
 
   <h2 class="h2">Detalle de las cuentas: el día, el mes y el histórico</h2>
   <div class="tracewrap">
-  <table class="trace">
+  <table class="trace agrupada">
     <thead>
       <tr><th scope="col">Cuenta</th><th scope="col">En el día</th><th scope="col">En el mes</th><th scope="col">Histórico</th></tr>
     </thead>
     
     <tbody>
       
-      <tr><td>Caja Principal</td><td>$302.000</td><td>—</td><td>—</td></tr>
+      <tr class="fila-grupo"><th scope="rowgroup"><span class="punto" style="background:#14705A;" aria-hidden="true"></span>Plata disponible</th><td>$7.399.000</td><td>—</td><td>—</td></tr>
 
       
-      <tr><td>Caja Auxiliar</td><td>$7.097.000</td><td>—</td><td>—</td></tr>
-
-      
-      <tr><td>Cuenta x Cobrar MINA GRIS <span class="lotes">· 1 subcuenta</span></td><td>$1.000.000</td><td>$90.274.600</td><td>$18.205.312</td></tr>
-
-      
-      <tr><td>Cuenta x Cobrar MINA ELVIS <span class="lotes">· 1 subcuenta</span></td><td>—</td><td>$8.743.000</td><td>$18.776.300</td></tr>
-
-      
-      <tr><td>Cuenta x Cobrar Grismaldo</td><td>$16.731.000</td><td>$43.450.000</td><td>$30.289.000</td></tr>
-
-      
-      <tr><td>Caja Auxiliar — $ Sobrante</td><td>—</td><td>$266.000</td><td>$176.000</td></tr>
-
-      
-      <tr><td>Ganancia x Venta Oro</td><td>—</td><td>$36.586.120</td><td>—</td></tr>
-
-      
-      <tr><td>Cuenta x Cobrar Motores</td><td>—</td><td class="merma">−$7.941.000</td><td>$12.227.700</td></tr>
-
-      
-      <tr><td>Anticipos por Venta de Oro <span class="lotes">· 1 subcuenta</span></td><td>$30.000.000</td><td>—</td><td>—</td></tr>
+      <tr><td>Cajas <span class="lotes">· 2 subcuentas</span></td><td>$7.399.000</td><td>—</td><td>—</td></tr>
 
       
     </tbody>
     
     <tbody>
       
-      <tr><td>Cuenta x Pagar CompraVenta</td><td>—</td><td>$1.746.000</td><td class="merma">−$7.049.422</td></tr>
+      <tr class="fila-grupo"><th scope="rowgroup"><span class="punto" style="background:#A4521F;" aria-hidden="true"></span>Cuentas por cobrar</th><td>$17.731.000</td><td>$134.526.600</td><td>$79.498.312</td></tr>
 
       
-      <tr><td>Gastos CompraVenta <span class="lotes">· 1 subcuenta</span></td><td class="merma">−$150.000</td><td class="merma">−$27.513.000</td><td class="merma">−$21.917.000</td></tr>
+      <tr><td>Mina Gris <span class="lotes">· 2 subcuentas</span></td><td>$1.000.000</td><td>$90.274.600</td><td>$18.205.312</td></tr>
 
       
-      <tr><td>Caja Auxiliar — $ Faltante</td><td>—</td><td class="merma">−$9.000</td><td class="merma">−$241.000</td></tr>
+      <tr><td>Mina Elvis <span class="lotes">· 2 subcuentas</span></td><td>—</td><td>$8.743.000</td><td>$18.776.300</td></tr>
+
+      
+      <tr><td>Grismaldo</td><td>$16.731.000</td><td>$43.450.000</td><td>$30.289.000</td></tr>
+
+      
+      <tr><td>Almacén Motores</td><td>—</td><td class="merma">−$7.941.000</td><td>$12.227.700</td></tr>
+
+      
+    </tbody>
+    
+    <tbody>
+      
+      <tr class="fila-grupo"><th scope="rowgroup"><span class="punto" style="background:#1F6F7A;" aria-hidden="true"></span>Cuentas por pagar</th><td>$30.000.000</td><td>$1.746.000</td><td class="merma">−$7.049.422</td></tr>
+
+      
+      <tr><td>Obligaciones de la compraventa</td><td>—</td><td>$1.746.000</td><td class="merma">−$7.049.422</td></tr>
+
+      
+      <tr><td>Cuenta Julieth <span class="lotes">· 1 subcuenta</span></td><td>$30.000.000</td><td>—</td><td>—</td></tr>
+
+      
+    </tbody>
+    
+    <tbody>
+      
+      <tr class="fila-grupo"><th scope="rowgroup"><span class="punto" style="background:#6B3FA0;" aria-hidden="true"></span>Resultado por venta de oro</th><td>—</td><td>$36.586.120</td><td>—</td></tr>
+
+      
+      <tr><td>Ganancia en venta de oro</td><td>—</td><td>$36.586.120</td><td>—</td></tr>
+
+      
+    </tbody>
+    
+    <tbody>
+      
+      <tr class="fila-grupo"><th scope="rowgroup"><span class="punto" style="background:#5A5E6B;" aria-hidden="true"></span>Gastos del negocio</th><td class="merma">−$150.000</td><td class="merma">−$27.513.000</td><td class="merma">−$21.917.000</td></tr>
+
+      
+      <tr><td>Gastos de operación <span class="lotes">· 2 subcuentas</span></td><td class="merma">−$150.000</td><td class="merma">−$27.513.000</td><td class="merma">−$21.917.000</td></tr>
+
+      
+    </tbody>
+    
+    <tbody>
+      
+      <tr class="fila-grupo"><th scope="rowgroup"><span class="punto" style="background:#8A5A2B;" aria-hidden="true"></span>Sobrantes y faltantes de caja</th><td>—</td><td>$257.000</td><td class="merma">−$65.000</td></tr>
+
+      
+      <tr><td>Caja Auxiliar — Sobrante</td><td>—</td><td>$266.000</td><td>$176.000</td></tr>
+
+      
+      <tr><td>Caja Auxiliar — Faltante</td><td>—</td><td class="merma">−$9.000</td><td class="merma">−$241.000</td></tr>
 
       
     </tbody>
     
     
     <tfoot>
-      
-      <tr><td>Suman</td><td>$55.130.000</td><td>$171.378.720</td><td>$79.674.312</td></tr>
-
-      
-      <tr><td>Restan</td><td class="merma">−$150.000</td><td class="merma">−$25.776.000</td><td class="merma">−$29.207.422</td></tr>
-
       
       <tr><td>Total</td><td>$54.980.000</td><td>$145.602.720</td><td>$50.466.890</td></tr>
 
@@ -731,7 +690,116 @@ p { margin: 0; }
 </div>
 
   
-  <details class="como"><summary>¿Cómo se lee esta tabla?</summary><p class="tracenote">Cada cifra es lo que la cuenta aporta al cierre, con su signo. El guion significa que ese día no se registró nada, no que valga cero. Las cifras en rojo restan.</p></details>
+  <details class="como"><summary>¿Cómo se lee esta tabla?</summary><p class="tracenote">Las cuentas van por grupos, cada uno con su subtotal, en el orden de la barra; los sobrantes y faltantes de caja van aparte de los gastos. Cada cifra es lo que la cuenta aporta al cierre, con su signo. Las cuentas sin ninguna cifra ese día no llevan fila: se nombran al final de su grupo, en «Sin movimiento». El guion significa que ese día no se registró nada, no que valga cero. Las cifras en rojo restan.</p></details>
+
+  
+  
+  <h2 class="h2">Quién responde por cada monto</h2>
+  
+  <section class="unidad" aria-labelledby="unidad-1">
+    <div class="unidad-cabeza">
+      <h3 class="unidad-nombre" id="unidad-1">Compraventa</h3>
+      <dl class="unidad-totales"><div><dt>En caja</dt><dd>$7.399.000</dd></div><div><dt>Le debemos</dt><dd>$5.303.422</dd></div><div><dt>Resultado de ventas</dt><dd>$36.586.120</dd></div><div><dt>Gastos y ajustes</dt><dd class="merma">−$27.406.000</dd></div></dl>
+    </div>
+    <div class="unidad-tarjeta">
+      <table class="quien">
+        <thead><tr><th scope="col">Concepto y responsable</th><th scope="col">Mes</th><th scope="col">Histórico</th></tr></thead>
+        <tbody>
+          <tr><td><span class="punto" style="background:#14705A;"></span><span class="quien-rol">Caja principal</span> <span class="quien-nombre">· Carlos</span></td><td class="vacio">—</td><td class="historico">$302.000</td></tr>
+          <tr><td><span class="punto" style="background:#14705A;"></span><span class="quien-rol">Caja auxiliar</span> <span class="quien-nombre">· Fabián</span></td><td class="vacio">—</td><td class="historico">$7.097.000</td></tr>
+          <tr><td><span class="punto" style="background:#5A5E6B;"></span><span class="quien-rol">Sobrantes y faltantes del mes</span> <span class="quien-nombre">· Fabián</span></td><td>$257.000</td><td class="historico">$257.000</td></tr>
+          <tr><td><span class="punto" style="background:#6B3FA0;"></span><span class="quien-rol">Resultado de ventas</span> <span class="quien-nombre">· La compraventa</span></td><td>$36.586.120</td><td class="historico">$36.586.120</td></tr>
+          <tr><td><span class="punto" style="background:#1F6F7A;"></span><span class="quien-rol">Cuentas por pagar</span> <span class="quien-nombre">· Compra</span></td><td>$1.746.000</td><td class="historico merma">−$5.303.422</td></tr>
+          <tr><td><span class="punto" style="background:#5A5E6B;"></span><span class="quien-rol">Nómina</span> <span class="quien-nombre">· La compraventa</span></td><td class="merma">−$10.000.000</td><td class="historico merma">−$10.000.000</td></tr>
+          <tr><td><span class="punto" style="background:#5A5E6B;"></span><span class="quien-rol">Gastos del mes</span> <span class="quien-nombre">· La compraventa</span></td><td class="merma">−$17.663.000</td><td class="historico merma">−$17.663.000</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+  <section class="unidad" aria-labelledby="unidad-2">
+    <div class="unidad-cabeza">
+      <h3 class="unidad-nombre" id="unidad-2">Mina Gris</h3>
+      <dl class="unidad-totales"><div><dt>Nos debe</dt><dd>$109.479.912</dd></div></dl>
+    </div>
+    <div class="unidad-tarjeta">
+      <table class="quien">
+        <thead><tr><th scope="col">Concepto y responsable</th><th scope="col">Mes</th><th scope="col">Histórico</th></tr></thead>
+        <tbody>
+          <tr><td><span class="punto" style="background:#A4521F;"></span><span class="quien-rol">Cuenta por cobrar</span> <span class="quien-nombre">· Mina Gris</span></td><td>$91.274.600</td><td class="historico">$99.589.912</td></tr>
+          <tr><td><span class="punto" style="background:#A4521F;"></span><span class="quien-rol">Anticipo a trabajadores</span> <span class="quien-nombre">· Mina Gris</span></td><td class="vacio">—</td><td class="historico">$9.890.000</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+  <section class="unidad" aria-labelledby="unidad-3">
+    <div class="unidad-cabeza">
+      <h3 class="unidad-nombre" id="unidad-3">Grismaldo</h3>
+      <dl class="unidad-totales"><div><dt>Nos debe</dt><dd>$90.470.000</dd></div></dl>
+    </div>
+    <div class="unidad-tarjeta">
+      <table class="quien">
+        <thead><tr><th scope="col">Concepto y responsable</th><th scope="col">Mes</th><th scope="col">Histórico</th></tr></thead>
+        <tbody>
+          <tr><td><span class="punto" style="background:#A4521F;"></span><span class="quien-rol">Cuenta por cobrar</span> <span class="quien-nombre">· Grismaldo</span></td><td>$60.181.000</td><td class="historico">$90.470.000</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+  <section class="unidad" aria-labelledby="unidad-4">
+    <div class="unidad-cabeza">
+      <h3 class="unidad-nombre" id="unidad-4">Julieth</h3>
+      <dl class="unidad-totales"><div><dt>Le debemos</dt><dd>$30.000.000</dd></div></dl>
+    </div>
+    <div class="unidad-tarjeta">
+      <table class="quien">
+        <thead><tr><th scope="col">Concepto y responsable</th><th scope="col">Mes</th><th scope="col">Histórico</th></tr></thead>
+        <tbody>
+          <tr><td><span class="punto" style="background:#1F6F7A;"></span><span class="quien-rol">Anticipo por venta de oro</span> <span class="quien-nombre">· Julieth</span></td><td class="vacio">—</td><td class="historico">$30.000.000</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+  <section class="unidad" aria-labelledby="unidad-5">
+    <div class="unidad-cabeza">
+      <h3 class="unidad-nombre" id="unidad-5">Mina Elvis</h3>
+      <dl class="unidad-totales"><div><dt>Nos debe</dt><dd>$27.519.300</dd></div></dl>
+    </div>
+    <div class="unidad-tarjeta">
+      <table class="quien">
+        <thead><tr><th scope="col">Concepto y responsable</th><th scope="col">Mes</th><th scope="col">Histórico</th></tr></thead>
+        <tbody>
+          <tr><td><span class="punto" style="background:#A4521F;"></span><span class="quien-rol">Cuenta por cobrar</span> <span class="quien-nombre">· Mina Elvis</span></td><td>$8.743.000</td><td class="historico">$26.779.300</td></tr>
+          <tr><td><span class="punto" style="background:#A4521F;"></span><span class="quien-rol">Anticipo a trabajadores</span> <span class="quien-nombre">· Mina Elvis</span></td><td class="vacio">—</td><td class="historico">$740.000</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+  <section class="unidad" aria-labelledby="unidad-6">
+    <div class="unidad-cabeza">
+      <h3 class="unidad-nombre" id="unidad-6">Almacen Motores</h3>
+      <dl class="unidad-totales"><div><dt>Nos debe</dt><dd>$4.286.700</dd></div></dl>
+    </div>
+    <div class="unidad-tarjeta">
+      <table class="quien">
+        <thead><tr><th scope="col">Concepto y responsable</th><th scope="col">Mes</th><th scope="col">Histórico</th></tr></thead>
+        <tbody>
+          <tr><td><span class="punto" style="background:#A4521F;"></span><span class="quien-rol">Cuenta por cobrar</span> <span class="quien-nombre">· Motores</span></td><td class="merma">−$7.941.000</td><td class="historico">$4.286.700</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+  <div class="keys quien-leyenda"><span class="key"><span class="punto" style="background:#14705A;"></span>Plata disponible</span><span class="key"><span class="punto" style="background:#A4521F;"></span>Plata que nos deben</span><span class="key"><span class="punto" style="background:#1F6F7A;"></span>Plata que debemos</span><span class="key"><span class="punto" style="background:#6B3FA0;"></span>Resultado por venta de oro</span><span class="key"><span class="punto" style="background:#5A5E6B;"></span>Gastos y ajustes</span></div>
+  <details class="como"><summary>¿Cómo se lee esta sección?</summary><p class="tracenote">Cada unidad de negocio lleva arriba sus totales por rubro: lo que nos debe, lo que le debemos, lo que hay en caja. Abajo, cada cuenta con quien responde por ella: en «Mes», lo del día y el mes; en «Histórico», lo que la cuenta arrastra. Las cajas y los anticipos solo llevan el saldo del día, así que no tienen mes. La unidad de cada cuenta se elige en el catálogo de cuentas.</p></details>
+  <p class="tracenote">Esta sección no suma el balance del día: el oro no tiene responsable.</p>
+  
+
+  
 
   
   <h2 class="h2">De dónde sale cada cifra de cierre</h2>
@@ -753,5 +821,6 @@ p { margin: 0; }
 
 
 </div>
+
 </body>
 </html>
